@@ -1,0 +1,316 @@
+<!doctype html>
+<html><body><code><pre>#survey
+
+| type                         | name              | label::English (en) (english (en))           | hint::English (en) (english (en))                                                                                                                                              | required   | guidance_hint                        | appearance   | relevant                          | constraint   | parameters      | calculation   |
+|------------------------------+-------------------+----------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+--------------------------------------+--------------+-----------------------------------+--------------+-----------------+---------------|
+| start                        | start             |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| end                          | end               |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| today                        | today             |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| begin_group                  | group_ih2au74     | Section 1 – General Information              |                                                                                                                                                                                | false      |                                      |              |                                   |              |                 |               |
+| text                         | collector_name    | Collector name                               | Name of the person collecting the sample.                                                                                                                                      | true       | Philipp Schiffer                     |              |                                   |              |                 |               |
+| select_multiple iq6nb08      | affiliation       | Affiliation (research group / institute)     | Enter the research group, laboratory, institute, or consortium responsible for this sampling. Use the official name.                                                           | true       |                                      | minimal      |                                   |              |                 |               |
+| text                         | affiliation_other | If "Other", please type the affiliation name |                                                                                                                                                                                | true       |                                      |              | selected(${affiliation}, 'other') | . != ''      |                 |               |
+| text                         | sample_id         | Sample ID                                    | Unique code for each sampling site. Use the format COUNTRY-YEAR-### (e.g., COL-2025-001).                                                                                      | true       | COL-2025-001                         |              |                                   |              |                 |               |
+| date                         | sampling_date     | Sampling Date                                | Date when the sample was taken.                                                                                                                                                | true       | 2025-09-12                           |              |                                   |              |                 |               |
+| select_one country_list      | country           | Country                                      | Country where the sample was collected.                                                                                                                                        | true       | Colombia                             |              |                                   |              |                 |               |
+| text                         | notes             | Notes / Comments                             | Any relevant observations.                                                                                                                                                     | false      | “Moist soil near coffee plantation.” | multiline    |                                   |              |                 |               |
+| end_group                    |                   |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| begin_group                  | group_kw39a24     | Section 2 – Geolocation                      |                                                                                                                                                                                | false      |                                      |              |                                   |              |                 |               |
+| geopoint                     | gps_coordinates   | Sampling location                            | Record precise coordinates using the map or GPS device.                                                                                                                        | true       | (captured automatically)             | maps         |                                   |              |                 |               |
+| text                         | site_name         | Site name                                    | Name or code for the sampling site.                                                                                                                                            | false      | “San Pedro plot”                     |              |                                   |              |                 |               |
+| end_group                    |                   |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| begin_group                  | group_jy8zq69     | Section 3 – Environmental & Soil Data        |                                                                                                                                                                                | false      |                                      |              |                                   |              |                 |               |
+| select_one habitat_type_list | habitat_type_001  | Habitat type                                 | Select habitat (forest, agricultural, desert, grassland, etc.)                                                                                                                 | true       | Agricultural field                   |              |                                   |              |                 |               |
+| select_one soil_type_list    | soil_type_001     | Soil type                                    | Choose soil texture (sandy, clay, loamy, etc.)                                                                                                                                 | false      | Sandy loam                           |              |                                   |              |                 |               |
+| decimal                      | soil_ph           | Soil pH                                      | Measure pH of the soil, 1 decimal precision (6.4).                                                                                                                             | false      | 6.4                                  |              |                                   |              |                 |               |
+| note                         | climate_info      | Climate Data (auto-filled later)             | This field will be completed automatically in the web app.                                                                                                                     | false      |                                      |              |                                   |              |                 |               |
+| end_group                    |                   |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| begin_group                  | group_ga0dq77     | Section 4 – Sampling Details                 |                                                                                                                                                                                | false      |                                      |              |                                   |              |                 |               |
+| integer                      | depth_cm          | Sampling Depth (cm)                          | Enter depth in centimeters.                                                                                                                                                    | false      | 3                                    |              |                                   |              |                 |               |
+| integer                      | num_samples       | Number of sub-samples                        | Number of sub-samples collected at this site.                                                                                                                                  | true       | 4                                    |              |                                   |              |                 |               |
+| text                         | tube_id           | Tube ID                                      | Label each physical tube with a unique code using this format: SMP-[sample_id]-[subnumber]-[initials] Example: SMP-COL-2025-001-01-PS Use waterproof labels and indelible ink. | true       | SMP-COL-2025-001-01-PS               |              |                                   |              |                 |               |
+| image                        | photo_sample      | Sample Photo                                 | Optional photo of the sample or environment.                                                                                                                                   | false      |                                      |              |                                   |              | max-pixels=1024 |               |
+| end_group                    |                   |                                              |                                                                                                                                                                                |            |                                      |              |                                   |              |                 |               |
+| calculate                    | instance_uuid     |                                              |                                                                                                                                                                                | false      |                                      |              |                                   |              |                 | uuid()        |
+
+#choices
+
+| list_name         | name               | label::English (en) (english (en))           |
+|-------------------+--------------------+----------------------------------------------|
+| iq6nb08           | worm_lab           | worm~lab                                     |
+| iq6nb08           | sanger_institute   | Sanger Institute                             |
+| iq6nb08           | other              | Other                                        |
+| country_list      | AF                 | Afghanistan                                  |
+| country_list      | AX                 | Aland Islands                                |
+| country_list      | AL                 | Albania                                      |
+| country_list      | DZ                 | Algeria                                      |
+| country_list      | AS                 | American Samoa                               |
+| country_list      | AD                 | Andorra                                      |
+| country_list      | AO                 | Angola                                       |
+| country_list      | AI                 | Anguilla                                     |
+| country_list      | AQ                 | Antarctica                                   |
+| country_list      | AG                 | Antigua and Barbuda                          |
+| country_list      | AR                 | Argentina                                    |
+| country_list      | AM                 | Armenia                                      |
+| country_list      | AW                 | Aruba                                        |
+| country_list      | AU                 | Australia                                    |
+| country_list      | AT                 | Austria                                      |
+| country_list      | AZ                 | Azerbaijan                                   |
+| country_list      | BS                 | Bahamas                                      |
+| country_list      | BH                 | Bahrain                                      |
+| country_list      | BD                 | Bangladesh                                   |
+| country_list      | BB                 | Barbados                                     |
+| country_list      | BY                 | Belarus                                      |
+| country_list      | BE                 | Belgium                                      |
+| country_list      | BZ                 | Belize                                       |
+| country_list      | BJ                 | Benin                                        |
+| country_list      | BM                 | Bermuda                                      |
+| country_list      | BT                 | Bhutan                                       |
+| country_list      | BO                 | Bolivia                                      |
+| country_list      | BQ                 | Bonaire, Sint Eustatius and Saba             |
+| country_list      | BA                 | Bosnia and Herzegovina                       |
+| country_list      | BW                 | Botswana                                     |
+| country_list      | BV                 | Bouvet Island                                |
+| country_list      | BR                 | Brazil                                       |
+| country_list      | IO                 | British Indian Ocean Territory               |
+| country_list      | BN                 | Brunei Darussalam                            |
+| country_list      | BG                 | Bulgaria                                     |
+| country_list      | BF                 | Burkina Faso                                 |
+| country_list      | BI                 | Burundi                                      |
+| country_list      | CV                 | Cabo Verde                                   |
+| country_list      | KH                 | Cambodia                                     |
+| country_list      | CM                 | Cameroon                                     |
+| country_list      | CA                 | Canada                                       |
+| country_list      | KY                 | Cayman Islands                               |
+| country_list      | CF                 | Central African Republic                     |
+| country_list      | TD                 | Chad                                         |
+| country_list      | CL                 | Chile                                        |
+| country_list      | CN                 | China                                        |
+| country_list      | CX                 | Christmas Island                             |
+| country_list      | CC                 | Cocos (Keeling) Islands                      |
+| country_list      | CO                 | Colombia                                     |
+| country_list      | KM                 | Comoros                                      |
+| country_list      | CG                 | Congo                                        |
+| country_list      | CD                 | Congo, Democratic Republic of the            |
+| country_list      | CK                 | Cook Islands                                 |
+| country_list      | CR                 | Costa Rica                                   |
+| country_list      | CI                 | Cote d'Ivoire                                |
+| country_list      | HR                 | Croatia                                      |
+| country_list      | CU                 | Cuba                                         |
+| country_list      | CW                 | Curacao                                      |
+| country_list      | CY                 | Cyprus                                       |
+| country_list      | CZ                 | Czechia                                      |
+| country_list      | DK                 | Denmark                                      |
+| country_list      | DJ                 | Djibouti                                     |
+| country_list      | DM                 | Dominica                                     |
+| country_list      | DO                 | Dominican Republic                           |
+| country_list      | EC                 | Ecuador                                      |
+| country_list      | EG                 | Egypt                                        |
+| country_list      | SV                 | El Salvador                                  |
+| country_list      | GQ                 | Equatorial Guinea                            |
+| country_list      | ER                 | Eritrea                                      |
+| country_list      | EE                 | Estonia                                      |
+| country_list      | SZ                 | Eswatini                                     |
+| country_list      | ET                 | Ethiopia                                     |
+| country_list      | FK                 | Falkland Islands (Malvinas)                  |
+| country_list      | FO                 | Faroe Islands                                |
+| country_list      | FJ                 | Fiji                                         |
+| country_list      | FI                 | Finland                                      |
+| country_list      | FR                 | France                                       |
+| country_list      | GF                 | French Guiana                                |
+| country_list      | PF                 | French Polynesia                             |
+| country_list      | TF                 | French Southern Territories                  |
+| country_list      | GA                 | Gabon                                        |
+| country_list      | GM                 | Gambia                                       |
+| country_list      | GE                 | Georgia                                      |
+| country_list      | DE                 | Germany                                      |
+| country_list      | GH                 | Ghana                                        |
+| country_list      | GI                 | Gibraltar                                    |
+| country_list      | GR                 | Greece                                       |
+| country_list      | GL                 | Greenland                                    |
+| country_list      | GD                 | Grenada                                      |
+| country_list      | GP                 | Guadeloupe                                   |
+| country_list      | GU                 | Guam                                         |
+| country_list      | GT                 | Guatemala                                    |
+| country_list      | GG                 | Guernsey                                     |
+| country_list      | GN                 | Guinea                                       |
+| country_list      | GW                 | Guinea-Bissau                                |
+| country_list      | GY                 | Guyana                                       |
+| country_list      | HT                 | Haiti                                        |
+| country_list      | HM                 | Heard Island and McDonald Islands            |
+| country_list      | VA                 | Holy See                                     |
+| country_list      | HN                 | Honduras                                     |
+| country_list      | HK                 | Hong Kong                                    |
+| country_list      | HU                 | Hungary                                      |
+| country_list      | IS                 | Iceland                                      |
+| country_list      | IN                 | India                                        |
+| country_list      | ID                 | Indonesia                                    |
+| country_list      | IR                 | Iran, Islamic Republic of                    |
+| country_list      | IQ                 | Iraq                                         |
+| country_list      | IE                 | Ireland                                      |
+| country_list      | IM                 | Isle of Man                                  |
+| country_list      | IL                 | Israel                                       |
+| country_list      | IT                 | Italy                                        |
+| country_list      | JM                 | Jamaica                                      |
+| country_list      | JP                 | Japan                                        |
+| country_list      | JE                 | Jersey                                       |
+| country_list      | JO                 | Jordan                                       |
+| country_list      | KZ                 | Kazakhstan                                   |
+| country_list      | KE                 | Kenya                                        |
+| country_list      | KI                 | Kiribati                                     |
+| country_list      | KP                 | Korea, Democratic People's Republic of       |
+| country_list      | KR                 | Korea, Republic of                           |
+| country_list      | KW                 | Kuwait                                       |
+| country_list      | KG                 | Kyrgyzstan                                   |
+| country_list      | LA                 | Lao People's Democratic Republic             |
+| country_list      | LV                 | Latvia                                       |
+| country_list      | LB                 | Lebanon                                      |
+| country_list      | LS                 | Lesotho                                      |
+| country_list      | LR                 | Liberia                                      |
+| country_list      | LY                 | Libya                                        |
+| country_list      | LI                 | Liechtenstein                                |
+| country_list      | LT                 | Lithuania                                    |
+| country_list      | LU                 | Luxembourg                                   |
+| country_list      | MO                 | Macao                                        |
+| country_list      | MG                 | Madagascar                                   |
+| country_list      | MW                 | Malawi                                       |
+| country_list      | MY                 | Malaysia                                     |
+| country_list      | MV                 | Maldives                                     |
+| country_list      | ML                 | Mali                                         |
+| country_list      | MT                 | Malta                                        |
+| country_list      | MH                 | Marshall Islands                             |
+| country_list      | MQ                 | Martinique                                   |
+| country_list      | MR                 | Mauritania                                   |
+| country_list      | MU                 | Mauritius                                    |
+| country_list      | YT                 | Mayotte                                      |
+| country_list      | MX                 | Mexico                                       |
+| country_list      | FM                 | Micronesia, Federated States of              |
+| country_list      | MD                 | Moldova, Republic of                         |
+| country_list      | MC                 | Monaco                                       |
+| country_list      | MN                 | Mongolia                                     |
+| country_list      | ME                 | Montenegro                                   |
+| country_list      | MS                 | Montserrat                                   |
+| country_list      | MA                 | Morocco                                      |
+| country_list      | MZ                 | Mozambique                                   |
+| country_list      | MM                 | Myanmar                                      |
+| country_list      | NA                 | Namibia                                      |
+| country_list      | NR                 | Nauru                                        |
+| country_list      | NP                 | Nepal                                        |
+| country_list      | NL                 | Netherlands                                  |
+| country_list      | NC                 | New Caledonia                                |
+| country_list      | NZ                 | New Zealand                                  |
+| country_list      | NI                 | Nicaragua                                    |
+| country_list      | NE                 | Niger                                        |
+| country_list      | NG                 | Nigeria                                      |
+| country_list      | NU                 | Niue                                         |
+| country_list      | NF                 | Norfolk Island                               |
+| country_list      | MK                 | North Macedonia                              |
+| country_list      | MP                 | Northern Mariana Islands                     |
+| country_list      | NO                 | Norway                                       |
+| country_list      | OM                 | Oman                                         |
+| country_list      | PK                 | Pakistan                                     |
+| country_list      | PW                 | Palau                                        |
+| country_list      | PS                 | Palestine, State of                          |
+| country_list      | PA                 | Panama                                       |
+| country_list      | PG                 | Papua New Guinea                             |
+| country_list      | PY                 | Paraguay                                     |
+| country_list      | PE                 | Peru                                         |
+| country_list      | PH                 | Philippines                                  |
+| country_list      | PN                 | Pitcairn                                     |
+| country_list      | PL                 | Poland                                       |
+| country_list      | PT                 | Portugal                                     |
+| country_list      | PR                 | Puerto Rico                                  |
+| country_list      | QA                 | Qatar                                        |
+| country_list      | RE                 | Reunion                                      |
+| country_list      | RO                 | Romania                                      |
+| country_list      | RU                 | Russian Federation                           |
+| country_list      | RW                 | Rwanda                                       |
+| country_list      | BL                 | Saint Barthelemy                             |
+| country_list      | SH                 | Saint Helena, Ascension and Tristan da Cunha |
+| country_list      | KN                 | Saint Kitts and Nevis                        |
+| country_list      | LC                 | Saint Lucia                                  |
+| country_list      | MF                 | Saint Martin (French part)                   |
+| country_list      | PM                 | Saint Pierre and Miquelon                    |
+| country_list      | VC                 | Saint Vincent and the Grenadines             |
+| country_list      | WS                 | Samoa                                        |
+| country_list      | SM                 | San Marino                                   |
+| country_list      | ST                 | Sao Tome and Principe                        |
+| country_list      | SA                 | Saudi Arabia                                 |
+| country_list      | SN                 | Senegal                                      |
+| country_list      | RS                 | Serbia                                       |
+| country_list      | SC                 | Seychelles                                   |
+| country_list      | SL                 | Sierra Leone                                 |
+| country_list      | SG                 | Singapore                                    |
+| country_list      | SX                 | Sint Maarten (Dutch part)                    |
+| country_list      | SK                 | Slovakia                                     |
+| country_list      | SI                 | Slovenia                                     |
+| country_list      | SB                 | Solomon Islands                              |
+| country_list      | SO                 | Somalia                                      |
+| country_list      | ZA                 | South Africa                                 |
+| country_list      | GS                 | South Georgia and the South Sandwich Islands |
+| country_list      | SS                 | South Sudan                                  |
+| country_list      | ES                 | Spain                                        |
+| country_list      | LK                 | Sri Lanka                                    |
+| country_list      | SD                 | Sudan                                        |
+| country_list      | SR                 | Suriname                                     |
+| country_list      | SJ                 | Svalbard and Jan Mayen                       |
+| country_list      | SE                 | Sweden                                       |
+| country_list      | CH                 | Switzerland                                  |
+| country_list      | SY                 | Syrian Arab Republic                         |
+| country_list      | TW                 | Taiwan, Province of China                    |
+| country_list      | TJ                 | Tajikistan                                   |
+| country_list      | TZ                 | Tanzania, United Republic of                 |
+| country_list      | TH                 | Thailand                                     |
+| country_list      | TL                 | Timor-Leste                                  |
+| country_list      | TG                 | Togo                                         |
+| country_list      | TK                 | Tokelau                                      |
+| country_list      | TO                 | Tonga                                        |
+| country_list      | TT                 | Trinidad and Tobago                          |
+| country_list      | TN                 | Tunisia                                      |
+| country_list      | TR                 | Turkey                                       |
+| country_list      | TM                 | Turkmenistan                                 |
+| country_list      | TC                 | Turks and Caicos Islands                     |
+| country_list      | TV                 | Tuvalu                                       |
+| country_list      | UG                 | Uganda                                       |
+| country_list      | UA                 | Ukraine                                      |
+| country_list      | AE                 | United Arab Emirates                         |
+| country_list      | GB                 | United Kingdom                               |
+| country_list      | US                 | United States of America                     |
+| country_list      | UM                 | United States Minor Outlying Islands         |
+| country_list      | UY                 | Uruguay                                      |
+| country_list      | UZ                 | Uzbekistan                                   |
+| country_list      | VU                 | Vanuatu                                      |
+| country_list      | VE                 | Venezuela, Bolivarian Republic of            |
+| country_list      | VN                 | Viet Nam                                     |
+| country_list      | VG                 | Virgin Islands, British                      |
+| country_list      | VI                 | Virgin Islands, U.S.                         |
+| country_list      | WF                 | Wallis and Futuna                            |
+| country_list      | EH                 | Western Sahara                               |
+| country_list      | YE                 | Yemen                                        |
+| country_list      | ZM                 | Zambia                                       |
+| country_list      | ZW                 | Zimbabwe                                     |
+| habitat_type_list | agricultural_field | Agricultural field                           |
+| habitat_type_list | forest             | Forest                                       |
+| habitat_type_list | grassland          | Grassland                                    |
+| habitat_type_list | wetland            | Wetland                                      |
+| habitat_type_list | urban              | Urban / built environment                    |
+| habitat_type_list | desert             | Desert / arid                                |
+| habitat_type_list | freshwater_margin  | Freshwater margin (river/lake)               |
+| habitat_type_list | coastal            | Coastal                                      |
+| habitat_type_list | tundra             | Tundra / alpine                              |
+| habitat_type_list | other              | Other                                        |
+| soil_type_list    | sandy              | Sandy                                        |
+| soil_type_list    | clay               | Clay                                         |
+| soil_type_list    | silt               | Silt                                         |
+| soil_type_list    | loam               | Loam                                         |
+| soil_type_list    | peat               | Peat / organic-rich                          |
+| soil_type_list    | chalk              | Chalky / calcareous                          |
+| soil_type_list    | volcanic           | Volcanic                                     |
+| soil_type_list    | mixed              | Mixed / unknown                              |
+| soil_type_list    | other              | Other                                        |
+
+#settings
+
+| id_string         | style   | version   | default_language            |
+|-------------------+---------+-----------+-----------------------------|
+| wwm_soil_sampling |         | v1        | English (en) (english (en)) |

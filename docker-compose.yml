@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgis/postgis:15-3.3
+    container_name: wwm-db
+    environment:
+      POSTGRES_DB: wwm
+      POSTGRES_USER: wwm
+      POSTGRES_PASSWORD: wwm
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wwm -d wwm"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./wwm/backend
+      dockerfile: Dockerfile
+    container_name: wwm-backend
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - ./wwm/.env
+    environment:
+      DATABASE_URL: postgresql+psycopg2://wwm:wwm@db:5432/wwm
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./wwm/backend/app:/app/app
+      - ./wwm/backend/scripts:/app/scripts
+      - ./wwm/frontend:/app/frontend
+      - ./wwm/.env:/app/.env:ro
+
+volumes:
+  postgis_data:

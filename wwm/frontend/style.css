@@ -1,0 +1,140 @@
+:root {
+  --bg: #f3f6f4;
+  --panel: #ffffff;
+  --ink: #1f2937;
+  --line: #d8e2dc;
+  --ok: #1e8e3e;
+  --bad: #c62828;
+  --accent: #2c6e49;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+header {
+  min-height: 56px;
+  padding: 10px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+header p {
+  margin: 2px 0 0;
+  font-size: 0.9rem;
+  color: #5f6b7a;
+}
+
+.api-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.api-status.online .status-dot {
+  background: var(--ok);
+}
+
+.api-status.offline .status-dot {
+  background: var(--bad);
+}
+
+#controls {
+  min-height: 64px;
+  padding: 8px 16px;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 10px;
+}
+
+#controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+
+#controls select,
+#controls button {
+  min-width: 170px;
+  height: 34px;
+  border: 1px solid #c8d3cc;
+  border-radius: 6px;
+  padding: 4px 8px;
+  background: #fff;
+}
+
+#controls button {
+  min-width: 100px;
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  cursor: pointer;
+}
+
+#map {
+  height: calc(100vh - 120px);
+  width: 100%;
+}
+
+.empty-state {
+  position: absolute;
+  top: 128px;
+  left: 16px;
+  z-index: 500;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 720px) {
+  header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  #controls select,
+  #controls button {
+    min-width: 140px;
+  }
+}

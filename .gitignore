@@ -1,0 +1,13 @@
+# Environment secrets
+wwm/.env
+
+# System files
+.DS_Store
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+wwm/.env
