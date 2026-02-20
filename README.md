@@ -1,5 +1,14 @@
 # World Worm Map (WWM)
 
+## Project Attribution
+
+World Worm Map (WWM) is an open-science infrastructure project designed and developed by **Lucy Jimenez**.
+
+The platform was created for and in collaboration with **Worm Lab**:
+https://worm-lab.eu/
+
+WWM supports the Worm Lab mission of advancing nematode biodiversity research through reproducible, data-driven, and collaborative genomic workflows.
+
 WWM contains:
 - FastAPI backend (`wwm/backend`)
 - PostGIS database (via Docker Compose)
@@ -72,6 +81,20 @@ Expected response:
 {"ingested": 0, "duplicates": 0, "errors": 0}
 ```
 
+## Refresh Kobo data without losing seed examples
+
+Verify Kobo/database sync state:
+
+```bash
+curl -H "x-api-key: admin-key" http://localhost:8000/api/admin/verify/kobo-sync
+```
+
+Refresh Kobo-derived data only (keeps `data_source='seed'` samples):
+
+```bash
+curl -X POST -H "x-api-key: admin-key" http://localhost:8000/api/admin/kobo/refresh
+```
+
 ## Scheduler
 
 Ingestion runs daily inside the FastAPI process using APScheduler:
@@ -97,3 +120,14 @@ If backend cannot connect to the database during startup, reset local containers
 docker compose down -v
 docker compose up --build
 ```
+
+## Credits
+
+Project Lead & Architecture:
+Lucy Jimenez
+
+Developed for:
+Worm Lab — https://worm-lab.eu/
+
+Technology stack:
+FastAPI, PostgreSQL/PostGIS, Leaflet, KoboToolbox

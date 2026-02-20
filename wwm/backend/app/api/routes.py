@@ -1,15 +1,15 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Header
-from sqlalchemy import func, select, text
+from sqlalchemy import func, select, text, delete
 from sqlalchemy.orm import Session, selectinload
 
 from app.db.session import get_db
 from app.core.config import settings
-from app.models import Affiliation, GenomicRecord, Sample, SampleAffiliation, SampleSpecies
+from app.models import Affiliation, AuditLog, GenomicRecord, Sample, SampleAffiliation, SampleSpecies
 from app.schemas.schemas import ApprovalRequest, GenomicRecordOut, GenomicsCreate, SpeciesCreate
 from app.services.accession import validate_accession
 from app.services.audit import write_audit
 from app.services.auth import require_role
-from app.services.kobo_ingest import get_kobo_fields_debug, ingest_kobo_submissions
+from app.services.kobo_ingest import fetch_kobo_submissions, get_first, get_kobo_fields_debug, ingest_kobo_submissions
 from app.services.scheduler import scheduler
 
 router = APIRouter(prefix="/api", tags=["wwm"])
@@ -58,6 +58,7 @@ def list_samples(
     return [
         {
             "sample_id": sample.external_sample_id,
+            "data_source": sample.data_source,
             "status": sample.status,
             "site_name": sample.site_name or "Unknown site",
             "sampling_date": sample.sampling_date.isoformat()
@@ -212,3 +213,70 @@ def trigger_kobo_ingest(
 @router.get("/admin/kobo/fields")
 def debug_kobo_fields(_: str = Depends(require_role("admin"))):
     return get_kobo_fields_debug()
+
+
+@router.get("/admin/verify/kobo-sync")
+def verify_kobo_sync(_: str = Depends(require_role("admin")), db: Session = Depends(get_db)):
+    submissions = fetch_kobo_submissions()
+    kobo_sample_ids: list[str] = []
+    for submission in submissions:
+        sample_id = get_first(submission, "sample_id", "_uuid", "_id")
+        if sample_id is None:
+            continue
+        sample_id_str = str(sample_id).strip()
+        if sample_id_str and sample_id_str not in kobo_sample_ids:
+            kobo_sample_ids.append(sample_id_str)
+
+    db_kobo_sample_ids = db.execute(
+        select(Sample.external_sample_id).where(Sample.data_source == "kobo").order_by(Sample.external_sample_id.asc())
+    ).scalars().all()
+
+    db_count_total = db.execute(select(func.count(Sample.id))).scalar_one()
+    db_count_kobo = db.execute(select(func.count(Sample.id)).where(Sample.data_source == "kobo")).scalar_one()
+    db_count_seed = db.execute(select(func.count(Sample.id)).where(Sample.data_source == "seed")).scalar_one()
+
+    kobo_set = set(kobo_sample_ids)
+    db_kobo_set = set(db_kobo_sample_ids)
+
+    return {
+        "kobo_count": len(submissions),
+        "db_count_total": db_count_total,
+        "db_count_kobo": db_count_kobo,
+        "db_count_seed": db_count_seed,
+        "kobo_sample_ids": sorted(kobo_set),
+        "db_kobo_sample_ids": sorted(db_kobo_set),
+        "in_db_kobo_not_in_kobo": sorted(db_kobo_set - kobo_set),
+        "in_kobo_not_in_db": sorted(kobo_set - db_kobo_set),
+    }
+
+
+@router.post("/admin/kobo/refresh")
+def refresh_kobo_data(_: str = Depends(require_role("admin")), db: Session = Depends(get_db)):
+    submissions = fetch_kobo_submissions()
+    kobo_count_reported = len(submissions)
+
+    kobo_samples = db.execute(select(Sample).where(Sample.data_source == "kobo")).scalars().all()
+    deleted_kobo_samples = len(kobo_samples)
+    kobo_sample_db_ids = [str(sample.id) for sample in kobo_samples]
+
+    if kobo_sample_db_ids:
+        db.execute(
+            delete(AuditLog).where(
+                AuditLog.entity_type == "sample",
+                AuditLog.entity_id.in_(kobo_sample_db_ids),
+            )
+        )
+
+    for sample in kobo_samples:
+        db.delete(sample)
+    db.commit()
+
+    ingest_result = ingest_kobo_submissions(db, actor="admin_refresh")
+    seed_samples_remaining = db.execute(select(func.count(Sample.id)).where(Sample.data_source == "seed")).scalar_one()
+
+    return {
+        "deleted_kobo_samples": deleted_kobo_samples,
+        "reingested_kobo_samples": ingest_result.get("ingested", 0),
+        "seed_samples_remaining": seed_samples_remaining,
+        "kobo_count_reported": kobo_count_reported,
+    }

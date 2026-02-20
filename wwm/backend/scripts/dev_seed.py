@@ -37,6 +37,7 @@ def create_sample_if_missing(
     sample = Sample(
         external_sample_id=sample_id,
         submitted_by="demo@example.org",
+        data_source="seed",
         site_name=site_name,
         sampling_date=sampling_date,
         status=status,

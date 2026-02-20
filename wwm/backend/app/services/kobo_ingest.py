@@ -72,6 +72,23 @@ def _parse_date(value: Any) -> date | None:
     return None
 
 
+def _parse_datetime(value: Any) -> datetime | None:
+    if _is_empty(value):
+        return None
+    raw = str(value).strip().replace("Z", "")
+    for fmt in (
+        "%Y-%m-%dT%H:%M:%S.%f",
+        "%Y-%m-%dT%H:%M:%S",
+        "%Y-%m-%d %H:%M:%S",
+        "%Y-%m-%d",
+    ):
+        try:
+            return datetime.strptime(raw, fmt)
+        except ValueError:
+            continue
+    return None
+
+
 def _parse_geopoint(value: Any) -> tuple[float, float] | None:
     if value is None:
         return None
@@ -101,7 +118,7 @@ def _extract_submissions(payload: Any) -> list[dict[str, Any]]:
     return []
 
 
-def _fetch_kobo_submissions() -> list[dict[str, Any]]:
+def fetch_kobo_submissions() -> list[dict[str, Any]]:
     if not settings.kobo_asset_uid or not settings.kobo_token:
         return []
 
@@ -200,6 +217,9 @@ def _normalize_submission(submission: dict[str, Any]) -> dict[str, Any] | None:
     affiliation_slugs = _parse_affiliation_values(affiliation_raw)
     affiliation_other = _clean_string(get_first(submission, "affiliation_other"))
     country_value = _clean_string(get_first(submission, "country"))
+    kobo_uuid = _clean_string(get_first(submission, "_uuid"))
+    kobo_id = _clean_string(get_first(submission, "_id"))
+    kobo_submission_time = _parse_datetime(get_first(submission, "_submission_time"))
 
     return {
         "sample_id": str(sample_id_value).strip(),
@@ -210,6 +230,9 @@ def _normalize_submission(submission: dict[str, Any]) -> dict[str, Any] | None:
         "lat": geopoint[0],
         "lon": geopoint[1],
         "country": country_value,
+        "kobo_uuid": kobo_uuid,
+        "kobo_id": kobo_id,
+        "kobo_submission_time": kobo_submission_time,
         "habitat_type": _clean_string(get_first(submission, "habitat_type")),
         "soil_type": _clean_string(get_first(submission, "soil_type")),
         "soil_ph": _clean_string(get_first(submission, "soil_ph")),
@@ -232,7 +255,7 @@ def _normalize_submission(submission: dict[str, Any]) -> dict[str, Any] | None:
 
 
 def get_kobo_fields_debug() -> dict[str, Any]:
-    submissions = _fetch_kobo_submissions()
+    submissions = fetch_kobo_submissions()
     if not submissions:
         return {"count": 0, "keys": [], "mapped": {}}
 
@@ -252,7 +275,7 @@ def get_kobo_fields_debug() -> dict[str, Any]:
 
 
 def ingest_kobo_submissions(db: Session, actor: str = "system") -> dict[str, int]:
-    submissions = _fetch_kobo_submissions()
+    submissions = fetch_kobo_submissions()
     ingested = 0
     duplicates = 0
     errors = 0
@@ -286,6 +309,10 @@ def ingest_kobo_submissions(db: Session, actor: str = "system") -> dict[str, int
                     external_sample_id=ext_id,
                     submitted_by=normalized.get("collector_name"),
                     country=normalized.get("country"),
+                    data_source="kobo",
+                    kobo_uuid=normalized.get("kobo_uuid"),
+                    kobo_id=normalized.get("kobo_id"),
+                    kobo_submission_time=normalized.get("kobo_submission_time"),
                     site_name=normalized.get("site_name"),
                     sampling_date=normalized.get("sampling_date"),
                     status="pending",
