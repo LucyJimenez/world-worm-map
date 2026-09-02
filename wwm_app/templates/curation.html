@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WWM curation</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="panel">
+      <div class="section-heading">
+        <p class="eyebrow">World Worm Map</p>
+        <h1>Sample curation</h1>
+      </div>
+
+      <form method="POST" action="{{ url_for('submit_curation') }}">
+        <label for="sample_id">Sample ID</label>
+        <select id="sample_id" name="sample_id" required>
+          <option value="">Select sample</option>
+          {% for sample_id in sample_ids %}
+          <option value="{{ sample_id }}">{{ sample_id }}</option>
+          {% endfor %}
+        </select>
+
+        <label for="scientific_name">Scientific name</label>
+        <input id="scientific_name" type="text" name="scientific_name" placeholder="e.g. Meloidogyne incognita" required>
+
+        <label for="family">Family</label>
+        <input id="family" type="text" name="family" placeholder="e.g. Meloidogynidae">
+
+        <label for="rank">Taxonomic rank</label>
+        <select id="rank" name="rank">
+          <option value="species">Species</option>
+          <option value="genus">Genus</option>
+          <option value="family">Family</option>
+          <option value="unknown">Unknown</option>
+        </select>
+
+        <label for="identification_method">Identification method</label>
+        <select id="identification_method" name="identification_method">
+          <option value="">Not specified</option>
+          <option value="morphological">Morphological</option>
+          <option value="molecular">Molecular</option>
+          <option value="mixed">Morphological + molecular</option>
+          <option value="literature">Literature / legacy record</option>
+        </select>
+
+        <label for="gene_marker">Gene marker</label>
+        <input id="gene_marker" type="text" name="gene_marker" placeholder="e.g. 18S, ITS, COI">
+
+        <label for="genetic_sequence_id">Sequence ID</label>
+        <input id="genetic_sequence_id" type="text" name="genetic_sequence_id">
+
+        <label for="genbank_accession">GenBank accession</label>
+        <input id="genbank_accession" type="text" name="genbank_accession" placeholder="e.g. OP123456">
+
+        <label for="curator_name">Curator name</label>
+        <input id="curator_name" type="text" name="curator_name" required>
+
+        <button type="submit">Save curation</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

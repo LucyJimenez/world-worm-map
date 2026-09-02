@@ -1,0 +1,2222 @@
+<?xml version="1.0"?>
+<h:html xmlns="http://www.w3.org/2002/xforms" xmlns:h="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:jr="http://openrosa.org/javarosa" xmlns:orx="http://openrosa.org/xforms" xmlns:odk="http://www.opendatakit.org/xforms">
+  <h:head>
+    <h:title>Nematode Soil Sampling</h:title>
+    <model odk:xforms-version="1.0.0">
+      <itext>
+        <translation lang="English (en) (english (en))" default="true()">
+          <text id="iq6nb08-0">
+            <value>Worm~lab</value>
+          </text>
+          <text id="iq6nb08-1">
+            <value>Sanger Institute</value>
+          </text>
+          <text id="iq6nb08-2">
+            <value>CRC1211</value>
+          </text>
+          <text id="iq6nb08-3">
+            <value>Other</value>
+          </text>
+          <text id="country_list-0">
+            <value>Afghanistan</value>
+          </text>
+          <text id="country_list-1">
+            <value>Aland Islands</value>
+          </text>
+          <text id="country_list-2">
+            <value>Albania</value>
+          </text>
+          <text id="country_list-3">
+            <value>Algeria</value>
+          </text>
+          <text id="country_list-4">
+            <value>American Samoa</value>
+          </text>
+          <text id="country_list-5">
+            <value>Andorra</value>
+          </text>
+          <text id="country_list-6">
+            <value>Angola</value>
+          </text>
+          <text id="country_list-7">
+            <value>Anguilla</value>
+          </text>
+          <text id="country_list-8">
+            <value>Antarctica</value>
+          </text>
+          <text id="country_list-9">
+            <value>Antigua and Barbuda</value>
+          </text>
+          <text id="country_list-10">
+            <value>Argentina</value>
+          </text>
+          <text id="country_list-11">
+            <value>Armenia</value>
+          </text>
+          <text id="country_list-12">
+            <value>Aruba</value>
+          </text>
+          <text id="country_list-13">
+            <value>Australia</value>
+          </text>
+          <text id="country_list-14">
+            <value>Austria</value>
+          </text>
+          <text id="country_list-15">
+            <value>Azerbaijan</value>
+          </text>
+          <text id="country_list-16">
+            <value>Bahamas</value>
+          </text>
+          <text id="country_list-17">
+            <value>Bahrain</value>
+          </text>
+          <text id="country_list-18">
+            <value>Bangladesh</value>
+          </text>
+          <text id="country_list-19">
+            <value>Barbados</value>
+          </text>
+          <text id="country_list-20">
+            <value>Belarus</value>
+          </text>
+          <text id="country_list-21">
+            <value>Belgium</value>
+          </text>
+          <text id="country_list-22">
+            <value>Belize</value>
+          </text>
+          <text id="country_list-23">
+            <value>Benin</value>
+          </text>
+          <text id="country_list-24">
+            <value>Bermuda</value>
+          </text>
+          <text id="country_list-25">
+            <value>Bhutan</value>
+          </text>
+          <text id="country_list-26">
+            <value>Bolivia</value>
+          </text>
+          <text id="country_list-27">
+            <value>Bonaire, Sint Eustatius and Saba</value>
+          </text>
+          <text id="country_list-28">
+            <value>Bosnia and Herzegovina</value>
+          </text>
+          <text id="country_list-29">
+            <value>Botswana</value>
+          </text>
+          <text id="country_list-30">
+            <value>Bouvet Island</value>
+          </text>
+          <text id="country_list-31">
+            <value>Brazil</value>
+          </text>
+          <text id="country_list-32">
+            <value>British Indian Ocean Territory</value>
+          </text>
+          <text id="country_list-33">
+            <value>Brunei Darussalam</value>
+          </text>
+          <text id="country_list-34">
+            <value>Bulgaria</value>
+          </text>
+          <text id="country_list-35">
+            <value>Burkina Faso</value>
+          </text>
+          <text id="country_list-36">
+            <value>Burundi</value>
+          </text>
+          <text id="country_list-37">
+            <value>Cabo Verde</value>
+          </text>
+          <text id="country_list-38">
+            <value>Cambodia</value>
+          </text>
+          <text id="country_list-39">
+            <value>Cameroon</value>
+          </text>
+          <text id="country_list-40">
+            <value>Canada</value>
+          </text>
+          <text id="country_list-41">
+            <value>Cayman Islands</value>
+          </text>
+          <text id="country_list-42">
+            <value>Central African Republic</value>
+          </text>
+          <text id="country_list-43">
+            <value>Chad</value>
+          </text>
+          <text id="country_list-44">
+            <value>Chile</value>
+          </text>
+          <text id="country_list-45">
+            <value>China</value>
+          </text>
+          <text id="country_list-46">
+            <value>Christmas Island</value>
+          </text>
+          <text id="country_list-47">
+            <value>Cocos (Keeling) Islands</value>
+          </text>
+          <text id="country_list-48">
+            <value>Colombia</value>
+          </text>
+          <text id="country_list-49">
+            <value>Comoros</value>
+          </text>
+          <text id="country_list-50">
+            <value>Congo</value>
+          </text>
+          <text id="country_list-51">
+            <value>Congo, Democratic Republic of the</value>
+          </text>
+          <text id="country_list-52">
+            <value>Cook Islands</value>
+          </text>
+          <text id="country_list-53">
+            <value>Costa Rica</value>
+          </text>
+          <text id="country_list-54">
+            <value>Cote d'Ivoire</value>
+          </text>
+          <text id="country_list-55">
+            <value>Croatia</value>
+          </text>
+          <text id="country_list-56">
+            <value>Cuba</value>
+          </text>
+          <text id="country_list-57">
+            <value>Curacao</value>
+          </text>
+          <text id="country_list-58">
+            <value>Cyprus</value>
+          </text>
+          <text id="country_list-59">
+            <value>Czechia</value>
+          </text>
+          <text id="country_list-60">
+            <value>Denmark</value>
+          </text>
+          <text id="country_list-61">
+            <value>Djibouti</value>
+          </text>
+          <text id="country_list-62">
+            <value>Dominica</value>
+          </text>
+          <text id="country_list-63">
+            <value>Dominican Republic</value>
+          </text>
+          <text id="country_list-64">
+            <value>Ecuador</value>
+          </text>
+          <text id="country_list-65">
+            <value>Egypt</value>
+          </text>
+          <text id="country_list-66">
+            <value>El Salvador</value>
+          </text>
+          <text id="country_list-67">
+            <value>Equatorial Guinea</value>
+          </text>
+          <text id="country_list-68">
+            <value>Eritrea</value>
+          </text>
+          <text id="country_list-69">
+            <value>Estonia</value>
+          </text>
+          <text id="country_list-70">
+            <value>Eswatini</value>
+          </text>
+          <text id="country_list-71">
+            <value>Ethiopia</value>
+          </text>
+          <text id="country_list-72">
+            <value>Falkland Islands (Malvinas)</value>
+          </text>
+          <text id="country_list-73">
+            <value>Faroe Islands</value>
+          </text>
+          <text id="country_list-74">
+            <value>Fiji</value>
+          </text>
+          <text id="country_list-75">
+            <value>Finland</value>
+          </text>
+          <text id="country_list-76">
+            <value>France</value>
+          </text>
+          <text id="country_list-77">
+            <value>French Guiana</value>
+          </text>
+          <text id="country_list-78">
+            <value>French Polynesia</value>
+          </text>
+          <text id="country_list-79">
+            <value>French Southern Territories</value>
+          </text>
+          <text id="country_list-80">
+            <value>Gabon</value>
+          </text>
+          <text id="country_list-81">
+            <value>Gambia</value>
+          </text>
+          <text id="country_list-82">
+            <value>Georgia</value>
+          </text>
+          <text id="country_list-83">
+            <value>Germany</value>
+          </text>
+          <text id="country_list-84">
+            <value>Ghana</value>
+          </text>
+          <text id="country_list-85">
+            <value>Gibraltar</value>
+          </text>
+          <text id="country_list-86">
+            <value>Greece</value>
+          </text>
+          <text id="country_list-87">
+            <value>Greenland</value>
+          </text>
+          <text id="country_list-88">
+            <value>Grenada</value>
+          </text>
+          <text id="country_list-89">
+            <value>Guadeloupe</value>
+          </text>
+          <text id="country_list-90">
+            <value>Guam</value>
+          </text>
+          <text id="country_list-91">
+            <value>Guatemala</value>
+          </text>
+          <text id="country_list-92">
+            <value>Guernsey</value>
+          </text>
+          <text id="country_list-93">
+            <value>Guinea</value>
+          </text>
+          <text id="country_list-94">
+            <value>Guinea-Bissau</value>
+          </text>
+          <text id="country_list-95">
+            <value>Guyana</value>
+          </text>
+          <text id="country_list-96">
+            <value>Haiti</value>
+          </text>
+          <text id="country_list-97">
+            <value>Heard Island and McDonald Islands</value>
+          </text>
+          <text id="country_list-98">
+            <value>Holy See</value>
+          </text>
+          <text id="country_list-99">
+            <value>Honduras</value>
+          </text>
+          <text id="country_list-100">
+            <value>Hong Kong</value>
+          </text>
+          <text id="country_list-101">
+            <value>Hungary</value>
+          </text>
+          <text id="country_list-102">
+            <value>Iceland</value>
+          </text>
+          <text id="country_list-103">
+            <value>India</value>
+          </text>
+          <text id="country_list-104">
+            <value>Indonesia</value>
+          </text>
+          <text id="country_list-105">
+            <value>Iran, Islamic Republic of</value>
+          </text>
+          <text id="country_list-106">
+            <value>Iraq</value>
+          </text>
+          <text id="country_list-107">
+            <value>Ireland</value>
+          </text>
+          <text id="country_list-108">
+            <value>Isle of Man</value>
+          </text>
+          <text id="country_list-109">
+            <value>Israel</value>
+          </text>
+          <text id="country_list-110">
+            <value>Italy</value>
+          </text>
+          <text id="country_list-111">
+            <value>Jamaica</value>
+          </text>
+          <text id="country_list-112">
+            <value>Japan</value>
+          </text>
+          <text id="country_list-113">
+            <value>Jersey</value>
+          </text>
+          <text id="country_list-114">
+            <value>Jordan</value>
+          </text>
+          <text id="country_list-115">
+            <value>Kazakhstan</value>
+          </text>
+          <text id="country_list-116">
+            <value>Kenya</value>
+          </text>
+          <text id="country_list-117">
+            <value>Kiribati</value>
+          </text>
+          <text id="country_list-118">
+            <value>Korea, Democratic People's Republic of</value>
+          </text>
+          <text id="country_list-119">
+            <value>Korea, Republic of</value>
+          </text>
+          <text id="country_list-120">
+            <value>Kuwait</value>
+          </text>
+          <text id="country_list-121">
+            <value>Kyrgyzstan</value>
+          </text>
+          <text id="country_list-122">
+            <value>Lao People's Democratic Republic</value>
+          </text>
+          <text id="country_list-123">
+            <value>Latvia</value>
+          </text>
+          <text id="country_list-124">
+            <value>Lebanon</value>
+          </text>
+          <text id="country_list-125">
+            <value>Lesotho</value>
+          </text>
+          <text id="country_list-126">
+            <value>Liberia</value>
+          </text>
+          <text id="country_list-127">
+            <value>Libya</value>
+          </text>
+          <text id="country_list-128">
+            <value>Liechtenstein</value>
+          </text>
+          <text id="country_list-129">
+            <value>Lithuania</value>
+          </text>
+          <text id="country_list-130">
+            <value>Luxembourg</value>
+          </text>
+          <text id="country_list-131">
+            <value>Macao</value>
+          </text>
+          <text id="country_list-132">
+            <value>Madagascar</value>
+          </text>
+          <text id="country_list-133">
+            <value>Malawi</value>
+          </text>
+          <text id="country_list-134">
+            <value>Malaysia</value>
+          </text>
+          <text id="country_list-135">
+            <value>Maldives</value>
+          </text>
+          <text id="country_list-136">
+            <value>Mali</value>
+          </text>
+          <text id="country_list-137">
+            <value>Malta</value>
+          </text>
+          <text id="country_list-138">
+            <value>Marshall Islands</value>
+          </text>
+          <text id="country_list-139">
+            <value>Martinique</value>
+          </text>
+          <text id="country_list-140">
+            <value>Mauritania</value>
+          </text>
+          <text id="country_list-141">
+            <value>Mauritius</value>
+          </text>
+          <text id="country_list-142">
+            <value>Mayotte</value>
+          </text>
+          <text id="country_list-143">
+            <value>Mexico</value>
+          </text>
+          <text id="country_list-144">
+            <value>Micronesia, Federated States of</value>
+          </text>
+          <text id="country_list-145">
+            <value>Moldova, Republic of</value>
+          </text>
+          <text id="country_list-146">
+            <value>Monaco</value>
+          </text>
+          <text id="country_list-147">
+            <value>Mongolia</value>
+          </text>
+          <text id="country_list-148">
+            <value>Montenegro</value>
+          </text>
+          <text id="country_list-149">
+            <value>Montserrat</value>
+          </text>
+          <text id="country_list-150">
+            <value>Morocco</value>
+          </text>
+          <text id="country_list-151">
+            <value>Mozambique</value>
+          </text>
+          <text id="country_list-152">
+            <value>Myanmar</value>
+          </text>
+          <text id="country_list-153">
+            <value>Namibia</value>
+          </text>
+          <text id="country_list-154">
+            <value>Nauru</value>
+          </text>
+          <text id="country_list-155">
+            <value>Nepal</value>
+          </text>
+          <text id="country_list-156">
+            <value>Netherlands</value>
+          </text>
+          <text id="country_list-157">
+            <value>New Caledonia</value>
+          </text>
+          <text id="country_list-158">
+            <value>New Zealand</value>
+          </text>
+          <text id="country_list-159">
+            <value>Nicaragua</value>
+          </text>
+          <text id="country_list-160">
+            <value>Niger</value>
+          </text>
+          <text id="country_list-161">
+            <value>Nigeria</value>
+          </text>
+          <text id="country_list-162">
+            <value>Niue</value>
+          </text>
+          <text id="country_list-163">
+            <value>Norfolk Island</value>
+          </text>
+          <text id="country_list-164">
+            <value>North Macedonia</value>
+          </text>
+          <text id="country_list-165">
+            <value>Northern Mariana Islands</value>
+          </text>
+          <text id="country_list-166">
+            <value>Norway</value>
+          </text>
+          <text id="country_list-167">
+            <value>Oman</value>
+          </text>
+          <text id="country_list-168">
+            <value>Pakistan</value>
+          </text>
+          <text id="country_list-169">
+            <value>Palau</value>
+          </text>
+          <text id="country_list-170">
+            <value>Palestine, State of</value>
+          </text>
+          <text id="country_list-171">
+            <value>Panama</value>
+          </text>
+          <text id="country_list-172">
+            <value>Papua New Guinea</value>
+          </text>
+          <text id="country_list-173">
+            <value>Paraguay</value>
+          </text>
+          <text id="country_list-174">
+            <value>Peru</value>
+          </text>
+          <text id="country_list-175">
+            <value>Philippines</value>
+          </text>
+          <text id="country_list-176">
+            <value>Pitcairn</value>
+          </text>
+          <text id="country_list-177">
+            <value>Poland</value>
+          </text>
+          <text id="country_list-178">
+            <value>Portugal</value>
+          </text>
+          <text id="country_list-179">
+            <value>Puerto Rico</value>
+          </text>
+          <text id="country_list-180">
+            <value>Qatar</value>
+          </text>
+          <text id="country_list-181">
+            <value>Reunion</value>
+          </text>
+          <text id="country_list-182">
+            <value>Romania</value>
+          </text>
+          <text id="country_list-183">
+            <value>Russian Federation</value>
+          </text>
+          <text id="country_list-184">
+            <value>Rwanda</value>
+          </text>
+          <text id="country_list-185">
+            <value>Saint Barthelemy</value>
+          </text>
+          <text id="country_list-186">
+            <value>Saint Helena, Ascension and Tristan da Cunha</value>
+          </text>
+          <text id="country_list-187">
+            <value>Saint Kitts and Nevis</value>
+          </text>
+          <text id="country_list-188">
+            <value>Saint Lucia</value>
+          </text>
+          <text id="country_list-189">
+            <value>Saint Martin (French part)</value>
+          </text>
+          <text id="country_list-190">
+            <value>Saint Pierre and Miquelon</value>
+          </text>
+          <text id="country_list-191">
+            <value>Saint Vincent and the Grenadines</value>
+          </text>
+          <text id="country_list-192">
+            <value>Samoa</value>
+          </text>
+          <text id="country_list-193">
+            <value>San Marino</value>
+          </text>
+          <text id="country_list-194">
+            <value>Sao Tome and Principe</value>
+          </text>
+          <text id="country_list-195">
+            <value>Saudi Arabia</value>
+          </text>
+          <text id="country_list-196">
+            <value>Senegal</value>
+          </text>
+          <text id="country_list-197">
+            <value>Serbia</value>
+          </text>
+          <text id="country_list-198">
+            <value>Seychelles</value>
+          </text>
+          <text id="country_list-199">
+            <value>Sierra Leone</value>
+          </text>
+          <text id="country_list-200">
+            <value>Singapore</value>
+          </text>
+          <text id="country_list-201">
+            <value>Sint Maarten (Dutch part)</value>
+          </text>
+          <text id="country_list-202">
+            <value>Slovakia</value>
+          </text>
+          <text id="country_list-203">
+            <value>Slovenia</value>
+          </text>
+          <text id="country_list-204">
+            <value>Solomon Islands</value>
+          </text>
+          <text id="country_list-205">
+            <value>Somalia</value>
+          </text>
+          <text id="country_list-206">
+            <value>South Africa</value>
+          </text>
+          <text id="country_list-207">
+            <value>South Georgia and the South Sandwich Islands</value>
+          </text>
+          <text id="country_list-208">
+            <value>South Sudan</value>
+          </text>
+          <text id="country_list-209">
+            <value>Spain</value>
+          </text>
+          <text id="country_list-210">
+            <value>Sri Lanka</value>
+          </text>
+          <text id="country_list-211">
+            <value>Sudan</value>
+          </text>
+          <text id="country_list-212">
+            <value>Suriname</value>
+          </text>
+          <text id="country_list-213">
+            <value>Svalbard and Jan Mayen</value>
+          </text>
+          <text id="country_list-214">
+            <value>Sweden</value>
+          </text>
+          <text id="country_list-215">
+            <value>Switzerland</value>
+          </text>
+          <text id="country_list-216">
+            <value>Syrian Arab Republic</value>
+          </text>
+          <text id="country_list-217">
+            <value>Taiwan, Province of China</value>
+          </text>
+          <text id="country_list-218">
+            <value>Tajikistan</value>
+          </text>
+          <text id="country_list-219">
+            <value>Tanzania, United Republic of</value>
+          </text>
+          <text id="country_list-220">
+            <value>Thailand</value>
+          </text>
+          <text id="country_list-221">
+            <value>Timor-Leste</value>
+          </text>
+          <text id="country_list-222">
+            <value>Togo</value>
+          </text>
+          <text id="country_list-223">
+            <value>Tokelau</value>
+          </text>
+          <text id="country_list-224">
+            <value>Tonga</value>
+          </text>
+          <text id="country_list-225">
+            <value>Trinidad and Tobago</value>
+          </text>
+          <text id="country_list-226">
+            <value>Tunisia</value>
+          </text>
+          <text id="country_list-227">
+            <value>Turkey</value>
+          </text>
+          <text id="country_list-228">
+            <value>Turkmenistan</value>
+          </text>
+          <text id="country_list-229">
+            <value>Turks and Caicos Islands</value>
+          </text>
+          <text id="country_list-230">
+            <value>Tuvalu</value>
+          </text>
+          <text id="country_list-231">
+            <value>Uganda</value>
+          </text>
+          <text id="country_list-232">
+            <value>Ukraine</value>
+          </text>
+          <text id="country_list-233">
+            <value>United Arab Emirates</value>
+          </text>
+          <text id="country_list-234">
+            <value>United Kingdom</value>
+          </text>
+          <text id="country_list-235">
+            <value>United States of America</value>
+          </text>
+          <text id="country_list-236">
+            <value>United States Minor Outlying Islands</value>
+          </text>
+          <text id="country_list-237">
+            <value>Uruguay</value>
+          </text>
+          <text id="country_list-238">
+            <value>Uzbekistan</value>
+          </text>
+          <text id="country_list-239">
+            <value>Vanuatu</value>
+          </text>
+          <text id="country_list-240">
+            <value>Venezuela, Bolivarian Republic of</value>
+          </text>
+          <text id="country_list-241">
+            <value>Viet Nam</value>
+          </text>
+          <text id="country_list-242">
+            <value>Virgin Islands, British</value>
+          </text>
+          <text id="country_list-243">
+            <value>Virgin Islands, U.S.</value>
+          </text>
+          <text id="country_list-244">
+            <value>Wallis and Futuna</value>
+          </text>
+          <text id="country_list-245">
+            <value>Western Sahara</value>
+          </text>
+          <text id="country_list-246">
+            <value>Yemen</value>
+          </text>
+          <text id="country_list-247">
+            <value>Zambia</value>
+          </text>
+          <text id="country_list-248">
+            <value>Zimbabwe</value>
+          </text>
+          <text id="habitat_type_list-0">
+            <value>Agricultural field</value>
+          </text>
+          <text id="habitat_type_list-1">
+            <value>Forest</value>
+          </text>
+          <text id="habitat_type_list-2">
+            <value>Grassland</value>
+          </text>
+          <text id="habitat_type_list-3">
+            <value>Wetland</value>
+          </text>
+          <text id="habitat_type_list-4">
+            <value>Urban / built environment</value>
+          </text>
+          <text id="habitat_type_list-5">
+            <value>Desert / arid</value>
+          </text>
+          <text id="habitat_type_list-6">
+            <value>Freshwater margin (river/lake)</value>
+          </text>
+          <text id="habitat_type_list-7">
+            <value>Coastal</value>
+          </text>
+          <text id="habitat_type_list-8">
+            <value>Tundra / alpine</value>
+          </text>
+          <text id="habitat_type_list-9">
+            <value>Other</value>
+          </text>
+          <text id="pl9wk59-0">
+            <value>Sandy</value>
+          </text>
+          <text id="pl9wk59-1">
+            <value>Clay</value>
+          </text>
+          <text id="pl9wk59-2">
+            <value>Silt</value>
+          </text>
+          <text id="pl9wk59-3">
+            <value>Loam</value>
+          </text>
+          <text id="pl9wk59-4">
+            <value>Peat / organic-rich</value>
+          </text>
+          <text id="pl9wk59-5">
+            <value>Chalky / calcareous</value>
+          </text>
+          <text id="pl9wk59-6">
+            <value>Volcanic</value>
+          </text>
+          <text id="pl9wk59-7">
+            <value>Mixed / unknow</value>
+          </text>
+          <text id="pl9wk59-8">
+            <value>Other</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74:label">
+            <value>Section 1 – General Information</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name:label">
+            <value>Collector name</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name:hint">
+            <value>Name of the person collecting the sample.</value>
+            <value form="guidance">Philipp Schiffer</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation:label">
+            <value>Affiliation (research group / institute)</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation:hint">
+            <value>Enter the research group, laboratory, institute, or consortium responsible for this sampling. Use the official name.</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation_other:label">
+            <value>If "Other", please type the affiliation name</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id:label">
+            <value>Sample ID</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id:hint">
+            <value>Unique code for each sampling site. Use the format COUNTRY-YEAR-### (e.g., COL-2025-001).</value>
+            <value form="guidance">COL-2025-001</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date:label">
+            <value>Sampling Date</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date:hint">
+            <value>Date when the sample was taken.</value>
+            <value form="guidance">2025-09-12</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country:label">
+            <value>Country</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country:hint">
+            <value>Country where the sample was collected.</value>
+            <value form="guidance">Colombia</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes:label">
+            <value>Notes / Comments</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes:hint">
+            <value>Any relevant observations.</value>
+            <value form="guidance">"Moist soil near coffee plantation."</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24:label">
+            <value>Section 2 – Geolocation</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates:label">
+            <value>Sampling location</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates:hint">
+            <value>Record precise coordinates using the map or GPS device.</value>
+            <value form="guidance">WITH GPS: Click the crosshair icon and wait for coordinates. | NO GPS: Use the search bar or drag the map manually. | NOTE: Do not edit Altitude or Accuracy fields.</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name:label">
+            <value>Site name</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name:hint">
+            <value>Name or code for the sampling site.</value>
+            <value form="guidance">"San Pedro plot"</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69:label">
+            <value>Section 3 – Environmental &amp; Soil Data</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001:label">
+            <value>Habitat type</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001:hint">
+            <value>Select habitat (forest, agricultural, desert, grassland, etc.)</value>
+            <value form="guidance">Agricultural field</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_habitat_type:label">
+            <value>If "Other", please type the habitat type</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001:label">
+            <value>Soil type</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001:hint">
+            <value>Choose soil texture (sandy, clay, loamy, etc.)</value>
+            <value form="guidance">Sandy loam</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_soi:label">
+            <value>If "Other", please type the soil type</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph:label">
+            <value>Soil pH</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph:hint">
+            <value>Measure pH of the soil, 1 decimal precision (6.4).</value>
+            <value form="guidance">6.4</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info:label">
+            <value>Climate Data (auto-filled later)</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info:hint">
+            <value>This field will be completed automatically in the web app.</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77:label">
+            <value>Section 4 – Sampling Details</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm:label">
+            <value>Sampling Depth (cm)</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm:hint">
+            <value>Enter depth in centimeters.</value>
+            <value form="guidance">3</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples:label">
+            <value>Number of sub-samples</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples:hint">
+            <value>Number of sub-samples collected at this site.</value>
+            <value form="guidance">4</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample:label">
+            <value>Sample Photo</value>
+          </text>
+          <text id="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample:hint">
+            <value>Optional photo of the sample or environment.</value>
+          </text>
+        </translation>
+      </itext>
+      <instance>
+        <a8Rvu5KasYeAfsa2GfFppG id="wwm_soil_sampling">
+          <start/>
+          <end/>
+          <today/>
+          <group_ih2au74>
+            <collector_name/>
+            <affiliation/>
+            <affiliation_other/>
+            <sample_id/>
+            <sampling_date/>
+            <country/>
+            <notes/>
+          </group_ih2au74>
+          <group_kw39a24>
+            <gps_coordinates/>
+            <site_name/>
+          </group_kw39a24>
+          <group_jy8zq69>
+            <habitat_type_001/>
+            <If_Other_please_type_the_habitat_type/>
+            <soil_type_001_001/>
+            <If_Other_please_type_the_soi/>
+            <soil_ph/>
+            <climate_info/>
+          </group_jy8zq69>
+          <group_ga0dq77>
+            <depth_cm/>
+            <num_samples/>
+            <photo_sample/>
+          </group_ga0dq77>
+          <instance_uuid/>
+          <meta>
+            <instanceID/>
+          </meta>
+        </a8Rvu5KasYeAfsa2GfFppG>
+      </instance>
+      <instance id="iq6nb08">
+        <root>
+          <item>
+            <itextId>iq6nb08-0</itextId>
+            <name>worm_lab</name>
+            <order>0</order>
+          </item>
+          <item>
+            <itextId>iq6nb08-1</itextId>
+            <name>sanger_institute</name>
+            <order>1</order>
+          </item>
+          <item>
+            <itextId>iq6nb08-2</itextId>
+            <name>crc1211</name>
+            <order>2</order>
+          </item>
+          <item>
+            <itextId>iq6nb08-3</itextId>
+            <name>other</name>
+            <order>3</order>
+          </item>
+        </root>
+      </instance>
+      <instance id="country_list">
+        <root>
+          <item>
+            <itextId>country_list-0</itextId>
+            <name>AF</name>
+          </item>
+          <item>
+            <itextId>country_list-1</itextId>
+            <name>AX</name>
+          </item>
+          <item>
+            <itextId>country_list-2</itextId>
+            <name>AL</name>
+          </item>
+          <item>
+            <itextId>country_list-3</itextId>
+            <name>DZ</name>
+          </item>
+          <item>
+            <itextId>country_list-4</itextId>
+            <name>AS</name>
+          </item>
+          <item>
+            <itextId>country_list-5</itextId>
+            <name>AD</name>
+          </item>
+          <item>
+            <itextId>country_list-6</itextId>
+            <name>AO</name>
+          </item>
+          <item>
+            <itextId>country_list-7</itextId>
+            <name>AI</name>
+          </item>
+          <item>
+            <itextId>country_list-8</itextId>
+            <name>AQ</name>
+          </item>
+          <item>
+            <itextId>country_list-9</itextId>
+            <name>AG</name>
+          </item>
+          <item>
+            <itextId>country_list-10</itextId>
+            <name>AR</name>
+          </item>
+          <item>
+            <itextId>country_list-11</itextId>
+            <name>AM</name>
+          </item>
+          <item>
+            <itextId>country_list-12</itextId>
+            <name>AW</name>
+          </item>
+          <item>
+            <itextId>country_list-13</itextId>
+            <name>AU</name>
+          </item>
+          <item>
+            <itextId>country_list-14</itextId>
+            <name>AT</name>
+          </item>
+          <item>
+            <itextId>country_list-15</itextId>
+            <name>AZ</name>
+          </item>
+          <item>
+            <itextId>country_list-16</itextId>
+            <name>BS</name>
+          </item>
+          <item>
+            <itextId>country_list-17</itextId>
+            <name>BH</name>
+          </item>
+          <item>
+            <itextId>country_list-18</itextId>
+            <name>BD</name>
+          </item>
+          <item>
+            <itextId>country_list-19</itextId>
+            <name>BB</name>
+          </item>
+          <item>
+            <itextId>country_list-20</itextId>
+            <name>BY</name>
+          </item>
+          <item>
+            <itextId>country_list-21</itextId>
+            <name>BE</name>
+          </item>
+          <item>
+            <itextId>country_list-22</itextId>
+            <name>BZ</name>
+          </item>
+          <item>
+            <itextId>country_list-23</itextId>
+            <name>BJ</name>
+          </item>
+          <item>
+            <itextId>country_list-24</itextId>
+            <name>BM</name>
+          </item>
+          <item>
+            <itextId>country_list-25</itextId>
+            <name>BT</name>
+          </item>
+          <item>
+            <itextId>country_list-26</itextId>
+            <name>BO</name>
+          </item>
+          <item>
+            <itextId>country_list-27</itextId>
+            <name>BQ</name>
+          </item>
+          <item>
+            <itextId>country_list-28</itextId>
+            <name>BA</name>
+          </item>
+          <item>
+            <itextId>country_list-29</itextId>
+            <name>BW</name>
+          </item>
+          <item>
+            <itextId>country_list-30</itextId>
+            <name>BV</name>
+          </item>
+          <item>
+            <itextId>country_list-31</itextId>
+            <name>BR</name>
+          </item>
+          <item>
+            <itextId>country_list-32</itextId>
+            <name>IO</name>
+          </item>
+          <item>
+            <itextId>country_list-33</itextId>
+            <name>BN</name>
+          </item>
+          <item>
+            <itextId>country_list-34</itextId>
+            <name>BG</name>
+          </item>
+          <item>
+            <itextId>country_list-35</itextId>
+            <name>BF</name>
+          </item>
+          <item>
+            <itextId>country_list-36</itextId>
+            <name>BI</name>
+          </item>
+          <item>
+            <itextId>country_list-37</itextId>
+            <name>CV</name>
+          </item>
+          <item>
+            <itextId>country_list-38</itextId>
+            <name>KH</name>
+          </item>
+          <item>
+            <itextId>country_list-39</itextId>
+            <name>CM</name>
+          </item>
+          <item>
+            <itextId>country_list-40</itextId>
+            <name>CA</name>
+          </item>
+          <item>
+            <itextId>country_list-41</itextId>
+            <name>KY</name>
+          </item>
+          <item>
+            <itextId>country_list-42</itextId>
+            <name>CF</name>
+          </item>
+          <item>
+            <itextId>country_list-43</itextId>
+            <name>TD</name>
+          </item>
+          <item>
+            <itextId>country_list-44</itextId>
+            <name>CL</name>
+          </item>
+          <item>
+            <itextId>country_list-45</itextId>
+            <name>CN</name>
+          </item>
+          <item>
+            <itextId>country_list-46</itextId>
+            <name>CX</name>
+          </item>
+          <item>
+            <itextId>country_list-47</itextId>
+            <name>CC</name>
+          </item>
+          <item>
+            <itextId>country_list-48</itextId>
+            <name>CO</name>
+          </item>
+          <item>
+            <itextId>country_list-49</itextId>
+            <name>KM</name>
+          </item>
+          <item>
+            <itextId>country_list-50</itextId>
+            <name>CG</name>
+          </item>
+          <item>
+            <itextId>country_list-51</itextId>
+            <name>CD</name>
+          </item>
+          <item>
+            <itextId>country_list-52</itextId>
+            <name>CK</name>
+          </item>
+          <item>
+            <itextId>country_list-53</itextId>
+            <name>CR</name>
+          </item>
+          <item>
+            <itextId>country_list-54</itextId>
+            <name>CI</name>
+          </item>
+          <item>
+            <itextId>country_list-55</itextId>
+            <name>HR</name>
+          </item>
+          <item>
+            <itextId>country_list-56</itextId>
+            <name>CU</name>
+          </item>
+          <item>
+            <itextId>country_list-57</itextId>
+            <name>CW</name>
+          </item>
+          <item>
+            <itextId>country_list-58</itextId>
+            <name>CY</name>
+          </item>
+          <item>
+            <itextId>country_list-59</itextId>
+            <name>CZ</name>
+          </item>
+          <item>
+            <itextId>country_list-60</itextId>
+            <name>DK</name>
+          </item>
+          <item>
+            <itextId>country_list-61</itextId>
+            <name>DJ</name>
+          </item>
+          <item>
+            <itextId>country_list-62</itextId>
+            <name>DM</name>
+          </item>
+          <item>
+            <itextId>country_list-63</itextId>
+            <name>DO</name>
+          </item>
+          <item>
+            <itextId>country_list-64</itextId>
+            <name>EC</name>
+          </item>
+          <item>
+            <itextId>country_list-65</itextId>
+            <name>EG</name>
+          </item>
+          <item>
+            <itextId>country_list-66</itextId>
+            <name>SV</name>
+          </item>
+          <item>
+            <itextId>country_list-67</itextId>
+            <name>GQ</name>
+          </item>
+          <item>
+            <itextId>country_list-68</itextId>
+            <name>ER</name>
+          </item>
+          <item>
+            <itextId>country_list-69</itextId>
+            <name>EE</name>
+          </item>
+          <item>
+            <itextId>country_list-70</itextId>
+            <name>SZ</name>
+          </item>
+          <item>
+            <itextId>country_list-71</itextId>
+            <name>ET</name>
+          </item>
+          <item>
+            <itextId>country_list-72</itextId>
+            <name>FK</name>
+          </item>
+          <item>
+            <itextId>country_list-73</itextId>
+            <name>FO</name>
+          </item>
+          <item>
+            <itextId>country_list-74</itextId>
+            <name>FJ</name>
+          </item>
+          <item>
+            <itextId>country_list-75</itextId>
+            <name>FI</name>
+          </item>
+          <item>
+            <itextId>country_list-76</itextId>
+            <name>FR</name>
+          </item>
+          <item>
+            <itextId>country_list-77</itextId>
+            <name>GF</name>
+          </item>
+          <item>
+            <itextId>country_list-78</itextId>
+            <name>PF</name>
+          </item>
+          <item>
+            <itextId>country_list-79</itextId>
+            <name>TF</name>
+          </item>
+          <item>
+            <itextId>country_list-80</itextId>
+            <name>GA</name>
+          </item>
+          <item>
+            <itextId>country_list-81</itextId>
+            <name>GM</name>
+          </item>
+          <item>
+            <itextId>country_list-82</itextId>
+            <name>GE</name>
+          </item>
+          <item>
+            <itextId>country_list-83</itextId>
+            <name>DE</name>
+          </item>
+          <item>
+            <itextId>country_list-84</itextId>
+            <name>GH</name>
+          </item>
+          <item>
+            <itextId>country_list-85</itextId>
+            <name>GI</name>
+          </item>
+          <item>
+            <itextId>country_list-86</itextId>
+            <name>GR</name>
+          </item>
+          <item>
+            <itextId>country_list-87</itextId>
+            <name>GL</name>
+          </item>
+          <item>
+            <itextId>country_list-88</itextId>
+            <name>GD</name>
+          </item>
+          <item>
+            <itextId>country_list-89</itextId>
+            <name>GP</name>
+          </item>
+          <item>
+            <itextId>country_list-90</itextId>
+            <name>GU</name>
+          </item>
+          <item>
+            <itextId>country_list-91</itextId>
+            <name>GT</name>
+          </item>
+          <item>
+            <itextId>country_list-92</itextId>
+            <name>GG</name>
+          </item>
+          <item>
+            <itextId>country_list-93</itextId>
+            <name>GN</name>
+          </item>
+          <item>
+            <itextId>country_list-94</itextId>
+            <name>GW</name>
+          </item>
+          <item>
+            <itextId>country_list-95</itextId>
+            <name>GY</name>
+          </item>
+          <item>
+            <itextId>country_list-96</itextId>
+            <name>HT</name>
+          </item>
+          <item>
+            <itextId>country_list-97</itextId>
+            <name>HM</name>
+          </item>
+          <item>
+            <itextId>country_list-98</itextId>
+            <name>VA</name>
+          </item>
+          <item>
+            <itextId>country_list-99</itextId>
+            <name>HN</name>
+          </item>
+          <item>
+            <itextId>country_list-100</itextId>
+            <name>HK</name>
+          </item>
+          <item>
+            <itextId>country_list-101</itextId>
+            <name>HU</name>
+          </item>
+          <item>
+            <itextId>country_list-102</itextId>
+            <name>IS</name>
+          </item>
+          <item>
+            <itextId>country_list-103</itextId>
+            <name>IN</name>
+          </item>
+          <item>
+            <itextId>country_list-104</itextId>
+            <name>ID</name>
+          </item>
+          <item>
+            <itextId>country_list-105</itextId>
+            <name>IR</name>
+          </item>
+          <item>
+            <itextId>country_list-106</itextId>
+            <name>IQ</name>
+          </item>
+          <item>
+            <itextId>country_list-107</itextId>
+            <name>IE</name>
+          </item>
+          <item>
+            <itextId>country_list-108</itextId>
+            <name>IM</name>
+          </item>
+          <item>
+            <itextId>country_list-109</itextId>
+            <name>IL</name>
+          </item>
+          <item>
+            <itextId>country_list-110</itextId>
+            <name>IT</name>
+          </item>
+          <item>
+            <itextId>country_list-111</itextId>
+            <name>JM</name>
+          </item>
+          <item>
+            <itextId>country_list-112</itextId>
+            <name>JP</name>
+          </item>
+          <item>
+            <itextId>country_list-113</itextId>
+            <name>JE</name>
+          </item>
+          <item>
+            <itextId>country_list-114</itextId>
+            <name>JO</name>
+          </item>
+          <item>
+            <itextId>country_list-115</itextId>
+            <name>KZ</name>
+          </item>
+          <item>
+            <itextId>country_list-116</itextId>
+            <name>KE</name>
+          </item>
+          <item>
+            <itextId>country_list-117</itextId>
+            <name>KI</name>
+          </item>
+          <item>
+            <itextId>country_list-118</itextId>
+            <name>KP</name>
+          </item>
+          <item>
+            <itextId>country_list-119</itextId>
+            <name>KR</name>
+          </item>
+          <item>
+            <itextId>country_list-120</itextId>
+            <name>KW</name>
+          </item>
+          <item>
+            <itextId>country_list-121</itextId>
+            <name>KG</name>
+          </item>
+          <item>
+            <itextId>country_list-122</itextId>
+            <name>LA</name>
+          </item>
+          <item>
+            <itextId>country_list-123</itextId>
+            <name>LV</name>
+          </item>
+          <item>
+            <itextId>country_list-124</itextId>
+            <name>LB</name>
+          </item>
+          <item>
+            <itextId>country_list-125</itextId>
+            <name>LS</name>
+          </item>
+          <item>
+            <itextId>country_list-126</itextId>
+            <name>LR</name>
+          </item>
+          <item>
+            <itextId>country_list-127</itextId>
+            <name>LY</name>
+          </item>
+          <item>
+            <itextId>country_list-128</itextId>
+            <name>LI</name>
+          </item>
+          <item>
+            <itextId>country_list-129</itextId>
+            <name>LT</name>
+          </item>
+          <item>
+            <itextId>country_list-130</itextId>
+            <name>LU</name>
+          </item>
+          <item>
+            <itextId>country_list-131</itextId>
+            <name>MO</name>
+          </item>
+          <item>
+            <itextId>country_list-132</itextId>
+            <name>MG</name>
+          </item>
+          <item>
+            <itextId>country_list-133</itextId>
+            <name>MW</name>
+          </item>
+          <item>
+            <itextId>country_list-134</itextId>
+            <name>MY</name>
+          </item>
+          <item>
+            <itextId>country_list-135</itextId>
+            <name>MV</name>
+          </item>
+          <item>
+            <itextId>country_list-136</itextId>
+            <name>ML</name>
+          </item>
+          <item>
+            <itextId>country_list-137</itextId>
+            <name>MT</name>
+          </item>
+          <item>
+            <itextId>country_list-138</itextId>
+            <name>MH</name>
+          </item>
+          <item>
+            <itextId>country_list-139</itextId>
+            <name>MQ</name>
+          </item>
+          <item>
+            <itextId>country_list-140</itextId>
+            <name>MR</name>
+          </item>
+          <item>
+            <itextId>country_list-141</itextId>
+            <name>MU</name>
+          </item>
+          <item>
+            <itextId>country_list-142</itextId>
+            <name>YT</name>
+          </item>
+          <item>
+            <itextId>country_list-143</itextId>
+            <name>MX</name>
+          </item>
+          <item>
+            <itextId>country_list-144</itextId>
+            <name>FM</name>
+          </item>
+          <item>
+            <itextId>country_list-145</itextId>
+            <name>MD</name>
+          </item>
+          <item>
+            <itextId>country_list-146</itextId>
+            <name>MC</name>
+          </item>
+          <item>
+            <itextId>country_list-147</itextId>
+            <name>MN</name>
+          </item>
+          <item>
+            <itextId>country_list-148</itextId>
+            <name>ME</name>
+          </item>
+          <item>
+            <itextId>country_list-149</itextId>
+            <name>MS</name>
+          </item>
+          <item>
+            <itextId>country_list-150</itextId>
+            <name>MA</name>
+          </item>
+          <item>
+            <itextId>country_list-151</itextId>
+            <name>MZ</name>
+          </item>
+          <item>
+            <itextId>country_list-152</itextId>
+            <name>MM</name>
+          </item>
+          <item>
+            <itextId>country_list-153</itextId>
+            <name>NA</name>
+          </item>
+          <item>
+            <itextId>country_list-154</itextId>
+            <name>NR</name>
+          </item>
+          <item>
+            <itextId>country_list-155</itextId>
+            <name>NP</name>
+          </item>
+          <item>
+            <itextId>country_list-156</itextId>
+            <name>NL</name>
+          </item>
+          <item>
+            <itextId>country_list-157</itextId>
+            <name>NC</name>
+          </item>
+          <item>
+            <itextId>country_list-158</itextId>
+            <name>NZ</name>
+          </item>
+          <item>
+            <itextId>country_list-159</itextId>
+            <name>NI</name>
+          </item>
+          <item>
+            <itextId>country_list-160</itextId>
+            <name>NE</name>
+          </item>
+          <item>
+            <itextId>country_list-161</itextId>
+            <name>NG</name>
+          </item>
+          <item>
+            <itextId>country_list-162</itextId>
+            <name>NU</name>
+          </item>
+          <item>
+            <itextId>country_list-163</itextId>
+            <name>NF</name>
+          </item>
+          <item>
+            <itextId>country_list-164</itextId>
+            <name>MK</name>
+          </item>
+          <item>
+            <itextId>country_list-165</itextId>
+            <name>MP</name>
+          </item>
+          <item>
+            <itextId>country_list-166</itextId>
+            <name>NO</name>
+          </item>
+          <item>
+            <itextId>country_list-167</itextId>
+            <name>OM</name>
+          </item>
+          <item>
+            <itextId>country_list-168</itextId>
+            <name>PK</name>
+          </item>
+          <item>
+            <itextId>country_list-169</itextId>
+            <name>PW</name>
+          </item>
+          <item>
+            <itextId>country_list-170</itextId>
+            <name>PS</name>
+          </item>
+          <item>
+            <itextId>country_list-171</itextId>
+            <name>PA</name>
+          </item>
+          <item>
+            <itextId>country_list-172</itextId>
+            <name>PG</name>
+          </item>
+          <item>
+            <itextId>country_list-173</itextId>
+            <name>PY</name>
+          </item>
+          <item>
+            <itextId>country_list-174</itextId>
+            <name>PE</name>
+          </item>
+          <item>
+            <itextId>country_list-175</itextId>
+            <name>PH</name>
+          </item>
+          <item>
+            <itextId>country_list-176</itextId>
+            <name>PN</name>
+          </item>
+          <item>
+            <itextId>country_list-177</itextId>
+            <name>PL</name>
+          </item>
+          <item>
+            <itextId>country_list-178</itextId>
+            <name>PT</name>
+          </item>
+          <item>
+            <itextId>country_list-179</itextId>
+            <name>PR</name>
+          </item>
+          <item>
+            <itextId>country_list-180</itextId>
+            <name>QA</name>
+          </item>
+          <item>
+            <itextId>country_list-181</itextId>
+            <name>RE</name>
+          </item>
+          <item>
+            <itextId>country_list-182</itextId>
+            <name>RO</name>
+          </item>
+          <item>
+            <itextId>country_list-183</itextId>
+            <name>RU</name>
+          </item>
+          <item>
+            <itextId>country_list-184</itextId>
+            <name>RW</name>
+          </item>
+          <item>
+            <itextId>country_list-185</itextId>
+            <name>BL</name>
+          </item>
+          <item>
+            <itextId>country_list-186</itextId>
+            <name>SH</name>
+          </item>
+          <item>
+            <itextId>country_list-187</itextId>
+            <name>KN</name>
+          </item>
+          <item>
+            <itextId>country_list-188</itextId>
+            <name>LC</name>
+          </item>
+          <item>
+            <itextId>country_list-189</itextId>
+            <name>MF</name>
+          </item>
+          <item>
+            <itextId>country_list-190</itextId>
+            <name>PM</name>
+          </item>
+          <item>
+            <itextId>country_list-191</itextId>
+            <name>VC</name>
+          </item>
+          <item>
+            <itextId>country_list-192</itextId>
+            <name>WS</name>
+          </item>
+          <item>
+            <itextId>country_list-193</itextId>
+            <name>SM</name>
+          </item>
+          <item>
+            <itextId>country_list-194</itextId>
+            <name>ST</name>
+          </item>
+          <item>
+            <itextId>country_list-195</itextId>
+            <name>SA</name>
+          </item>
+          <item>
+            <itextId>country_list-196</itextId>
+            <name>SN</name>
+          </item>
+          <item>
+            <itextId>country_list-197</itextId>
+            <name>RS</name>
+          </item>
+          <item>
+            <itextId>country_list-198</itextId>
+            <name>SC</name>
+          </item>
+          <item>
+            <itextId>country_list-199</itextId>
+            <name>SL</name>
+          </item>
+          <item>
+            <itextId>country_list-200</itextId>
+            <name>SG</name>
+          </item>
+          <item>
+            <itextId>country_list-201</itextId>
+            <name>SX</name>
+          </item>
+          <item>
+            <itextId>country_list-202</itextId>
+            <name>SK</name>
+          </item>
+          <item>
+            <itextId>country_list-203</itextId>
+            <name>SI</name>
+          </item>
+          <item>
+            <itextId>country_list-204</itextId>
+            <name>SB</name>
+          </item>
+          <item>
+            <itextId>country_list-205</itextId>
+            <name>SO</name>
+          </item>
+          <item>
+            <itextId>country_list-206</itextId>
+            <name>ZA</name>
+          </item>
+          <item>
+            <itextId>country_list-207</itextId>
+            <name>GS</name>
+          </item>
+          <item>
+            <itextId>country_list-208</itextId>
+            <name>SS</name>
+          </item>
+          <item>
+            <itextId>country_list-209</itextId>
+            <name>ES</name>
+          </item>
+          <item>
+            <itextId>country_list-210</itextId>
+            <name>LK</name>
+          </item>
+          <item>
+            <itextId>country_list-211</itextId>
+            <name>SD</name>
+          </item>
+          <item>
+            <itextId>country_list-212</itextId>
+            <name>SR</name>
+          </item>
+          <item>
+            <itextId>country_list-213</itextId>
+            <name>SJ</name>
+          </item>
+          <item>
+            <itextId>country_list-214</itextId>
+            <name>SE</name>
+          </item>
+          <item>
+            <itextId>country_list-215</itextId>
+            <name>CH</name>
+          </item>
+          <item>
+            <itextId>country_list-216</itextId>
+            <name>SY</name>
+          </item>
+          <item>
+            <itextId>country_list-217</itextId>
+            <name>TW</name>
+          </item>
+          <item>
+            <itextId>country_list-218</itextId>
+            <name>TJ</name>
+          </item>
+          <item>
+            <itextId>country_list-219</itextId>
+            <name>TZ</name>
+          </item>
+          <item>
+            <itextId>country_list-220</itextId>
+            <name>TH</name>
+          </item>
+          <item>
+            <itextId>country_list-221</itextId>
+            <name>TL</name>
+          </item>
+          <item>
+            <itextId>country_list-222</itextId>
+            <name>TG</name>
+          </item>
+          <item>
+            <itextId>country_list-223</itextId>
+            <name>TK</name>
+          </item>
+          <item>
+            <itextId>country_list-224</itextId>
+            <name>TO</name>
+          </item>
+          <item>
+            <itextId>country_list-225</itextId>
+            <name>TT</name>
+          </item>
+          <item>
+            <itextId>country_list-226</itextId>
+            <name>TN</name>
+          </item>
+          <item>
+            <itextId>country_list-227</itextId>
+            <name>TR</name>
+          </item>
+          <item>
+            <itextId>country_list-228</itextId>
+            <name>TM</name>
+          </item>
+          <item>
+            <itextId>country_list-229</itextId>
+            <name>TC</name>
+          </item>
+          <item>
+            <itextId>country_list-230</itextId>
+            <name>TV</name>
+          </item>
+          <item>
+            <itextId>country_list-231</itextId>
+            <name>UG</name>
+          </item>
+          <item>
+            <itextId>country_list-232</itextId>
+            <name>UA</name>
+          </item>
+          <item>
+            <itextId>country_list-233</itextId>
+            <name>AE</name>
+          </item>
+          <item>
+            <itextId>country_list-234</itextId>
+            <name>GB</name>
+          </item>
+          <item>
+            <itextId>country_list-235</itextId>
+            <name>US</name>
+          </item>
+          <item>
+            <itextId>country_list-236</itextId>
+            <name>UM</name>
+          </item>
+          <item>
+            <itextId>country_list-237</itextId>
+            <name>UY</name>
+          </item>
+          <item>
+            <itextId>country_list-238</itextId>
+            <name>UZ</name>
+          </item>
+          <item>
+            <itextId>country_list-239</itextId>
+            <name>VU</name>
+          </item>
+          <item>
+            <itextId>country_list-240</itextId>
+            <name>VE</name>
+          </item>
+          <item>
+            <itextId>country_list-241</itextId>
+            <name>VN</name>
+          </item>
+          <item>
+            <itextId>country_list-242</itextId>
+            <name>VG</name>
+          </item>
+          <item>
+            <itextId>country_list-243</itextId>
+            <name>VI</name>
+          </item>
+          <item>
+            <itextId>country_list-244</itextId>
+            <name>WF</name>
+          </item>
+          <item>
+            <itextId>country_list-245</itextId>
+            <name>EH</name>
+          </item>
+          <item>
+            <itextId>country_list-246</itextId>
+            <name>YE</name>
+          </item>
+          <item>
+            <itextId>country_list-247</itextId>
+            <name>ZM</name>
+          </item>
+          <item>
+            <itextId>country_list-248</itextId>
+            <name>ZW</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="habitat_type_list">
+        <root>
+          <item>
+            <itextId>habitat_type_list-0</itextId>
+            <name>agricultural_field</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-1</itextId>
+            <name>forest</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-2</itextId>
+            <name>grassland</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-3</itextId>
+            <name>wetland</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-4</itextId>
+            <name>urban</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-5</itextId>
+            <name>desert</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-6</itextId>
+            <name>freshwater_margin</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-7</itextId>
+            <name>coastal</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-8</itextId>
+            <name>tundra</name>
+          </item>
+          <item>
+            <itextId>habitat_type_list-9</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <instance id="pl9wk59">
+        <root>
+          <item>
+            <itextId>pl9wk59-0</itextId>
+            <name>sandy</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-1</itextId>
+            <name>clay</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-2</itextId>
+            <name>silt</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-3</itextId>
+            <name>loam</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-4</itextId>
+            <name>peat</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-5</itextId>
+            <name>chalk</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-6</itextId>
+            <name>volcanic</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-7</itextId>
+            <name>mixed</name>
+          </item>
+          <item>
+            <itextId>pl9wk59-8</itextId>
+            <name>other</name>
+          </item>
+        </root>
+      </instance>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/start" jr:preload="timestamp" type="dateTime" jr:preloadParams="start"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/end" jr:preload="timestamp" type="dateTime" jr:preloadParams="end"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/today" jr:preload="date" type="date" jr:preloadParams="today"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name" type="string" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation" type="string" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation_other" type="string" relevant="selected( /a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation , 'other')" required="true()" constraint=". != ''"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id" type="string" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date" type="date" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country" type="string" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes" type="string" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates" type="geopoint" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name" type="string" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001" type="string" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_habitat_type" type="string" relevant=" /a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001  = 'other'" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001" type="string" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_soi" type="string" relevant="selected( /a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001 , 'other')" required="true()" constraint=". != ''"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph" type="decimal" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info" readonly="true()" type="string" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm" type="int" required="false()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples" type="int" required="true()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample" type="binary" required="false()" orx:max-pixels="1024"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/instance_uuid" type="string" required="false()" calculate="uuid()"/>
+      <bind nodeset="/a8Rvu5KasYeAfsa2GfFppG/meta/instanceID" type="string" readonly="true()" jr:preload="uid"/>
+    </model>
+  </h:head>
+  <h:body>
+    <group ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74">
+      <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74:label')"/>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/collector_name:hint')"/>
+      </input>
+      <select appearance="minimal" ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation:hint')"/>
+        <itemset nodeset="instance('iq6nb08')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation_other">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/affiliation_other:label')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sample_id:hint')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/sampling_date:hint')"/>
+      </input>
+      <select1 appearance="autocomplete" ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/country:hint')"/>
+        <itemset nodeset="instance('country_list')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input appearance="multiline" ref="/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ih2au74/notes:hint')"/>
+      </input>
+    </group>
+    <group ref="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24">
+      <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24:label')"/>
+      <input appearance="maps" ref="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/gps_coordinates:hint')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_kw39a24/site_name:hint')"/>
+      </input>
+    </group>
+    <group ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69">
+      <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69:label')"/>
+      <select1 appearance="quick" ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/habitat_type_001:hint')"/>
+        <itemset nodeset="instance('habitat_type_list')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select1>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_habitat_type">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_habitat_type:label')"/>
+      </input>
+      <select appearance="horizontal" ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_type_001_001:hint')"/>
+        <itemset nodeset="instance('pl9wk59')/root/item">
+          <value ref="name"/>
+          <label ref="jr:itext(itextId)"/>
+        </itemset>
+      </select>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_soi">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/If_Other_please_type_the_soi:label')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/soil_ph:hint')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_jy8zq69/climate_info:hint')"/>
+      </input>
+    </group>
+    <group ref="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77">
+      <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77:label')"/>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/depth_cm:hint')"/>
+      </input>
+      <input ref="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/num_samples:hint')"/>
+      </input>
+      <upload mediatype="image/*" ref="/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample">
+        <label ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample:label')"/>
+        <hint ref="jr:itext('/a8Rvu5KasYeAfsa2GfFppG/group_ga0dq77/photo_sample:hint')"/>
+      </upload>
+    </group>
+  </h:body>
+</h:html>

@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: world-worm-map
+    runtime: python
+    rootDir: wwm_app
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: KOBO_BASE_URL
+        value: https://eu.kobotoolbox.org
+      - key: KOBO_ASSET_UID
+        sync: false
+      - key: KOBO_TOKEN
+        sync: false
+      - key: KOBO_PAGE_SIZE
+        value: "1000"
+      - key: WHAT3WORDS_API_KEY
+        sync: false
+      - key: WHAT3WORDS_LANGUAGE
+        value: en

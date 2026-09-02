@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WWM admin</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="panel">
+      <p class="eyebrow">World Worm Map</p>
+      <h1>Admin actions</h1>
+
+      <section class="admin-block">
+        <h2>KoboToolbox</h2>
+        <p id="kobo-status" class="small-text">Import submissions from the configured KoboToolbox form.</p>
+        <button id="ingest-kobo" type="button">Import Kobo samples</button>
+      </section>
+
+      <section class="admin-block">
+        <h2>What3Words</h2>
+        <p id="w3w-status" class="small-text">Validate 3-word addresses entered by users in Kobo.</p>
+        <button id="validate-w3w" type="button">Validate entered W3W</button>
+      </section>
+
+      <div class="actions">
+        <a class="button-link secondary" href="/">Open map</a>
+        <a class="button-link secondary" href="/curation">Open curation</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.querySelector("#ingest-kobo").addEventListener("click", async () => {
+      const status = document.querySelector("#kobo-status");
+      status.textContent = "Importing from KoboToolbox...";
+      try {
+        const response = await fetch("/api/admin/ingest/kobo", { method: "POST" });
+        const payload = await response.json();
+        if (!response.ok) {
+          status.textContent = payload.message || "Kobo import is not configured.";
+          return;
+        }
+        status.textContent =
+          `Fetched ${payload.fetched}; ${payload.created} new, ${payload.updated} updated.`;
+      } catch (error) {
+        status.textContent = "Could not import from KoboToolbox.";
+      }
+    });
+
+    document.querySelector("#validate-w3w").addEventListener("click", async () => {
+      const status = document.querySelector("#w3w-status");
+      status.textContent = "Validating entered What3Words addresses...";
+      try {
+        const response = await fetch("/api/admin/validate/what3words", { method: "POST" });
+        const payload = await response.json();
+        if (!response.ok) {
+          status.textContent = payload.message || "What3Words is not configured.";
+          return;
+        }
+        status.textContent =
+          `Validated ${payload.validated} entries; ${payload.skipped} skipped.`;
+      } catch (error) {
+        status.textContent = "Could not reach the What3Words validation endpoint.";
+      }
+    });
+  </script>
+</body>
+</html>

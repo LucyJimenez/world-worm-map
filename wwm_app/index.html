@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>World Worm Map</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="map-page">
+  <aside class="sidebar">
+    <div class="brand-block">
+      <p class="eyebrow">World Worm Map</p>
+      <h1>Nematode occurrences</h1>
+    </div>
+
+    <form id="filters" class="filter-form">
+      <label for="species">Species</label>
+      <select id="species" name="species">
+        <option value="">All species</option>
+      </select>
+
+      <label for="family">Family</label>
+      <select id="family" name="family">
+        <option value="">All families</option>
+      </select>
+
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="">Any status</option>
+        <option value="pending">Pending</option>
+        <option value="validated">Validated</option>
+        <option value="rejected">Rejected</option>
+      </select>
+
+      <label for="country">Country code</label>
+      <input id="country" name="country" type="text" placeholder="e.g. CH, CO">
+
+      <label for="habitat">Habitat</label>
+      <select id="habitat" name="habitat">
+        <option value="">Any habitat</option>
+        <option value="agricultural_field">Agricultural field</option>
+        <option value="forest">Forest</option>
+        <option value="grassland">Grassland</option>
+        <option value="wetland">Wetland</option>
+        <option value="urban">Urban</option>
+        <option value="desert">Desert</option>
+        <option value="freshwater_margin">Freshwater margin</option>
+        <option value="coastal">Coastal</option>
+        <option value="tundra">Tundra</option>
+        <option value="other">Other</option>
+      </select>
+
+      <label for="soil_type">Soil type</label>
+      <select id="soil_type" name="soil_type">
+        <option value="">Any soil</option>
+        <option value="sandy">Sandy</option>
+        <option value="clay">Clay</option>
+        <option value="silt">Silt</option>
+        <option value="loam">Loam</option>
+        <option value="peat">Peat</option>
+        <option value="chalk">Chalk</option>
+        <option value="volcanic">Volcanic</option>
+        <option value="mixed">Mixed</option>
+        <option value="other">Other</option>
+      </select>
+
+      <div class="field-grid">
+        <label>
+          pH min
+          <input name="ph_min" type="number" step="0.1" min="0" max="14">
+        </label>
+        <label>
+          pH max
+          <input name="ph_max" type="number" step="0.1" min="0" max="14">
+        </label>
+      </div>
+
+      <div class="actions">
+        <button type="submit">Apply</button>
+        <button id="reset" type="button" class="secondary">Reset</button>
+      </div>
+    </form>
+
+    <section class="summary" aria-live="polite">
+      <h2>Current view</h2>
+      <dl>
+        <div><dt>Samples</dt><dd id="sample-count">0</dd></div>
+        <div><dt>pH range</dt><dd id="ph-range">-</dd></div>
+        <div><dt>Habitats</dt><dd id="habitats">-</dd></div>
+      </dl>
+    </section>
+
+    <a class="button-link secondary" href="/admin">Admin</a>
+  </aside>
+
+  <main class="map-wrap">
+    <div id="map"></div>
+  </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script>
+    const map = L.map("map", { worldCopyJump: true }).setView([18, 0], 2);
+    const markerLayer = L.layerGroup().addTo(map);
+    const filters = document.querySelector("#filters");
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(map);
+
+    function statusColor(status) {
+      if (status === "validated") return "#197278";
+      if (status === "rejected") return "#9d0208";
+      return "#9a6a00";
+    }
+
+    function htmlList(values) {
+      return values && values.length ? values.join(", ") : "Not recorded";
+    }
+
+    function popupHtml(sample) {
+      const habitat = sample.habitat_other || sample.habitat_type || "Not recorded";
+      const soil = sample.soil_type_other || htmlList(sample.soil_types);
+      const w3wHref = sample.what3words_map_url || `https://w3w.co/${sample.what3words || ""}`;
+      const what3words = sample.what3words
+        ? `<a href="${w3wHref}" target="_blank" rel="noreferrer">///${sample.what3words}</a>`
+        : "Not entered";
+      const w3wMeta = sample.what3words
+        ? `${sample.what3words_source || "manual"}, ${sample.what3words_status || "unvalidated"}`
+        : "Not recorded";
+      return `
+        <strong>${sample.sample_id}</strong><br>
+        ${sample.site_name || "Unnamed site"} ${sample.country ? `(${sample.country})` : ""}<br>
+        <span>Status: ${sample.status}</span><br>
+        <span>Species: ${htmlList(sample.species)}</span><br>
+        <span>Families: ${htmlList(sample.families)}</span><br>
+        <hr>
+        <span>What3Words: ${what3words}</span><br>
+        <span>W3W status: ${w3wMeta}</span><br>
+        <span>Nearest place: ${sample.what3words_nearest_place || "Not recorded"}</span><br>
+        <span>Coordinates: ${sample.lat.toFixed(5)}, ${sample.lon.toFixed(5)}</span><br>
+        <hr>
+        <span>Habitat: ${habitat}</span><br>
+        <span>Soil: ${soil}</span><br>
+        <span>pH: ${sample.soil_ph ?? "Not recorded"}</span><br>
+        <span>Depth: ${sample.depth_cm ?? "Not recorded"} cm</span><br>
+        <span>Sub-samples: ${sample.num_samples ?? "Not recorded"}</span>
+      `;
+    }
+
+    function paramsFromForm() {
+      const params = new URLSearchParams();
+      new FormData(filters).forEach((value, key) => {
+        if (String(value).trim()) params.set(key, String(value).trim());
+      });
+      return params;
+    }
+
+    async function loadOptions(endpoint, selectId) {
+      const select = document.querySelector(selectId);
+      const current = select.value;
+      const values = await fetch(endpoint).then(response => response.json());
+      values.forEach(value => {
+        if (![...select.options].some(option => option.value === value)) {
+          const option = document.createElement("option");
+          option.value = value;
+          option.textContent = value;
+          select.append(option);
+        }
+      });
+      select.value = current;
+    }
+
+    async function loadSamples() {
+      const params = paramsFromForm();
+      const [samples, summary] = await Promise.all([
+        fetch(`/api/samples?${params}`).then(response => response.json()),
+        fetch(`/api/environment-summary?${params}`).then(response => response.json())
+      ]);
+
+      markerLayer.clearLayers();
+      const bounds = [];
+      samples.forEach(sample => {
+        const marker = L.circleMarker([sample.lat, sample.lon], {
+          radius: sample.status === "validated" ? 7 : 6,
+          color: statusColor(sample.status),
+          fillColor: statusColor(sample.status),
+          fillOpacity: sample.status === "pending" ? 0.45 : 0.78,
+          weight: 2
+        });
+        marker.bindPopup(popupHtml(sample));
+        marker.addTo(markerLayer);
+        bounds.push([sample.lat, sample.lon]);
+      });
+
+      if (bounds.length) {
+        map.fitBounds(bounds, { maxZoom: 8, padding: [24, 24] });
+      }
+
+      document.querySelector("#sample-count").textContent = summary.sample_count;
+      document.querySelector("#ph-range").textContent =
+        summary.ph_min === null ? "-" : `${summary.ph_min} - ${summary.ph_max}`;
+      document.querySelector("#habitats").textContent =
+        summary.habitats.length ? summary.habitats.join(", ") : "-";
+    }
+
+    filters.addEventListener("submit", event => {
+      event.preventDefault();
+      loadSamples();
+    });
+
+    document.querySelector("#reset").addEventListener("click", () => {
+      filters.reset();
+      loadSamples();
+    });
+
+    Promise.all([
+      loadOptions("/api/species", "#species"),
+      loadOptions("/api/families", "#family")
+    ]).then(loadSamples);
+  </script>
+</body>
+</html>

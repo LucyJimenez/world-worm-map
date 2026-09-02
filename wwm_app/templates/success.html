@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Curation saved</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page-shell">
+    <section class="panel">
+      <p class="eyebrow">Saved</p>
+      <h1>Curation data submitted</h1>
+      <p>
+        Sample <strong>{{ entry.sample_id }}</strong> now includes
+        <strong>{{ entry.scientific_name }}</strong>
+        {% if entry.family %} in <strong>{{ entry.family }}</strong>{% endif %}.
+      </p>
+      <div class="actions">
+        <a class="button-link" href="{{ url_for('curation_form') }}">Back to curation</a>
+        <a class="button-link secondary" href="{{ url_for('index') }}">Open map</a>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
