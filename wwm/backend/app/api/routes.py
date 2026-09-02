@@ -11,6 +11,7 @@ from app.services.audit import write_audit
 from app.services.auth import require_role
 from app.services.kobo_ingest import fetch_kobo_submissions, get_first, get_kobo_fields_debug, ingest_kobo_submissions
 from app.services.scheduler import scheduler
+from app.services.what3words import convert_to_coordinates, what3words_map_url
 
 router = APIRouter(prefix="/api", tags=["wwm"])
 
@@ -70,6 +71,12 @@ def list_samples(
             "tube_id": (sample.raw_payload or {}).get("tube_id"),
             "soil_ph": (sample.raw_payload or {}).get("soil_ph"),
             "depth_cm": (sample.raw_payload or {}).get("depth_cm"),
+            "what3words": sample.what3words,
+            "what3words_status": sample.what3words_status,
+            "what3words_source": sample.what3words_source,
+            "what3words_map_url": sample.what3words_map_url or what3words_map_url(sample.what3words),
+            "what3words_nearest_place": sample.what3words_nearest_place,
+            "what3words_country": sample.what3words_country,
             "lat": sample.latitude,
             "lon": sample.longitude,
             "affiliations": [sa.affiliation.name for sa in sample.affiliations],
@@ -213,6 +220,42 @@ def trigger_kobo_ingest(
 @router.get("/admin/kobo/fields")
 def debug_kobo_fields(_: str = Depends(require_role("admin"))):
     return get_kobo_fields_debug()
+
+
+@router.post("/admin/what3words/validate")
+def validate_what3words(_: str = Depends(require_role("admin")), db: Session = Depends(get_db)):
+    if not settings.what3words_api_key:
+        raise HTTPException(status_code=400, detail="WHAT3WORDS_API_KEY is not configured")
+
+    samples = db.execute(
+        select(Sample).where(Sample.what3words.is_not(None)).order_by(Sample.submitted_at.desc())
+    ).scalars().all()
+    validated = 0
+    failed = 0
+
+    for sample in samples:
+        try:
+            resolution = convert_to_coordinates(sample.what3words)
+            if not resolution:
+                failed += 1
+                sample.what3words_status = "validation_failed"
+                continue
+
+            sample.what3words = resolution["words"]
+            sample.what3words_status = "validated"
+            sample.what3words_language = resolution.get("language")
+            sample.what3words_map_url = resolution.get("map_url")
+            sample.what3words_nearest_place = resolution.get("nearest_place")
+            sample.what3words_country = resolution.get("country")
+            sample.what3words_square = resolution.get("square")
+            sample.what3words_updated_at = resolution.get("updated_at")
+            validated += 1
+        except Exception:
+            failed += 1
+            sample.what3words_status = "validation_failed"
+
+    db.commit()
+    return {"checked": len(samples), "validated": validated, "failed": failed}
 
 
 @router.get("/admin/verify/kobo-sync")

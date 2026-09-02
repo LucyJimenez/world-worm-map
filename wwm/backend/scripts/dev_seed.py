@@ -29,6 +29,7 @@ def create_sample_if_missing(
     status: str,
     affiliations: list[str],
     species_names: list[str],
+    what3words: str | None = None,
 ):
     sample = db.execute(select(Sample).where(Sample.external_sample_id == sample_id)).scalar_one_or_none()
     if sample:
@@ -38,6 +39,10 @@ def create_sample_if_missing(
         external_sample_id=sample_id,
         submitted_by="demo@example.org",
         data_source="seed",
+        what3words=what3words,
+        what3words_source="seed" if what3words else None,
+        what3words_status="demo" if what3words else None,
+        what3words_map_url=f"https://what3words.com/{what3words}" if what3words else None,
         site_name=site_name,
         sampling_date=sampling_date,
         status=status,
@@ -83,6 +88,7 @@ def main():
             status="pending",
             affiliations=["worm_lab"],
             species_names=["unidentified"],
+            what3words="filled.count.soap",
         )
         create_sample_if_missing(
             db,
@@ -94,6 +100,7 @@ def main():
             status="validated",
             affiliations=["sanger_institute"],
             species_names=["Caenorhabditis elegans"],
+            what3words="index.home.raft",
         )
         create_sample_if_missing(
             db,
@@ -105,6 +112,7 @@ def main():
             status="pending",
             affiliations=["worm_lab", "sanger_institute"],
             species_names=["unidentified", "Pristionchus pacificus"],
+            what3words="pays.vibes.daring",
         )
 
         db.commit()

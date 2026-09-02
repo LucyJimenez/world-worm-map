@@ -54,6 +54,10 @@ Required keys in `wwm/.env`:
 - `INGEST_HOUR`
 - `CORS_ORIGINS`
 
+Optional keys:
+- `WHAT3WORDS_API_KEY` validates manually entered Kobo What3Words values and stores nearest place/country metadata.
+- `WHAT3WORDS_LANGUAGE` defaults to `en`.
+
 ## Verify API and sample loading
 
 Check samples:
@@ -93,6 +97,12 @@ Refresh Kobo-derived data only (keeps `data_source='seed'` samples):
 
 ```bash
 curl -X POST -H "x-api-key: admin-key" http://localhost:8000/api/admin/kobo/refresh
+```
+
+Validate imported What3Words values when `WHAT3WORDS_API_KEY` is configured:
+
+```bash
+curl -X POST -H "x-api-key: admin-key" http://localhost:8000/api/admin/what3words/validate
 ```
 
 ## Scheduler

@@ -89,12 +89,19 @@ function renderMarkers(samples) {
       : "n/a";
     const affiliationOther = sample.affiliation_other ? ` (${sample.affiliation_other})` : "";
     const species = Array.isArray(sample.species) ? sample.species.join(", ") : "n/a";
+    const what3words = sample.what3words
+      ? `<a href="${sample.what3words_map_url || `https://what3words.com/${sample.what3words}`}" target="_blank" rel="noopener">///${sample.what3words}</a>`
+      : "n/a";
+    const what3wordsDetail = sample.what3words_nearest_place
+      ? ` (${sample.what3words_nearest_place})`
+      : "";
 
     const marker = L.circleMarker(coords, styleForStatus(sample.status));
     marker.bindPopup(
       `<strong>sample_id:</strong> ${sample.sample_id || "n/a"}<br>` +
         `<strong>status:</strong> ${sample.status || "n/a"}<br>` +
         `<strong>site_name:</strong> ${sample.site_name || "n/a"}<br>` +
+        `<strong>what3words:</strong> ${what3words}${what3wordsDetail}<br>` +
         `<strong>sampling_date:</strong> ${sample.sampling_date || "n/a"}<br>` +
         `<strong>collector_name:</strong> ${sample.collector_name || "n/a"}<br>` +
         `<strong>tube_id:</strong> ${sample.tube_id || "n/a"}<br>` +
