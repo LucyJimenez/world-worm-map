@@ -8,7 +8,7 @@ This document maps Kobo fields to backend ingestion normalization and storage.
 |---|---|---|---|
 | `group_ih2au74/sample_id` | `samples.external_sample_id` | Yes | Preferred identifier. Fallback: `_uuid`, then `_id` if missing. |
 | `group_kw39a24/site_name` | `samples.site_name` | No | Trim quotes/whitespace. Default `"Unknown site"` when empty. |
-| `group_kw39a24/what3words` | `samples.what3words` + What3Words metadata columns | No | Users enter the three words manually. Accepted formats include `filled.count.soap`, `///filled.count.soap`, or `filled count soap`. Stored normalized as `filled.count.soap`; validated/enriched when `WHAT3WORDS_API_KEY` is configured. |
+| `group_kw39a24/what3words` | `samples.what3words` + What3Words metadata columns | No | Users enter the three words manually. The form asks Atacama Desert users to select the exact 3 m square in the what3words app/map and paste the address as `///word.word.word`. Stored normalized without slashes; validated/enriched when `WHAT3WORDS_API_KEY` is configured. |
 | `group_ih2au74/collector_name` | `samples.submitted_by` | Yes | Trim string. Fallback key: `collector`. |
 | `group_ih2au74/sampling_date` | `samples.sampling_date` | Yes | Parse date. Fallback: `_submission_time` date component. |
 | `group_kw39a24/gps_coordinates` | `samples.latitude`, `samples.longitude`, `samples.geom` | Yes | Parse geopoint from `"lat lon alt acc"` or `"lat,lon,alt,acc"`; store PostGIS Point SRID 4326. |
