@@ -7,6 +7,8 @@ for the World Worm Map (WWM) platform.
 
 - SMART_PLAN.md — project roadmap and phased goals
 - ARCHITECTURE.md — system architecture and data flow
+- INSTALLATION.md — local setup, environment variables, and MVP runbook
+- MVP_HANDOFF.md — current MVP status, to-do list, and implementation recommendations
 - API.md — backend API contract
 - SCHEMA.md — database schema
 - KOBO_SCHEMA.md — KoboToolbox ingestion field contract
@@ -15,4 +17,3 @@ for the World Worm Map (WWM) platform.
 - DATA_SOURCES.md — environmental overlay sources and licenses
 
 The main project run instructions are available in the repository README.
-
