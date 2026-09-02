@@ -12,7 +12,7 @@ The current system is ready as a demonstrable MVP. It provides a working end-to-
 4. The API exposes samples, species, affiliations, curation endpoints, and admin ingestion utilities.
 5. The frontend displays sampling sites on an interactive global map.
 
-The What3Words integration has been implemented as an additional optional Kobo field. This preserves KoboToolbox as the data-entry source of truth and avoids introducing a second submission workflow at the MVP stage.
+The What3Words integration has been implemented and deployed as an additional optional Kobo field. This preserves KoboToolbox as the data-entry source of truth and avoids introducing a second submission workflow at the MVP stage.
 
 ## Scientific Data Model Priorities
 
@@ -29,9 +29,6 @@ Priority data dimensions:
 
 ## Immediate To-Do List
 
-- Merge the `what3words-kobo-field` pull request after review.
-- Confirm the final Kobo form field name is `what3words`.
-- Upload the updated XLSForm to KoboToolbox and run a test submission.
 - Add the production Kobo asset UID and token to `wwm/.env` or the deployment secret manager.
 - Add a What3Words API key only if validation/enrichment is required.
 - Run Kobo ingestion and confirm the new field appears in `/api/samples`.
