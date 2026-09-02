@@ -28,6 +28,14 @@ The MVP focuses on these scientific questions:
 - Daily scheduled ingestion using APScheduler.
 - Optional What3Words support as a Kobo-entered location reference.
 
+## Data Entry
+
+New sampling records are entered through the KoboToolbox form associated with the WWM project:
+
+[WWM KoboToolbox project and collection form](https://eu.kobotoolbox.org/#/forms/a8Rvu5KasYeAfsa2GfFppG/summary)
+
+From this page, use the KoboToolbox **Collect data** panel to open or copy the active web form link for field users. This keeps KoboToolbox as the source of truth for new submissions while WWM handles ingestion, normalization, curation, and spatial visualization.
+
 ## What3Words Integration
 
 The current design keeps KoboToolbox as the source of truth for data entry. What3Words is implemented as an optional field inside the Kobo workflow, not as a separate public data-entry path.

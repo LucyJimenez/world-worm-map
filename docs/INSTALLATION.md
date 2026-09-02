@@ -86,6 +86,14 @@ The seeded records include example What3Words values so the map popup can demons
 
 ## Import KoboToolbox Submissions
 
+New samples should be entered in KoboToolbox:
+
+```text
+https://eu.kobotoolbox.org/#/forms/a8Rvu5KasYeAfsa2GfFppG/summary
+```
+
+Use the KoboToolbox Collect data panel to open or copy the active web form link for field users.
+
 Trigger manual ingestion:
 
 ```bash
