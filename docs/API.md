@@ -11,10 +11,10 @@ GET /api/affiliations
 ## Admin
 
 POST /api/admin/ingest/kobo
+POST /api/admin/what3words/validate
 
 ## Governance
 
 POST /api/samples/{sample_id}/approve
 POST /api/samples/{sample_id}/species
 POST /api/species/{sample_species_id}/genomics
-

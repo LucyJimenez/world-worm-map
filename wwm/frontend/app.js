@@ -1,20 +1,24 @@
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000/api" : "/api";
 
-const map = L.map("map").setView([20, 0], 2);
+const map = L.map("map", { worldCopyJump: true }).setView([18, 0], 2);
+const markerLayer = L.layerGroup().addTo(map);
+const filters = document.getElementById("filters");
+const speciesFilter = document.getElementById("species-filter");
+const familyFilter = document.getElementById("family-filter");
+const affiliationFilter = document.getElementById("affiliation-filter");
+const resetBtn = document.getElementById("reset-btn");
+const apiStatus = document.getElementById("apiStatus");
+const statusText = apiStatus ? apiStatus.querySelector(".status-text") : null;
+const emptyState = document.getElementById("emptyState");
+const sampleCount = document.getElementById("sample-count");
+const phRange = document.getElementById("ph-range");
+const habitats = document.getElementById("habitats");
+const affiliationNamesBySlug = {};
+
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: "&copy; OpenStreetMap contributors",
 }).addTo(map);
-
-const markerLayer = L.layerGroup().addTo(map);
-const speciesFilter = document.getElementById("species-filter");
-const statusFilter = document.getElementById("status-filter");
-const affiliationFilter = document.getElementById("affiliation-filter");
-const refreshBtn = document.getElementById("refresh-btn");
-const apiStatus = document.getElementById("apiStatus");
-const statusText = apiStatus ? apiStatus.querySelector(".status-text") : null;
-const emptyState = document.getElementById("emptyState");
-const affiliationNamesBySlug = {};
 
 function setApiStatus(isOnline) {
   if (!apiStatus) return;
@@ -30,14 +34,10 @@ function setEmptyState(show) {
   emptyState.classList.toggle("hidden", !show);
 }
 
-function styleForStatus(status) {
-  if (status === "validated") {
-    return { radius: 7, color: "#1e8e3e", fillColor: "#1e8e3e", fillOpacity: 0.95, weight: 2 };
-  }
-  if (status === "rejected") {
-    return { radius: 7, color: "#c62828", fillColor: "#c62828", fillOpacity: 0.95, weight: 2 };
-  }
-  return { radius: 7, color: "#ef6c00", fillColor: "#ef6c00", fillOpacity: 0.9, weight: 2 };
+function statusColor(status) {
+  if (status === "validated") return "#197278";
+  if (status === "rejected") return "#9d0208";
+  return "#9a6a00";
 }
 
 async function getJson(url) {
@@ -48,114 +48,152 @@ async function getJson(url) {
   return response.json();
 }
 
-function buildSampleQuery() {
-  const params = new URLSearchParams();
-  if (speciesFilter.value) params.set("species", speciesFilter.value);
-  if (statusFilter.value) params.set("status", statusFilter.value);
-  if (affiliationFilter.value) params.set("affiliation", affiliationFilter.value);
-  const query = params.toString();
-  return query ? `?${query}` : "";
+function htmlList(values) {
+  return values && values.length ? values.join(", ") : "Not recorded";
 }
 
-function getLatLon(sample) {
-  const lat = Number(sample.lat);
-  const lon = Number(sample.lon);
-  if (Number.isFinite(lat) && Number.isFinite(lon)) {
-    return [lat, lon];
-  }
-  if (
-    sample.geometry &&
-    Array.isArray(sample.geometry.coordinates) &&
-    sample.geometry.coordinates.length >= 2
-  ) {
-    return [sample.geometry.coordinates[1], sample.geometry.coordinates[0]];
-  }
-  return null;
+function paramsFromForm() {
+  const params = new URLSearchParams();
+  new FormData(filters).forEach((value, key) => {
+    const cleaned = String(value).trim();
+    if (cleaned) params.set(key, cleaned);
+  });
+  return params;
+}
+
+function popupHtml(sample) {
+  const habitat = sample.habitat_other || sample.habitat_type || "Not recorded";
+  const soil = sample.soil_type_other || htmlList(sample.soil_types);
+  const w3wHref = sample.what3words_map_url || `https://what3words.com/${sample.what3words || ""}`;
+  const what3words = sample.what3words
+    ? `<a href="${w3wHref}" target="_blank" rel="noreferrer">///${sample.what3words}</a>`
+    : "Not entered";
+  const w3wMeta = sample.what3words
+    ? `${sample.what3words_source || "manual"}, ${sample.what3words_status || "unvalidated"}`
+    : "Not recorded";
+
+  return `
+    <strong>${sample.sample_id || "n/a"}</strong><br>
+    ${sample.site_name || "Unnamed site"} ${sample.country ? `(${sample.country})` : ""}<br>
+    <span>Status: ${sample.status || "n/a"}</span><br>
+    <span>Species: ${htmlList(sample.species)}</span><br>
+    <span>Families: ${htmlList(sample.families)}</span><br>
+    <hr>
+    <span>What3Words: ${what3words}</span><br>
+    <span>W3W status: ${w3wMeta}</span><br>
+    <span>Nearest place: ${sample.what3words_nearest_place || "Not recorded"}</span><br>
+    <span>Coordinates: ${Number(sample.lat).toFixed(5)}, ${Number(sample.lon).toFixed(5)}</span><br>
+    <hr>
+    <span>Habitat: ${habitat}</span><br>
+    <span>Soil: ${soil}</span><br>
+    <span>pH: ${sample.soil_ph ?? "Not recorded"}</span><br>
+    <span>Depth: ${sample.depth_cm ?? "Not recorded"} cm</span><br>
+    <span>Sub-samples: ${sample.num_samples ?? "Not recorded"}</span>
+  `;
 }
 
 function renderMarkers(samples) {
   markerLayer.clearLayers();
+  const bounds = [];
 
   samples.forEach((sample) => {
-    const coords = getLatLon(sample);
-    if (!coords) {
-      return;
-    }
+    const lat = Number(sample.lat);
+    const lon = Number(sample.lon);
+    if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
 
-    const affiliations = Array.isArray(sample.affiliations)
-      ? sample.affiliations
-          .map((slug) => affiliationNamesBySlug[slug] || slug)
-          .join(", ")
-      : "n/a";
-    const affiliationOther = sample.affiliation_other ? ` (${sample.affiliation_other})` : "";
-    const species = Array.isArray(sample.species) ? sample.species.join(", ") : "n/a";
+    const marker = L.circleMarker([lat, lon], {
+      radius: sample.status === "validated" ? 7 : 6,
+      color: statusColor(sample.status),
+      fillColor: statusColor(sample.status),
+      fillOpacity: sample.status === "pending" ? 0.45 : 0.78,
+      weight: 2,
+    });
+    marker.bindPopup(popupHtml(sample));
+    marker.addTo(markerLayer);
+    bounds.push([lat, lon]);
+  });
 
-    const marker = L.circleMarker(coords, styleForStatus(sample.status));
-    marker.bindPopup(
-      `<strong>sample_id:</strong> ${sample.sample_id || "n/a"}<br>` +
-        `<strong>status:</strong> ${sample.status || "n/a"}<br>` +
-        `<strong>site_name:</strong> ${sample.site_name || "n/a"}<br>` +
-        `<strong>sampling_date:</strong> ${sample.sampling_date || "n/a"}<br>` +
-        `<strong>collector_name:</strong> ${sample.collector_name || "n/a"}<br>` +
-        `<strong>tube_id:</strong> ${sample.tube_id || "n/a"}<br>` +
-        `<strong>affiliations:</strong> ${affiliations}${affiliationOther}<br>` +
-        `<strong>species:</strong> ${species}`
-    );
-    markerLayer.addLayer(marker);
+  if (bounds.length) {
+    map.fitBounds(bounds, { maxZoom: 8, padding: [24, 24] });
+  }
+}
+
+function updateSummary(summary) {
+  sampleCount.textContent = summary.sample_count ?? 0;
+  phRange.textContent = summary.ph_min === null ? "-" : `${summary.ph_min} - ${summary.ph_max}`;
+  habitats.textContent = summary.habitats && summary.habitats.length ? summary.habitats.join(", ") : "-";
+}
+
+async function loadOptions() {
+  const [speciesList, familiesList, affiliationsList] = await Promise.all([
+    getJson(`${API_BASE}/species`),
+    getJson(`${API_BASE}/families`),
+    getJson(`${API_BASE}/affiliations`),
+  ]);
+
+  speciesList.forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.species_name;
+    option.textContent = `${item.species_name} (${item.sample_count})`;
+    speciesFilter.appendChild(option);
+  });
+
+  familiesList.forEach((family) => {
+    const option = document.createElement("option");
+    option.value = family;
+    option.textContent = family;
+    familyFilter.appendChild(option);
+  });
+
+  affiliationsList.forEach((item) => {
+    const option = document.createElement("option");
+    option.value = item.slug;
+    option.textContent = item.name || item.slug;
+    affiliationNamesBySlug[item.slug] = item.name || item.slug;
+    affiliationFilter.appendChild(option);
   });
 }
 
-async function loadFilters() {
-  try {
-    const [speciesList, affiliationsList] = await Promise.all([
-      getJson(`${API_BASE}/species`),
-      getJson(`${API_BASE}/affiliations`),
-    ]);
-    setApiStatus(true);
+async function loadSamples() {
+  const params = paramsFromForm();
+  const query = params.toString();
+  const suffix = query ? `?${query}` : "";
+  const [samples, summary] = await Promise.all([
+    getJson(`${API_BASE}/samples${suffix}`),
+    getJson(`${API_BASE}/environment-summary${suffix}`),
+  ]);
 
-    speciesList.forEach((item) => {
-      const option = document.createElement("option");
-      option.value = item.species_name;
-      option.textContent = `${item.species_name} (${item.sample_count})`;
-      speciesFilter.appendChild(option);
-    });
-
-    affiliationsList.forEach((item) => {
-      const option = document.createElement("option");
-      option.value = item.slug;
-      option.textContent = item.name || item.slug;
-      affiliationNamesBySlug[item.slug] = item.name || item.slug;
-      affiliationFilter.appendChild(option);
-    });
-  } catch (error) {
-    setApiStatus(false);
-    console.warn("Could not load filters from API.", error);
-  }
+  const list = Array.isArray(samples) ? samples : [];
+  setApiStatus(true);
+  renderMarkers(list);
+  updateSummary(summary);
+  setEmptyState(list.length === 0);
 }
 
-async function loadSamples() {
-  try {
-    const samples = await getJson(`${API_BASE}/samples${buildSampleQuery()}`);
-    const list = Array.isArray(samples) ? samples : [];
-    setApiStatus(true);
-    renderMarkers(list);
-    setEmptyState(list.length === 0);
-  } catch (error) {
+filters.addEventListener("submit", (event) => {
+  event.preventDefault();
+  loadSamples().catch((error) => {
     setApiStatus(false);
-    renderMarkers([]);
     setEmptyState(false);
     console.warn("Could not load samples from API.", error);
-  }
-}
+  });
+});
 
-refreshBtn.addEventListener("click", loadSamples);
-speciesFilter.addEventListener("change", loadSamples);
-statusFilter.addEventListener("change", loadSamples);
-affiliationFilter.addEventListener("change", loadSamples);
+resetBtn.addEventListener("click", () => {
+  filters.reset();
+  loadSamples().catch((error) => {
+    setApiStatus(false);
+    console.warn("Could not load samples from API.", error);
+  });
+});
 
 setApiStatus(false);
 setEmptyState(false);
-loadFilters();
-loadSamples();
+loadOptions()
+  .then(loadSamples)
+  .catch((error) => {
+    setApiStatus(false);
+    console.warn("Could not initialize WWM map.", error);
+  });
 
 setTimeout(() => map.invalidateSize(), 0);

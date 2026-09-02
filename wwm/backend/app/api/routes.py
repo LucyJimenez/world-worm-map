@@ -11,6 +11,7 @@ from app.services.audit import write_audit
 from app.services.auth import require_role
 from app.services.kobo_ingest import fetch_kobo_submissions, get_first, get_kobo_fields_debug, ingest_kobo_submissions
 from app.services.scheduler import scheduler
+from app.services.what3words import convert_to_coordinates, what3words_map_url
 
 router = APIRouter(prefix="/api", tags=["wwm"])
 
@@ -28,8 +29,14 @@ def health(db: Session = Depends(get_db)):
 @router.get("/samples")
 def list_samples(
     species: str | None = Query(default=None),
+    family: str | None = Query(default=None),
     status: str | None = Query(default=None),
     affiliation: str | None = Query(default=None),
+    country: str | None = Query(default=None),
+    habitat: str | None = Query(default=None),
+    soil_type: str | None = Query(default=None),
+    ph_min: float | None = Query(default=None),
+    ph_max: float | None = Query(default=None),
     db: Session = Depends(get_db),
 ):
     stmt = select(Sample).options(
@@ -54,6 +61,34 @@ def list_samples(
 
     stmt = stmt.order_by(Sample.submitted_at.desc())
     samples = db.execute(stmt).scalars().unique().all()
+    filtered_samples = []
+    for sample in samples:
+        raw_payload = sample.raw_payload or {}
+        taxa = raw_payload.get("taxonomic_entries") or []
+        families = sorted({taxon.get("family") for taxon in taxa if taxon.get("family")})
+        sample_habitat = raw_payload.get("habitat_type")
+        sample_soil_type = raw_payload.get("soil_type")
+        sample_soil_ph = raw_payload.get("soil_ph")
+
+        try:
+            sample_soil_ph_number = float(sample_soil_ph) if sample_soil_ph is not None else None
+        except (TypeError, ValueError):
+            sample_soil_ph_number = None
+
+        if family and family not in families:
+            continue
+        if country and (sample.country or "").lower() != country.lower():
+            continue
+        if habitat and sample_habitat != habitat:
+            continue
+        if soil_type and soil_type not in str(sample_soil_type or "").replace(" ", ",").split(","):
+            continue
+        if ph_min is not None and (sample_soil_ph_number is None or sample_soil_ph_number < ph_min):
+            continue
+        if ph_max is not None and (sample_soil_ph_number is None or sample_soil_ph_number > ph_max):
+            continue
+
+        filtered_samples.append((sample, raw_payload, families, sample_soil_type))
 
     return [
         {
@@ -65,19 +100,33 @@ def list_samples(
             if sample.sampling_date
             else sample.submitted_at.date().isoformat(),
             "collector_name": sample.submitted_by
-            or (sample.raw_payload or {}).get("collector_name")
-            or (sample.raw_payload or {}).get("collector"),
-            "tube_id": (sample.raw_payload or {}).get("tube_id"),
-            "soil_ph": (sample.raw_payload or {}).get("soil_ph"),
-            "depth_cm": (sample.raw_payload or {}).get("depth_cm"),
+            or raw_payload.get("collector_name")
+            or raw_payload.get("collector"),
+            "country": sample.country,
+            "tube_id": raw_payload.get("tube_id"),
+            "habitat_type": raw_payload.get("habitat_type"),
+            "habitat_other": raw_payload.get("habitat_other"),
+            "soil_type": sample_soil_type,
+            "soil_types": [item for item in str(sample_soil_type or "").replace(" ", ",").split(",") if item],
+            "soil_type_other": raw_payload.get("soil_type_other"),
+            "soil_ph": raw_payload.get("soil_ph"),
+            "depth_cm": raw_payload.get("depth_cm"),
+            "num_samples": raw_payload.get("num_samples"),
+            "what3words": sample.what3words,
+            "what3words_status": sample.what3words_status,
+            "what3words_source": sample.what3words_source,
+            "what3words_map_url": sample.what3words_map_url or what3words_map_url(sample.what3words),
+            "what3words_nearest_place": sample.what3words_nearest_place,
+            "what3words_country": sample.what3words_country,
             "lat": sample.latitude,
             "lon": sample.longitude,
             "affiliations": [sa.affiliation.name for sa in sample.affiliations],
-            "affiliation_other": (sample.raw_payload or {}).get("affiliation_other"),
+            "affiliation_other": raw_payload.get("affiliation_other"),
             "species": [sp.species_name for sp in sample.species_entries],
+            "families": families,
             "has_genomic_links": any(sp.genomic_records for sp in sample.species_entries),
         }
-        for sample in samples
+        for sample, raw_payload, families, sample_soil_type in filtered_samples
     ]
 
 
@@ -89,6 +138,61 @@ def list_species(db: Session = Depends(get_db)):
         .order_by(SampleSpecies.species_name.asc())
     ).all()
     return [{"species_name": row.species_name, "sample_count": row.sample_count} for row in rows]
+
+
+@router.get("/families")
+def list_families(db: Session = Depends(get_db)):
+    samples = db.execute(select(Sample.raw_payload)).scalars().all()
+    families: set[str] = set()
+    for raw_payload in samples:
+        for taxon in (raw_payload or {}).get("taxonomic_entries") or []:
+            if taxon.get("family"):
+                families.add(taxon["family"])
+    return sorted(families)
+
+
+@router.get("/environment-summary")
+def environment_summary(
+    species: str | None = Query(default=None),
+    family: str | None = Query(default=None),
+    status: str | None = Query(default=None),
+    affiliation: str | None = Query(default=None),
+    country: str | None = Query(default=None),
+    habitat: str | None = Query(default=None),
+    soil_type: str | None = Query(default=None),
+    ph_min: float | None = Query(default=None),
+    ph_max: float | None = Query(default=None),
+    db: Session = Depends(get_db),
+):
+    samples = list_samples(
+        species=species,
+        family=family,
+        status=status,
+        affiliation=affiliation,
+        country=country,
+        habitat=habitat,
+        soil_type=soil_type,
+        ph_min=ph_min,
+        ph_max=ph_max,
+        db=db,
+    )
+    ph_values = []
+    habitats = set()
+    for sample in samples:
+        if sample.get("habitat_type"):
+            habitats.add(sample["habitat_type"])
+        try:
+            if sample.get("soil_ph") is not None:
+                ph_values.append(float(sample["soil_ph"]))
+        except (TypeError, ValueError):
+            continue
+
+    return {
+        "sample_count": len(samples),
+        "ph_min": min(ph_values) if ph_values else None,
+        "ph_max": max(ph_values) if ph_values else None,
+        "habitats": sorted(habitats),
+    }
 
 
 @router.get("/affiliations")
@@ -213,6 +317,42 @@ def trigger_kobo_ingest(
 @router.get("/admin/kobo/fields")
 def debug_kobo_fields(_: str = Depends(require_role("admin"))):
     return get_kobo_fields_debug()
+
+
+@router.post("/admin/what3words/validate")
+def validate_what3words(_: str = Depends(require_role("admin")), db: Session = Depends(get_db)):
+    if not settings.what3words_api_key:
+        raise HTTPException(status_code=400, detail="WHAT3WORDS_API_KEY is not configured")
+
+    samples = db.execute(
+        select(Sample).where(Sample.what3words.is_not(None)).order_by(Sample.submitted_at.desc())
+    ).scalars().all()
+    validated = 0
+    failed = 0
+
+    for sample in samples:
+        try:
+            resolution = convert_to_coordinates(sample.what3words)
+            if not resolution:
+                failed += 1
+                sample.what3words_status = "validation_failed"
+                continue
+
+            sample.what3words = resolution["words"]
+            sample.what3words_status = "validated"
+            sample.what3words_language = resolution.get("language")
+            sample.what3words_map_url = resolution.get("map_url")
+            sample.what3words_nearest_place = resolution.get("nearest_place")
+            sample.what3words_country = resolution.get("country")
+            sample.what3words_square = resolution.get("square")
+            sample.what3words_updated_at = resolution.get("updated_at")
+            validated += 1
+        except Exception:
+            failed += 1
+            sample.what3words_status = "validation_failed"
+
+    db.commit()
+    return {"checked": len(samples), "validated": validated, "failed": failed}
 
 
 @router.get("/admin/verify/kobo-sync")

@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     kobo_asset_uid: str = "a8Rvu5KasYeAfsa2GfFppG"
     kobo_token: str = ""
 
+    what3words_api_key: str = ""
+    what3words_language: str = "en"
+
     enable_real_ncbi_validation: bool = False
     ncbi_api_base: str = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
 

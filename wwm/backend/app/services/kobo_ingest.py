@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from app.core.config import settings
 from app.models import Affiliation, Sample, SampleAffiliation, SampleSpecies
 from app.services.audit import write_audit
+from app.services.what3words import convert_to_coordinates, normalize_what3words, what3words_map_url
 
 logger = logging.getLogger(__name__)
 
@@ -210,6 +211,31 @@ def _normalize_submission(submission: dict[str, Any]) -> dict[str, Any] | None:
     sampling_date = _parse_date(get_first(submission, "sampling_date", "_submission_time")) or date.today()
     gps_raw = get_first(submission, "gps_coordinates", "_geolocation")
     geopoint = _parse_geopoint(gps_raw)
+    w3w_raw = get_first(
+        submission,
+        "what3words",
+        "what3words_address",
+        "what3words_three_words",
+        "w3w",
+        "w3w_address",
+        "w3w_three_words",
+    )
+    what3words = normalize_what3words(w3w_raw)
+    what3words_status = "unvalidated" if what3words else None
+    what3words_resolution = None
+    if what3words and settings.what3words_api_key:
+        try:
+            what3words_resolution = convert_to_coordinates(what3words)
+            if what3words_resolution:
+                what3words = what3words_resolution["words"]
+                what3words_status = "validated"
+        except Exception:
+            logger.exception("Failed to validate What3Words address from Kobo")
+            what3words_status = "validation_failed"
+
+    if geopoint is None and what3words_resolution:
+        geopoint = (what3words_resolution["lat"], what3words_resolution["lon"])
+
     if geopoint is None:
         return None
 
@@ -229,6 +255,10 @@ def _normalize_submission(submission: dict[str, Any]) -> dict[str, Any] | None:
         "gps_coordinates_raw": gps_raw,
         "lat": geopoint[0],
         "lon": geopoint[1],
+        "what3words_raw": w3w_raw,
+        "what3words": what3words,
+        "what3words_status": what3words_status,
+        "what3words_resolution": what3words_resolution,
         "country": country_value,
         "kobo_uuid": kobo_uuid,
         "kobo_id": kobo_id,
@@ -267,6 +297,8 @@ def get_kobo_fields_debug() -> dict[str, Any]:
         "collector_name": normalized.get("collector_name") if normalized else None,
         "sampling_date": normalized.get("sampling_date").isoformat() if normalized else None,
         "gps_coordinates": normalized.get("gps_coordinates_raw") if normalized else None,
+        "what3words": normalized.get("what3words") if normalized else None,
+        "what3words_status": normalized.get("what3words_status") if normalized else None,
         "affiliation": normalized.get("affiliation_raw") if normalized else None,
         "affiliation_other": normalized.get("affiliation_other") if normalized else None,
         "affiliation_slugs": normalized.get("affiliation_slugs") if normalized else [],
@@ -313,6 +345,16 @@ def ingest_kobo_submissions(db: Session, actor: str = "system") -> dict[str, int
                     kobo_uuid=normalized.get("kobo_uuid"),
                     kobo_id=normalized.get("kobo_id"),
                     kobo_submission_time=normalized.get("kobo_submission_time"),
+                    what3words=normalized.get("what3words"),
+                    what3words_source="kobo_manual" if normalized.get("what3words") else None,
+                    what3words_status=normalized.get("what3words_status"),
+                    what3words_language=(normalized.get("what3words_resolution") or {}).get("language"),
+                    what3words_map_url=(normalized.get("what3words_resolution") or {}).get("map_url")
+                    or what3words_map_url(normalized.get("what3words")),
+                    what3words_nearest_place=(normalized.get("what3words_resolution") or {}).get("nearest_place"),
+                    what3words_country=(normalized.get("what3words_resolution") or {}).get("country"),
+                    what3words_square=(normalized.get("what3words_resolution") or {}).get("square"),
+                    what3words_updated_at=(normalized.get("what3words_resolution") or {}).get("updated_at"),
                     site_name=normalized.get("site_name"),
                     sampling_date=normalized.get("sampling_date"),
                     status="pending",
@@ -321,6 +363,7 @@ def ingest_kobo_submissions(db: Session, actor: str = "system") -> dict[str, int
                         "kobo": normalized.get("raw"),
                         "collector_name": normalized.get("collector_name"),
                         "country": normalized.get("country"),
+                        "what3words_raw": normalized.get("what3words_raw"),
                         "habitat_type": normalized.get("habitat_type"),
                         "soil_type": normalized.get("soil_type"),
                         "soil_ph": normalized.get("soil_ph"),

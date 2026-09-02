@@ -1,133 +1,91 @@
 # World Worm Map (WWM)
 
-## Project Attribution
+World Worm Map (WWM) is a research software prototype for the collection, curation, and spatial exploration of nematode sampling records. The system is designed to support biodiversity and genomics workflows by linking field observations, sampling metadata, environmental descriptors, taxonomic annotations, and geographic context in a reproducible digital infrastructure.
 
-World Worm Map (WWM) is an open-science infrastructure project designed and developed by **Lucy Jimenez**.
+The current MVP connects a KoboToolbox field form to a geospatial backend and an interactive web map. Sampling records can be ingested from KoboToolbox, stored in PostgreSQL/PostGIS, reviewed through API endpoints, and visualized on a Leaflet-based global map with filters for species, validation status, and institutional affiliation.
 
-The platform was created for and in collaboration with **Worm Lab**:
-https://worm-lab.eu/
+## Scientific Scope
 
-WWM supports the Worm Lab mission of advancing nematode biodiversity research through reproducible, data-driven, and collaborative genomic workflows.
+WWM is intended as a foundation for a curated nematode occurrence and sampling database. The project follows the logic of an environmental data warehouse: preserve original field submissions, normalize core variables, track provenance, and expose the data through interfaces that support biological interpretation.
 
-WWM contains:
-- FastAPI backend (`wwm/backend`)
-- PostGIS database (via Docker Compose)
-- Leaflet frontend (`wwm/frontend`)
+The MVP focuses on these scientific questions:
+
+- Where have nematode samples been collected?
+- Which species or provisional identifications are associated with each sampling site?
+- Which institutions or research groups contributed each record?
+- What environmental and soil descriptors are available for each site?
+- Can sampling locations be referenced both by GPS coordinates and user-entered What3Words addresses?
+
+## MVP Capabilities
+
+- KoboToolbox ingestion for field sampling submissions.
+- PostgreSQL/PostGIS persistence for spatial records.
+- Interactive Leaflet map for sample exploration.
+- Filters by species, sample status, and affiliation.
+- Sample-level metadata: country, site name, collector, date, tube ID, soil pH, depth, notes, and raw Kobo payload.
+- Provisional species records created automatically for new samples.
+- Governance endpoints for sample approval, species curation, and genomic accession links.
+- Daily scheduled ingestion using APScheduler.
+- Optional What3Words support as a Kobo-entered location reference.
+
+## Data Entry
+
+New sampling records are entered through the active KoboToolbox collection form:
+
+[WWM KoboToolbox sample submission form](https://ee-eu.kobotoolbox.org/x/HcREEDBq)
+
+This keeps KoboToolbox as the source of truth for new submissions while WWM handles ingestion, normalization, curation, and spatial visualization.
+
+## What3Words Integration
+
+The current design keeps KoboToolbox as the source of truth for data entry. What3Words is implemented as an optional field inside the Kobo workflow, not as a separate public data-entry path.
+
+Users may enter three words in Kobo using formats such as:
+
+```text
+filled.count.soap
+///filled.count.soap
+filled count soap
+```
+
+During ingestion, WWM normalizes the value to `filled.count.soap`, stores it with the sample, and shows it in the map popup. If `WHAT3WORDS_API_KEY` is configured, the backend can validate the address and store additional metadata such as nearest place, country, map URL, and the validated square geometry.
+
+GPS coordinates remain the canonical map coordinates when available. Validated What3Words coordinates may be used as a fallback only when GPS coordinates are missing.
+
+## Repository Structure
+
+```text
+wwm/
+  backend/        FastAPI application, ingestion services, models, scripts
+  frontend/       Leaflet web map
+  forms/          Kobo/XLSForm artifacts
+docs/             Architecture, API, schema, installation, handoff notes
+forms/            XLSForm working files
+docker-compose.yml
+```
 
 ## Documentation
 
-- [`docs/SMART_PLAN.md`](docs/SMART_PLAN.md)
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md)
-- [`docs/API.md`](docs/API.md)
-- [`docs/SCHEMA.md`](docs/SCHEMA.md)
-- [`docs/KOBO_SCHEMA.md`](docs/KOBO_SCHEMA.md)
-- [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md)
-- [`docs/SECURITY.md`](docs/SECURITY.md)
-- [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
-- [`docs/KOBO_FIELD_MAPPING.md`](docs/KOBO_FIELD_MAPPING.md)
-- [`docs/README_DOCS.md`](docs/README_DOCS.md)
+- [Installation Guide](docs/INSTALLATION.md)
+- [MVP Handoff, Roadmap, and Implementation Notes](docs/MVP_HANDOFF.md)
+- [Architecture](docs/ARCHITECTURE.md)
+- [API Contract](docs/API.md)
+- [Database Schema](docs/SCHEMA.md)
+- [Kobo Field Mapping](docs/KOBO_FIELD_MAPPING.md)
+- [Kobo Schema](docs/KOBO_SCHEMA.md)
+- [Data Sources](docs/DATA_SOURCES.md)
+- [Security Notes](docs/SECURITY.md)
+- [SMART Implementation Plan](docs/SMART_PLAN.md)
 
-## Local run (from repo root)
+## Attribution
 
-1. Create the runtime env file:
-   ```bash
-   cp wwm/.env.example wwm/.env
-   ```
-2. Add your Kobo token in `wwm/.env`:
-   - `KOBO_TOKEN=...`
-3. Start services:
-   ```bash
-   docker compose up --build
-   ```
+Conceptual design and scientific direction were developed in collaboration with Worm Lab leadership.
 
-Backend will be available at [http://localhost:8000](http://localhost:8000).
-
-## Environment source of truth
-
-Only `wwm/.env` is used for backend runtime secrets/config in local Docker.
-
-Required keys in `wwm/.env`:
-- `DATABASE_URL`
-- `KOBO_BASE_URL`
-- `KOBO_ASSET_UID`
-- `KOBO_TOKEN`
-- `INGEST_HOUR`
-- `CORS_ORIGINS`
-
-## Verify API and sample loading
-
-Check samples:
-
-```bash
-curl http://localhost:8000/api/samples
-```
-
-If empty, seed demo data:
-
-```bash
-docker compose exec backend python -m scripts.dev_seed
-curl http://localhost:8000/api/samples
-```
-
-## Manual Kobo ingestion trigger
-
-```bash
-curl -X POST http://localhost:8000/api/admin/ingest/kobo
-```
-
-Expected response:
-
-```json
-{"ingested": 0, "duplicates": 0, "errors": 0}
-```
-
-## Refresh Kobo data without losing seed examples
-
-Verify Kobo/database sync state:
-
-```bash
-curl -H "x-api-key: admin-key" http://localhost:8000/api/admin/verify/kobo-sync
-```
-
-Refresh Kobo-derived data only (keeps `data_source='seed'` samples):
-
-```bash
-curl -X POST -H "x-api-key: admin-key" http://localhost:8000/api/admin/kobo/refresh
-```
-
-## Scheduler
-
-Ingestion runs daily inside the FastAPI process using APScheduler:
-- Hour: `INGEST_HOUR` (UTC)
-- Minute: `INGEST_MINUTE` (UTC, default `0`)
-
-## Frontend
-
-Serve frontend separately for local dev testing (optional):
-
-```bash
-cd wwm/frontend
-python -m http.server 8080
-```
-
-Then open [http://localhost:8080](http://localhost:8080). Frontend calls `http://localhost:8000/api`.
-
-## Troubleshooting
-
-If backend cannot connect to the database during startup, reset local containers/volumes and rebuild:
-
-```bash
-docker compose down -v
-docker compose up --build
-```
-
-## Credits
-
-Project Lead & Architecture:
-Lucy Jimenez
+Development, implementation, system integration, and delivery:
+**Lucy Jimenez**
 
 Developed for:
-Worm Lab — https://worm-lab.eu/
+**Worm Lab** — https://worm-lab.eu/
 
 Technology stack:
-FastAPI, PostgreSQL/PostGIS, Leaflet, KoboToolbox
+FastAPI, PostgreSQL/PostGIS, Leaflet, KoboToolbox, Docker Compose.
