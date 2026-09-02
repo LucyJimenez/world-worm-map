@@ -89,10 +89,10 @@ The seeded records include example What3Words values so the map popup can demons
 New samples should be entered in KoboToolbox:
 
 ```text
-https://eu.kobotoolbox.org/#/forms/a8Rvu5KasYeAfsa2GfFppG/summary
+https://ee-eu.kobotoolbox.org/x/HcREEDBq
 ```
 
-Use the KoboToolbox Collect data panel to open or copy the active web form link for field users.
+This is the active field-user submission link. The administrative KoboToolbox project remains associated with asset UID `a8Rvu5KasYeAfsa2GfFppG`.
 
 Trigger manual ingestion:
 

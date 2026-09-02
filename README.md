@@ -30,11 +30,11 @@ The MVP focuses on these scientific questions:
 
 ## Data Entry
 
-New sampling records are entered through the KoboToolbox form associated with the WWM project:
+New sampling records are entered through the active KoboToolbox collection form:
 
-[WWM KoboToolbox project and collection form](https://eu.kobotoolbox.org/#/forms/a8Rvu5KasYeAfsa2GfFppG/summary)
+[WWM KoboToolbox sample submission form](https://ee-eu.kobotoolbox.org/x/HcREEDBq)
 
-From this page, use the KoboToolbox **Collect data** panel to open or copy the active web form link for field users. This keeps KoboToolbox as the source of truth for new submissions while WWM handles ingestion, normalization, curation, and spatial visualization.
+This keeps KoboToolbox as the source of truth for new submissions while WWM handles ingestion, normalization, curation, and spatial visualization.
 
 ## What3Words Integration
 
