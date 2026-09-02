@@ -89,7 +89,8 @@ header p {
 }
 
 #controls select,
-#controls button {
+#controls button,
+.data-entry-link {
   min-width: 170px;
   height: 34px;
   border: 1px solid #c8d3cc;
@@ -98,12 +99,21 @@ header p {
   background: #fff;
 }
 
-#controls button {
+#controls button,
+.data-entry-link {
   min-width: 100px;
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
   cursor: pointer;
+}
+
+.data-entry-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 0.9rem;
 }
 
 #map {
@@ -134,7 +144,8 @@ header p {
   }
 
   #controls select,
-  #controls button {
+  #controls button,
+  .data-entry-link {
     min-width: 140px;
   }
 }
