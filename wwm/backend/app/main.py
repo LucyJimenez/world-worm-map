@@ -45,3 +45,13 @@ def root():
     if index_path.exists():
         return FileResponse(index_path)
     return JSONResponse({"message": "WWM API running"})
+
+
+@app.get("/style.css")
+def frontend_css():
+    return FileResponse(frontend_dir / "style.css")
+
+
+@app.get("/app.js")
+def frontend_js():
+    return FileResponse(frontend_dir / "app.js")

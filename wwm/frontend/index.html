@@ -12,45 +12,16 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
-  <body>
-    <header>
-      <div>
-        <h1>World Worm Map (WWM)</h1>
-        <p>Nematode sample explorer</p>
+  <body class="map-page">
+    <aside class="sidebar">
+      <div class="brand-block">
+        <p class="eyebrow">World Worm Map</p>
+        <h1>Nematode occurrences</h1>
+        <p class="small-text">Sampling records, taxonomic annotations, and environmental context.</p>
       </div>
-      <div id="apiStatus" class="api-status offline" aria-live="polite">
-        <span class="status-dot"></span>
-        <span class="status-text">API unreachable</span>
-      </div>
-    </header>
-
-    <section id="controls">
-      <label>
-        Species
-        <select id="species-filter">
-          <option value="">All species</option>
-        </select>
-      </label>
-
-      <label>
-        Status
-        <select id="status-filter">
-          <option value="">All statuses</option>
-          <option value="pending">pending</option>
-          <option value="validated">validated</option>
-          <option value="rejected">rejected</option>
-        </select>
-      </label>
-
-      <label>
-        Affiliation
-        <select id="affiliation-filter">
-          <option value="">All affiliations</option>
-        </select>
-      </label>
 
       <a
-        class="data-entry-link"
+        class="button-link"
         href="https://ee-eu.kobotoolbox.org/x/HcREEDBq"
         target="_blank"
         rel="noopener"
@@ -58,11 +29,112 @@
         Add samples
       </a>
 
-      <button id="refresh-btn" type="button">Refresh</button>
-    </section>
+      <form id="filters" class="filter-form">
+        <label for="species-filter">
+          Species
+          <select id="species-filter" name="species">
+            <option value="">All species</option>
+          </select>
+        </label>
 
-    <div id="emptyState" class="empty-state hidden">No samples yet. Run ingestion.</div>
-    <main id="map"></main>
+        <label for="family-filter">
+          Family
+          <select id="family-filter" name="family">
+            <option value="">All families</option>
+          </select>
+        </label>
+
+        <label for="status-filter">
+          Status
+          <select id="status-filter" name="status">
+            <option value="">Any status</option>
+            <option value="pending">Pending</option>
+            <option value="validated">Validated</option>
+            <option value="rejected">Rejected</option>
+          </select>
+        </label>
+
+        <label for="affiliation-filter">
+          Affiliation
+          <select id="affiliation-filter" name="affiliation">
+            <option value="">All affiliations</option>
+          </select>
+        </label>
+
+        <label for="country-filter">
+          Country code
+          <input id="country-filter" name="country" type="text" placeholder="e.g. CH, CO" />
+        </label>
+
+        <label for="habitat-filter">
+          Habitat
+          <select id="habitat-filter" name="habitat">
+            <option value="">Any habitat</option>
+            <option value="agricultural_field">Agricultural field</option>
+            <option value="forest">Forest</option>
+            <option value="grassland">Grassland</option>
+            <option value="wetland">Wetland</option>
+            <option value="urban">Urban</option>
+            <option value="desert">Desert</option>
+            <option value="freshwater_margin">Freshwater margin</option>
+            <option value="coastal">Coastal</option>
+            <option value="tundra">Tundra</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        <label for="soil-filter">
+          Soil type
+          <select id="soil-filter" name="soil_type">
+            <option value="">Any soil</option>
+            <option value="sandy">Sandy</option>
+            <option value="clay">Clay</option>
+            <option value="silt">Silt</option>
+            <option value="loam">Loam</option>
+            <option value="peat">Peat</option>
+            <option value="chalk">Chalk</option>
+            <option value="volcanic">Volcanic</option>
+            <option value="mixed">Mixed</option>
+            <option value="other">Other</option>
+          </select>
+        </label>
+
+        <div class="field-grid">
+          <label>
+            pH min
+            <input name="ph_min" type="number" step="0.1" min="0" max="14" />
+          </label>
+          <label>
+            pH max
+            <input name="ph_max" type="number" step="0.1" min="0" max="14" />
+          </label>
+        </div>
+
+        <div class="actions">
+          <button type="submit">Apply</button>
+          <button id="reset-btn" type="button" class="secondary">Reset</button>
+        </div>
+      </form>
+
+      <section class="summary" aria-live="polite">
+        <h2>Current view</h2>
+        <dl>
+          <div><dt>Samples</dt><dd id="sample-count">0</dd></div>
+          <div><dt>pH range</dt><dd id="ph-range">-</dd></div>
+          <div><dt>Habitats</dt><dd id="habitats">-</dd></div>
+        </dl>
+      </section>
+
+      <div id="apiStatus" class="api-status offline" aria-live="polite">
+        <span class="status-dot"></span>
+        <span class="status-text">API unreachable</span>
+      </div>
+    </aside>
+
+    <main class="map-wrap">
+      <div id="emptyState" class="empty-state hidden">No samples match the current filters.</div>
+      <div id="map"></div>
+    </main>
 
     <script
       src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
