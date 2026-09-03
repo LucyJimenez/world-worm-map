@@ -64,13 +64,6 @@ function paramsFromForm() {
 function popupHtml(sample) {
   const habitat = sample.habitat_other || sample.habitat_type || "Not recorded";
   const soil = sample.soil_type_other || htmlList(sample.soil_types);
-  const w3wHref = sample.what3words_map_url || `https://what3words.com/${sample.what3words || ""}`;
-  const what3words = sample.what3words
-    ? `<a href="${w3wHref}" target="_blank" rel="noreferrer">///${sample.what3words}</a>`
-    : "Not entered";
-  const w3wMeta = sample.what3words
-    ? `${sample.what3words_source || "manual"}, ${sample.what3words_status || "unvalidated"}`
-    : "Not recorded";
 
   return `
     <strong>${sample.sample_id || "n/a"}</strong><br>
@@ -79,11 +72,7 @@ function popupHtml(sample) {
     <span>Species: ${htmlList(sample.species)}</span><br>
     <span>Families: ${htmlList(sample.families)}</span><br>
     <hr>
-    <span>What3Words: ${what3words}</span><br>
-    <span>W3W status: ${w3wMeta}</span><br>
-    <span>Nearest place: ${sample.what3words_nearest_place || "Not recorded"}</span><br>
     <span>Coordinates: ${Number(sample.lat).toFixed(5)}, ${Number(sample.lon).toFixed(5)}</span><br>
-    <hr>
     <span>Habitat: ${habitat}</span><br>
     <span>Soil: ${soil}</span><br>
     <span>pH: ${sample.soil_ph ?? "Not recorded"}</span><br>

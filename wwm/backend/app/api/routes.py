@@ -11,7 +11,7 @@ from app.services.audit import write_audit
 from app.services.auth import require_role
 from app.services.kobo_ingest import fetch_kobo_submissions, get_first, get_kobo_fields_debug, ingest_kobo_submissions
 from app.services.scheduler import scheduler
-from app.services.what3words import convert_to_coordinates, what3words_map_url
+from app.services.what3words import convert_to_coordinates
 
 router = APIRouter(prefix="/api", tags=["wwm"])
 
@@ -112,12 +112,6 @@ def list_samples(
             "soil_ph": raw_payload.get("soil_ph"),
             "depth_cm": raw_payload.get("depth_cm"),
             "num_samples": raw_payload.get("num_samples"),
-            "what3words": sample.what3words,
-            "what3words_status": sample.what3words_status,
-            "what3words_source": sample.what3words_source,
-            "what3words_map_url": sample.what3words_map_url or what3words_map_url(sample.what3words),
-            "what3words_nearest_place": sample.what3words_nearest_place,
-            "what3words_country": sample.what3words_country,
             "lat": sample.latitude,
             "lon": sample.longitude,
             "affiliations": [sa.affiliation.name for sa in sample.affiliations],

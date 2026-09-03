@@ -82,7 +82,7 @@ Then open:
 http://localhost:8000
 ```
 
-The seeded records include example What3Words values so the map popup can demonstrate the integration without requiring live Kobo data.
+The seeded records include example What3Words values for backend validation and ingestion testing. These values are treated as internal metadata and are not shown in the public map popup.
 
 ## Import KoboToolbox Submissions
 
@@ -187,4 +187,4 @@ docker compose up --build
 
 If the API is reachable but no samples appear, load seed data or verify Kobo credentials.
 
-If What3Words values appear as `unvalidated`, that is expected when `WHAT3WORDS_API_KEY` is not configured. The field is still stored and shown as a manually entered location reference.
+If What3Words values appear as `unvalidated`, that is expected when `WHAT3WORDS_API_KEY` is not configured. The field is still stored as internal sampling metadata and is not shown in the public map popup.
