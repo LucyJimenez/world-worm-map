@@ -1,4 +1,5 @@
 const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000/api" : "/api";
+const DEMO_DATA_URL = "demo-samples.json";
 
 const map = L.map("map", { worldCopyJump: true }).setView([18, 0], 2);
 const markerLayer = L.layerGroup().addTo(map);
@@ -14,18 +15,20 @@ const sampleCount = document.getElementById("sample-count");
 const phRange = document.getElementById("ph-range");
 const habitats = document.getElementById("habitats");
 const affiliationNamesBySlug = {};
+let demoSamples = null;
+let useDemoData = false;
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: "&copy; OpenStreetMap contributors",
 }).addTo(map);
 
-function setApiStatus(isOnline) {
+function setApiStatus(isOnline, label) {
   if (!apiStatus) return;
   apiStatus.classList.toggle("online", isOnline);
   apiStatus.classList.toggle("offline", !isOnline);
   if (statusText) {
-    statusText.textContent = isOnline ? "API reachable" : "API unreachable";
+    statusText.textContent = label || (isOnline ? "API reachable" : "API unreachable");
   }
 }
 
@@ -48,8 +51,21 @@ async function getJson(url) {
   return response.json();
 }
 
+async function getDemoSamples() {
+  if (!demoSamples) {
+    demoSamples = await getJson(DEMO_DATA_URL);
+  }
+  return demoSamples;
+}
+
 function htmlList(values) {
   return values && values.length ? values.join(", ") : "Not recorded";
+}
+
+function niceLabel(value) {
+  return String(value || "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 function paramsFromForm() {
@@ -113,44 +129,130 @@ function updateSummary(summary) {
   habitats.textContent = summary.habitats && summary.habitats.length ? summary.habitats.join(", ") : "-";
 }
 
-async function loadOptions() {
-  const [speciesList, familiesList, affiliationsList] = await Promise.all([
-    getJson(`${API_BASE}/species`),
-    getJson(`${API_BASE}/families`),
-    getJson(`${API_BASE}/affiliations`),
-  ]);
+function optionFor(value, label) {
+  const option = document.createElement("option");
+  option.value = value;
+  option.textContent = label;
+  return option;
+}
 
+function deriveDemoOptions(samples) {
+  const speciesCounts = new Map();
+  const families = new Set();
+  const affiliations = new Set();
+
+  samples.forEach((sample) => {
+    (sample.species || []).forEach((name) => {
+      speciesCounts.set(name, (speciesCounts.get(name) || 0) + 1);
+    });
+    (sample.families || []).forEach((family) => families.add(family));
+    (sample.affiliations || []).forEach((affiliation) => affiliations.add(affiliation));
+  });
+
+  return {
+    speciesList: Array.from(speciesCounts.entries())
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([species_name, sample_count]) => ({ species_name, sample_count })),
+    familiesList: Array.from(families).sort(),
+    affiliationsList: Array.from(affiliations)
+      .sort()
+      .map((slug) => ({ slug, name: niceLabel(slug) })),
+  };
+}
+
+function addOptions({ speciesList, familiesList, affiliationsList }) {
   speciesList.forEach((item) => {
-    const option = document.createElement("option");
-    option.value = item.species_name;
-    option.textContent = `${item.species_name} (${item.sample_count})`;
-    speciesFilter.appendChild(option);
+    speciesFilter.appendChild(optionFor(item.species_name, `${item.species_name} (${item.sample_count})`));
   });
 
   familiesList.forEach((family) => {
-    const option = document.createElement("option");
-    option.value = family;
-    option.textContent = family;
-    familyFilter.appendChild(option);
+    familyFilter.appendChild(optionFor(family, family));
   });
 
   affiliationsList.forEach((item) => {
-    const option = document.createElement("option");
-    option.value = item.slug;
-    option.textContent = item.name || item.slug;
     affiliationNamesBySlug[item.slug] = item.name || item.slug;
-    affiliationFilter.appendChild(option);
+    affiliationFilter.appendChild(optionFor(item.slug, item.name || item.slug));
   });
 }
 
+async function loadOptions() {
+  try {
+    const [speciesList, familiesList, affiliationsList] = await Promise.all([
+      getJson(`${API_BASE}/species`),
+      getJson(`${API_BASE}/families`),
+      getJson(`${API_BASE}/affiliations`),
+    ]);
+    addOptions({ speciesList, familiesList, affiliationsList });
+  } catch (error) {
+    useDemoData = true;
+    const samples = await getDemoSamples();
+    addOptions(deriveDemoOptions(samples));
+    setApiStatus(true, "Demo dataset");
+    console.warn("Using static demo data.", error);
+  }
+}
+
+function matchesFilter(sample, key, value) {
+  if (!value) return true;
+  if (key === "species") return (sample.species || []).includes(value);
+  if (key === "family") return (sample.families || []).includes(value);
+  if (key === "status") return sample.status === value;
+  if (key === "affiliation") return (sample.affiliations || []).includes(value);
+  if (key === "country") return String(sample.country || "").toLowerCase() === value.toLowerCase();
+  if (key === "habitat") return sample.habitat_type === value;
+  if (key === "soil_type") return (sample.soil_types || []).includes(value);
+  if (key === "ph_min") return Number(sample.soil_ph) >= Number(value);
+  if (key === "ph_max") return Number(sample.soil_ph) <= Number(value);
+  return true;
+}
+
+function filterDemoSamples(samples) {
+  const entries = Array.from(new FormData(filters).entries());
+  return samples.filter((sample) => entries.every(([key, value]) => matchesFilter(sample, key, String(value).trim())));
+}
+
+function summarizeSamples(samples) {
+  const phValues = samples.map((sample) => Number(sample.soil_ph)).filter(Number.isFinite);
+  const habitatValues = Array.from(new Set(samples.map((sample) => sample.habitat_type).filter(Boolean))).sort();
+  return {
+    sample_count: samples.length,
+    ph_min: phValues.length ? Math.min(...phValues) : null,
+    ph_max: phValues.length ? Math.max(...phValues) : null,
+    habitats: habitatValues.map(niceLabel),
+  };
+}
+
+async function loadDemoSamples() {
+  const samples = filterDemoSamples(await getDemoSamples());
+  setApiStatus(true, "Demo dataset");
+  renderMarkers(samples);
+  updateSummary(summarizeSamples(samples));
+  setEmptyState(samples.length === 0);
+}
+
 async function loadSamples() {
+  if (useDemoData) {
+    await loadDemoSamples();
+    return;
+  }
+
   const params = paramsFromForm();
   const query = params.toString();
   const suffix = query ? `?${query}` : "";
-  const [samples, summary] = await Promise.all([
-    getJson(`${API_BASE}/samples${suffix}`),
-    getJson(`${API_BASE}/environment-summary${suffix}`),
-  ]);
+  let samples;
+  let summary;
+
+  try {
+    [samples, summary] = await Promise.all([
+      getJson(`${API_BASE}/samples${suffix}`),
+      getJson(`${API_BASE}/environment-summary${suffix}`),
+    ]);
+  } catch (error) {
+    useDemoData = true;
+    console.warn("Could not load samples from API; using static demo data.", error);
+    await loadDemoSamples();
+    return;
+  }
 
   const list = Array.isArray(samples) ? samples : [];
   setApiStatus(true);

@@ -4,6 +4,8 @@ World Worm Map (WWM) is a research software prototype for the collection, curati
 
 The current MVP connects a KoboToolbox field form to a geospatial backend and an interactive web map. Sampling records can be ingested from KoboToolbox, stored in PostgreSQL/PostGIS, reviewed through API endpoints, and visualized on a Leaflet-based global map with filters for species, validation status, and institutional affiliation.
 
+Public MVP demo: [World Worm Map web interface](https://lucyjimenez.github.io/world-worm-map/)
+
 ![WWM MVP map interface](docs/assets/wwm-map-mvp.png)
 
 ## Scientific Scope
@@ -16,7 +18,6 @@ The MVP focuses on these scientific questions:
 - Which species or provisional identifications are associated with each sampling site?
 - Which institutions or research groups contributed each record?
 - What environmental and soil descriptors are available for each site?
-- How can internal georeferencing metadata support sampling-site traceability without exposing operational location references in the public map?
 
 ## MVP Capabilities
 
@@ -28,7 +29,6 @@ The MVP focuses on these scientific questions:
 - Provisional species records created automatically for new samples.
 - Governance endpoints for sample approval, species curation, and genomic accession links.
 - Daily scheduled ingestion using APScheduler.
-- Optional What3Words support as an internal Kobo-entered location reference.
 
 ## Data Entry
 
@@ -38,21 +38,7 @@ New sampling records are entered through the active KoboToolbox collection form:
 
 This keeps KoboToolbox as the source of truth for new submissions while WWM handles ingestion, normalization, curation, and spatial visualization.
 
-## What3Words Integration
-
-The current design keeps KoboToolbox as the source of truth for data entry. What3Words is implemented as an optional internal field inside the Kobo workflow, not as a separate public data-entry path.
-
-Users may enter three words in Kobo using formats such as:
-
-```text
-filled.count.soap
-///filled.count.soap
-filled count soap
-```
-
-During ingestion, WWM normalizes the value to `filled.count.soap` and stores it internally with the sample. What3Words values are treated as operational location references and are not displayed in the public map popup or public sample API response. If `WHAT3WORDS_API_KEY` is configured, the backend can validate the address and store additional metadata such as nearest place, country, map URL, and the validated square geometry.
-
-GPS coordinates remain the canonical map coordinates when available. Validated What3Words coordinates may be used as a fallback only when GPS coordinates are missing.
+What3Words is supported only as an optional internal field in KoboToolbox. GPS/PostGIS coordinates remain the canonical map location, and What3Words values are not displayed in the public map popup or public sample API response.
 
 ## Repository Structure
 
