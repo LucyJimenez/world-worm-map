@@ -73,13 +73,16 @@
     "sampling_date": "2026-03-10",
     "country": "DE",
     "habitat_type": "agricultural_field",
-    "habitat_label": null,
+    "habitat_label": "Agricultural field",
     "soil_type": "volcanic,mixed",
     "soil_types": [
       "volcanic",
       "mixed"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Volcanic",
+      "Mixed"
+    ],
     "soil_ph": 7.3,
     "depth_cm": 1,
     "lat": 50.955244,
@@ -96,13 +99,11 @@
     "sample_id": "public-demo-0005",
     "site_name": "Bern",
     "sampling_date": "2026-02-18",
-    "country": "option_1",
-    "habitat_type": "option_1",
+    "country": null,
+    "habitat_type": null,
     "habitat_label": null,
-    "soil_type": "option_1",
-    "soil_types": [
-      "option_1"
-    ],
+    "soil_type": null,
+    "soil_types": [],
     "soil_labels": [],
     "soil_ph": 8.0,
     "depth_cm": 3,
@@ -120,13 +121,11 @@
     "sample_id": "public-demo-0006",
     "site_name": "Waco_usa",
     "sampling_date": "2026-02-18",
-    "country": "option_1",
-    "habitat_type": "option_1",
+    "country": null,
+    "habitat_type": null,
     "habitat_label": null,
-    "soil_type": "option_2",
-    "soil_types": [
-      "option_2"
-    ],
+    "soil_type": null,
+    "soil_types": [],
     "soil_labels": [],
     "soil_ph": 4.0,
     "depth_cm": 5,
@@ -146,7 +145,7 @@
     "sampling_date": "2023-07-23",
     "country": "AU",
     "habitat_type": "desert",
-    "habitat_label": null,
+    "habitat_label": "Desert / arid",
     "soil_type": null,
     "soil_types": [],
     "soil_labels": [],
@@ -168,7 +167,7 @@
     "sampling_date": "2026-02-15",
     "country": "CL",
     "habitat_type": "desert",
-    "habitat_label": null,
+    "habitat_label": "Desert / arid",
     "soil_type": null,
     "soil_types": [],
     "soil_labels": [],
@@ -188,13 +187,11 @@
     "sample_id": "public-demo-0009",
     "site_name": "BOV.25.01",
     "sampling_date": "2025-03-26",
-    "country": "option_1",
-    "habitat_type": "option_2",
+    "country": null,
+    "habitat_type": null,
     "habitat_label": null,
-    "soil_type": "option_1",
-    "soil_types": [
-      "option_1"
-    ],
+    "soil_type": null,
+    "soil_types": [],
     "soil_labels": [],
     "soil_ph": null,
     "depth_cm": 15,
@@ -214,13 +211,16 @@
     "sampling_date": "2026-05-04",
     "country": "CH",
     "habitat_type": "grassland",
-    "habitat_label": null,
+    "habitat_label": "Grassland",
     "soil_type": "loam,sandy",
     "soil_types": [
       "loam",
       "sandy"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Loam",
+      "Sandy"
+    ],
     "soil_ph": 7.1,
     "depth_cm": 20,
     "lat": 47.5596,
@@ -243,13 +243,16 @@
     "sampling_date": "2026-05-01",
     "country": "CO",
     "habitat_type": "agricultural_field",
-    "habitat_label": null,
+    "habitat_label": "Agricultural field",
     "soil_type": "loam,clay",
     "soil_types": [
       "loam",
       "clay"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Loam",
+      "Clay"
+    ],
     "soil_ph": 6.4,
     "depth_cm": 15,
     "lat": 4.711,
@@ -273,13 +276,16 @@
     "sampling_date": "2026-05-11",
     "country": "JP",
     "habitat_type": "forest",
-    "habitat_label": null,
+    "habitat_label": "Forest",
     "soil_type": "volcanic,loam",
     "soil_types": [
       "volcanic",
       "loam"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Volcanic",
+      "Loam"
+    ],
     "soil_ph": 5.6,
     "depth_cm": 18,
     "lat": 35.6762,
@@ -301,12 +307,14 @@
     "sampling_date": "2026-05-08",
     "country": "KE",
     "habitat_type": "urban",
-    "habitat_label": null,
+    "habitat_label": "Urban / built environment",
     "soil_type": "mixed",
     "soil_types": [
       "mixed"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Mixed"
+    ],
     "soil_ph": 6.8,
     "depth_cm": 10,
     "lat": -1.2864,
@@ -328,12 +336,14 @@
     "sampling_date": "2026-05-16",
     "country": "ZA",
     "habitat_type": "coastal",
-    "habitat_label": null,
+    "habitat_label": "Coastal",
     "soil_type": "sandy",
     "soil_types": [
       "sandy"
     ],
-    "soil_labels": [],
+    "soil_labels": [
+      "Sandy"
+    ],
     "soil_ph": 8.0,
     "depth_cm": 12,
     "lat": -33.9249,

@@ -126,6 +126,8 @@ def normalize_choice(value: Any, mapping: dict[str, str]) -> str | None:
     text = clean_string(value)
     if not text:
         return None
+    if re.fullmatch(r"option_\d+", text):
+        return None
 
     if text in mapping:
         return text
@@ -137,6 +139,13 @@ def normalize_choice(value: Any, mapping: dict[str, str]) -> str | None:
     for key, label in mapping.items():
         if slugify(label) == slug:
             return key
+    return text
+
+
+def clean_country(value: Any) -> str | None:
+    text = clean_string(value)
+    if not text or re.fullmatch(r"option_\d+", text):
+        return None
     return text
 
 
@@ -198,7 +207,7 @@ def to_public_sample(submission: dict[str, Any], index: int) -> dict[str, Any] |
         "sample_id": f"public-kobo-{index:04d}",
         "site_name": clean_string(get_first(submission, "site_name")) or "Unnamed sampling site",
         "sampling_date": parse_date(get_first(submission, "sampling_date", "_submission_time")),
-        "country": clean_string(get_first(submission, "country")),
+        "country": clean_country(get_first(submission, "country")),
         "habitat_type": habitat_type,
         "habitat_label": habitat_other if habitat_type == "other" and habitat_other else HABITAT_VALUES.get(habitat_type, habitat_type),
         "soil_type": ",".join(soil_types) if soil_types else None,
