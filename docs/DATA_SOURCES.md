@@ -1,17 +1,17 @@
-# Environmental Data Sources
+# Data Sources
 
-This document lists all environmental map layers used in WWM.
+This document lists data sources and external layers used in the current WWM beta.
 
-Each layer must include:
+## Implemented
 
-- Source name
-- License
-- Citation
-- URL
+- KoboToolbox EU: active source for new sampling submissions.
+- OpenStreetMap tile layer: basemap used by the Leaflet frontend.
+- Beta reference samples: small static fixture in `wwm/frontend/reference-samples.json` used to demonstrate species, family, and status filters.
 
-Example:
+## Planned / not implemented
 
-OpenStreetMap
-License: ODbL
-URL: https://www.openstreetmap.org
+- Environmental raster/vector overlays are not implemented in the beta.
+- Climate and soil enrichment from external datasets is not implemented in the beta.
+- Darwin Core or other biodiversity-standard exports are not implemented in the beta.
 
+Any future environmental layer should document source name, license, citation, URL, spatial/temporal resolution, transformation method, and whether values are observed or derived.

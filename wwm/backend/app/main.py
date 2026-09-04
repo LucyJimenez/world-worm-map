@@ -55,3 +55,8 @@ def frontend_css():
 @app.get("/app.js")
 def frontend_js():
     return FileResponse(frontend_dir / "app.js")
+
+
+@app.get("/demo-samples.json")
+def frontend_demo_samples():
+    return FileResponse(frontend_dir / "demo-samples.json")

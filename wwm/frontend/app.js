@@ -1,5 +1,5 @@
 const API_BASE = window.location.protocol === "file:" ? "http://127.0.0.1:8000/api" : "/api";
-const DEMO_DATA_URL = "demo-samples.json";
+const DEMO_DATA_URL = "demo-samples.json?v=20260904-beta-reference";
 
 const map = L.map("map", { worldCopyJump: true }).setView([18, 0], 2);
 const markerLayer = L.layerGroup().addTo(map);

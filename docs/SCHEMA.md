@@ -2,13 +2,17 @@
 
 ## Core tables
 
-users
-affiliations
-samples
-sample_affiliations
-sample_species
-genomic_records
-audit_log
+- `users`: user identity and role placeholder table.
+- `affiliations`: normalized institutional/research group slugs and display names.
+- `samples`: core sampling record, location, status, provenance, raw payload, and optional What3Words metadata.
+- `sample_affiliations`: many-to-many link between samples and affiliations.
+- `sample_species`: provisional or curated species annotations for each sample.
+- `genomic_records`: accession records attached to sample-species annotations.
+- `audit_log`: audit trail for ingestion and curator/admin actions.
+
+`samples.geom` is a PostGIS `POINT` with SRID 4326 and is generated from longitude/latitude.
+
+There are no Alembic migrations in the beta. Tables are created with SQLAlchemy metadata during FastAPI startup, and compatibility columns/indexes are added in `app/db/init_db.py`.
 
 ## What3Words fields on samples
 

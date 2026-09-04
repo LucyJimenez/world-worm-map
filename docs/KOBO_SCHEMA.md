@@ -3,14 +3,24 @@
 This document defines the ingestion contract between KoboToolbox
 and the WWM ingestion pipeline.
 
-## Required fields
+## Core fields used by the current beta
 
-gps_coordinates
-site_name
-sampling_date
-affiliation
-affiliation_other
-species_name (optional)
+- `gps_coordinates`
+- `site_name`
+- `sample_id`
+- `sampling_date`
+- `country`
+- `affiliation`
+- `affiliation_other`
+- `habitat_type`
+- `soil_type`
+- `soil_ph`
+- `depth_cm`
+- `num_samples`
+- `tube_id`
+- `what3words` (optional internal location reference)
+
+Taxonomic species and family values are not treated as required Kobo inputs in the current beta ingestion path. Newly ingested Kobo records receive a provisional `unidentified` species entry and can be curated later through API endpoints or future curator tooling.
 
 ## Notes
 
@@ -24,5 +34,5 @@ species_name (optional)
   - `kobo_id`
   - `kobo_submission_time`
 
-Last synchronized: 2026-02-20
+Last synchronized: 2026-09-04
 Kobo Asset UID: a8Rvu5KasYeAfsa2GfFppG

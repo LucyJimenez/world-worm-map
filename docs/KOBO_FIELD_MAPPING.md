@@ -1,6 +1,6 @@
 # Kobo Field Mapping
 
-Source form: `wwm/forms/kobo_form.xml`
+Source form artifacts: `wwm/forms/wwm_kobo_production.xlsx` and `forms/wwm_kobo_current.xlsx`.
 
 This document maps Kobo fields to backend ingestion normalization and storage.
 
@@ -13,8 +13,8 @@ This document maps Kobo fields to backend ingestion normalization and storage.
 | `group_ih2au74/sampling_date` | `samples.sampling_date` | Yes | Parse date. Fallback: `_submission_time` date component. |
 | `group_kw39a24/gps_coordinates` | `samples.latitude`, `samples.longitude`, `samples.geom` | Yes | Parse geopoint from `"lat lon alt acc"` or `"lat,lon,alt,acc"`; store PostGIS Point SRID 4326. |
 | `group_ih2au74/country` | `samples.country` | Yes | Stored as submitted code/value. Supports ISO-3166 dropdown values. |
-| `group_jy8zq69/habitat_type` | `samples.raw_payload.habitat_type` | Yes | Stored in raw payload. |
-| `group_jy8zq69/soil_type` | `samples.raw_payload.soil_type` | No | Stored in raw payload. |
+| `group_jy8zq69/habitat_type` or `habitat_type_001` | `samples.raw_payload.habitat_type` | Yes | Stored in raw payload. Public export normalizes known choice labels. |
+| `group_jy8zq69/soil_type` or `soil_type_001_001` | `samples.raw_payload.soil_type` | No | Stored in raw payload. Public export normalizes known choice labels. |
 | `group_jy8zq69/soil_ph` | `samples.raw_payload.soil_ph` | No | Stored in raw payload as string/decimal text. |
 | `group_ga0dq77/depth_cm` | `samples.raw_payload.depth_cm` | No | Stored in raw payload as numeric text. |
 | `group_ga0dq77/num_samples` | `samples.raw_payload.num_samples` | Yes | Stored in raw payload as numeric text. |
