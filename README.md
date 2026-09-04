@@ -2,7 +2,7 @@
 
 World Worm Map (WWM) is a research software prototype for the collection, curation, and spatial exploration of nematode sampling records. The system is designed to support biodiversity and genomics workflows by linking field observations, sampling metadata, environmental descriptors, taxonomic annotations, and geographic context in a reproducible digital infrastructure.
 
-The current MVP connects a KoboToolbox field form to a geospatial backend and an interactive web map. Sampling records can be ingested from KoboToolbox, stored in PostgreSQL/PostGIS, reviewed through API endpoints, and visualized on a Leaflet-based global map with filters for species, validation status, and institutional affiliation.
+The current MVP connects a KoboToolbox field form to a geospatial backend and an interactive web map. Sampling records can be ingested from KoboToolbox, stored in PostgreSQL/PostGIS, reviewed through API endpoints, and visualized on a Leaflet-based global map with filters for species, family, validation status, and institutional affiliation.
 
 Public MVP demo: [World Worm Map web interface](https://lucyjimenez.github.io/world-worm-map/)
 
@@ -24,7 +24,7 @@ The MVP focuses on these scientific questions:
 - KoboToolbox ingestion for field sampling submissions.
 - PostgreSQL/PostGIS persistence for spatial records.
 - Interactive Leaflet map for sample exploration.
-- Filters by species, sample status, and affiliation.
+- Filters by species, family, sample status, and affiliation.
 - Sample-level metadata: country, site name, collector, date, tube ID, soil pH, depth, notes, and raw Kobo payload.
 - Provisional species records created automatically for new samples.
 - Governance endpoints for sample approval, species curation, and genomic accession links.
@@ -46,7 +46,9 @@ The public GitHub Pages map is available at:
 
 [https://lucyjimenez.github.io/world-worm-map/](https://lucyjimenez.github.io/world-worm-map/)
 
-The page is static and reads `wwm/frontend/demo-samples.json` as its public dataset. During deployment, GitHub Actions refreshes this file from KoboToolbox when the repository secret `KOBO_TOKEN` is configured. The public export is intentionally limited to coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
+The page is static and reads `wwm/frontend/demo-samples.json` as its public dataset. During deployment, GitHub Actions refreshes this file from KoboToolbox when the repository secret `KOBO_TOKEN` is configured. The deployment output combines sanitized Kobo submissions with a small set of beta reference samples that illustrate species, family, and curation-status filters. The public export is intentionally limited to coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, taxonomy, and beta curation status where available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
+
+The beta reference samples are stored in `wwm/frontend/reference-samples.json`. They are didactic records for MVP demonstration and should be replaced or flagged through a formal curation workflow when validated production taxonomy is available.
 
 To enable live Kobo refresh in GitHub Pages, add this repository secret:
 

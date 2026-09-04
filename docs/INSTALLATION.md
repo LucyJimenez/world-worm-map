@@ -6,7 +6,7 @@ This document is intended for the technical person who will install, run, or con
 
 - Git
 - Docker Desktop or Docker Engine with Docker Compose
-- Access to the private GitHub repository
+- Access to the public GitHub repository
 - KoboToolbox asset UID and API token
 - Optional: What3Words API key for validation/enrichment
 
@@ -15,12 +15,6 @@ This document is intended for the technical person who will install, run, or con
 ```bash
 git clone https://github.com/LucyJimenez/world-worm-map.git
 cd world-worm-map
-```
-
-For the current MVP with What3Words support:
-
-```bash
-git checkout what3words-kobo-field
 ```
 
 ## Configure Environment Variables
@@ -68,9 +62,9 @@ The API base path is:
 http://localhost:8000/api
 ```
 
-## Load Demo Data
+## Load Local Seed Data
 
-If the map is empty, load seed records:
+If the local database is empty, load seed records:
 
 ```bash
 docker compose exec backend python -m scripts.dev_seed
@@ -82,7 +76,7 @@ Then open:
 http://localhost:8000
 ```
 
-The seeded records include example What3Words values for backend validation and ingestion testing. These values are treated as internal metadata and are not shown in the public map popup.
+The seeded records include beta examples for species, family, and status filters, plus example What3Words values for backend validation and ingestion testing. What3Words values are treated as internal metadata and are not shown in the public map popup.
 
 ## Import KoboToolbox Submissions
 
@@ -126,7 +120,7 @@ The public GitHub Pages map is static:
 https://lucyjimenez.github.io/world-worm-map/
 ```
 
-During deployment, the GitHub Actions workflow exports a sanitized public dataset from KoboToolbox to `wwm/frontend/demo-samples.json`. The public dataset includes only coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
+During deployment, the GitHub Actions workflow exports a sanitized public dataset from KoboToolbox to `wwm/frontend/demo-samples.json` and appends the beta reference records from `wwm/frontend/reference-samples.json`. The public dataset includes only coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, taxonomy, and beta curation status where available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
 
 Configure this repository secret in GitHub:
 

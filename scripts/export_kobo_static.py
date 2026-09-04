@@ -12,6 +12,7 @@ from urllib.request import Request, urlopen
 
 
 OUTPUT_PATH = Path("wwm/frontend/demo-samples.json")
+REFERENCE_SAMPLES_PATH = Path("wwm/frontend/reference-samples.json")
 
 HABITAT_VALUES = {
     "agricultural_field": "Agricultural field",
@@ -184,6 +185,15 @@ def fetch_kobo_submissions() -> list[dict[str, Any]]:
         return extract_submissions(json.loads(response.read().decode("utf-8")))
 
 
+def load_reference_samples() -> list[dict[str, Any]]:
+    if not REFERENCE_SAMPLES_PATH.exists():
+        return []
+    data = json.loads(REFERENCE_SAMPLES_PATH.read_text(encoding="utf-8"))
+    if not isinstance(data, list):
+        raise RuntimeError(f"{REFERENCE_SAMPLES_PATH} must contain a JSON list.")
+    return [item for item in data if isinstance(item, dict)]
+
+
 def to_public_sample(submission: dict[str, Any], index: int) -> dict[str, Any] | None:
     geopoint = parse_geopoint(get_first(submission, "gps_coordinates", "_geolocation"))
     if not geopoint:
@@ -231,12 +241,18 @@ def main() -> int:
         print(f"Kobo export skipped: {exc}")
         return 0
 
-    if not public_samples:
+    reference_samples = load_reference_samples()
+    combined_samples = public_samples + reference_samples
+
+    if not combined_samples:
         print("Kobo export produced no mappable samples; keeping existing demo-samples.json.")
         return 0
 
-    OUTPUT_PATH.write_text(json.dumps(public_samples, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(public_samples)} public Kobo samples to {OUTPUT_PATH}.")
+    OUTPUT_PATH.write_text(json.dumps(combined_samples, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    print(
+        f"Wrote {len(public_samples)} public Kobo samples and "
+        f"{len(reference_samples)} beta reference samples to {OUTPUT_PATH}."
+    )
     return 0
 
 

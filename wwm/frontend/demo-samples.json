@@ -206,10 +206,11 @@
     "families": []
   },
   {
-    "sample_id": "public-demo-0010",
+    "sample_id": "beta-reference-0001",
     "site_name": "Basel grassland edge",
     "sampling_date": "2026-05-04",
     "country": "CH",
+    "status": "validated",
     "habitat_type": "grassland",
     "habitat_label": "Grassland",
     "soil_type": "loam,sandy",
@@ -230,7 +231,6 @@
       "sanger_institute"
     ],
     "species": [
-      "unidentified",
       "Heterodera schachtii"
     ],
     "families": [
@@ -238,10 +238,11 @@
     ]
   },
   {
-    "sample_id": "public-demo-0011",
-    "site_name": "Bogota highland plot",
+    "sample_id": "beta-reference-0002",
+    "site_name": "Bogota highland agricultural plot",
     "sampling_date": "2026-05-01",
     "country": "CO",
+    "status": "pending",
     "habitat_type": "agricultural_field",
     "habitat_label": "Agricultural field",
     "soil_type": "loam,clay",
@@ -261,20 +262,49 @@
       "worm_lab"
     ],
     "species": [
-      "unidentified",
       "Pratylenchus penetrans",
       "Meloidogyne incognita"
     ],
     "families": [
-      "Meloidogynidae",
-      "Pratylenchidae"
+      "Pratylenchidae",
+      "Meloidogynidae"
     ]
   },
   {
-    "sample_id": "public-demo-0012",
+    "sample_id": "beta-reference-0003",
+    "site_name": "Nairobi urban garden",
+    "sampling_date": "2026-05-08",
+    "country": "KE",
+    "status": "validated",
+    "habitat_type": "urban",
+    "habitat_label": "Urban / built environment",
+    "soil_type": "mixed",
+    "soil_types": [
+      "mixed"
+    ],
+    "soil_labels": [
+      "Mixed"
+    ],
+    "soil_ph": 6.8,
+    "depth_cm": 10,
+    "lat": -1.2864,
+    "lon": 36.8172,
+    "affiliations": [
+      "crc1211"
+    ],
+    "species": [
+      "Caenorhabditis elegans"
+    ],
+    "families": [
+      "Rhabditidae"
+    ]
+  },
+  {
+    "sample_id": "beta-reference-0004",
     "site_name": "Honshu forest soil",
     "sampling_date": "2026-05-11",
     "country": "JP",
+    "status": "pending",
     "habitat_type": "forest",
     "habitat_label": "Forest",
     "soil_type": "volcanic,loam",
@@ -294,7 +324,6 @@
       "sanger_institute"
     ],
     "species": [
-      "unidentified",
       "Aphelenchoides fragariae"
     ],
     "families": [
@@ -302,39 +331,11 @@
     ]
   },
   {
-    "sample_id": "public-demo-0013",
-    "site_name": "Nairobi urban garden",
-    "sampling_date": "2026-05-08",
-    "country": "KE",
-    "habitat_type": "urban",
-    "habitat_label": "Urban / built environment",
-    "soil_type": "mixed",
-    "soil_types": [
-      "mixed"
-    ],
-    "soil_labels": [
-      "Mixed"
-    ],
-    "soil_ph": 6.8,
-    "depth_cm": 10,
-    "lat": -1.2864,
-    "lon": 36.8172,
-    "affiliations": [
-      "crc1211"
-    ],
-    "species": [
-      "unidentified",
-      "Caenorhabditis elegans"
-    ],
-    "families": [
-      "Rhabditidae"
-    ]
-  },
-  {
-    "sample_id": "public-demo-0014",
+    "sample_id": "beta-reference-0005",
     "site_name": "Cape coastal dune",
     "sampling_date": "2026-05-16",
     "country": "ZA",
+    "status": "rejected",
     "habitat_type": "coastal",
     "habitat_label": "Coastal",
     "soil_type": "sandy",
@@ -352,11 +353,66 @@
       "worm_lab"
     ],
     "species": [
-      "unidentified",
       "Panagrolaimus sp."
     ],
     "families": [
       "Panagrolaimidae"
+    ]
+  },
+  {
+    "sample_id": "beta-reference-0006",
+    "site_name": "Fowlers Gap arid soil",
+    "sampling_date": "2023-07-23",
+    "country": "AU",
+    "status": "validated",
+    "habitat_type": "desert",
+    "habitat_label": "Desert / arid",
+    "soil_type": "sandy",
+    "soil_types": [
+      "sandy"
+    ],
+    "soil_labels": [
+      "Sandy"
+    ],
+    "soil_ph": 7.8,
+    "depth_cm": 15,
+    "lat": -31.08834,
+    "lon": 141.70657,
+    "affiliations": [
+      "worm_lab"
+    ],
+    "species": [
+      "unidentified"
+    ],
+    "families": []
+  },
+  {
+    "sample_id": "beta-reference-0007",
+    "site_name": "Atacama Desert sampling site",
+    "sampling_date": "2025-03-26",
+    "country": "CL",
+    "status": "pending",
+    "habitat_type": "desert",
+    "habitat_label": "Desert / arid",
+    "soil_type": "sandy",
+    "soil_types": [
+      "sandy"
+    ],
+    "soil_labels": [
+      "Sandy"
+    ],
+    "soil_ph": 6.8,
+    "depth_cm": 35,
+    "lat": -22.322429,
+    "lon": -69.474276,
+    "affiliations": [
+      "worm_lab"
+    ],
+    "species": [
+      "Pristionchus pacificus"
+    ],
+    "families": [
+      "Diplogastridae"
     ]
   }
 ]
