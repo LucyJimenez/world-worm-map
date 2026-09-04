@@ -46,7 +46,7 @@ The public GitHub Pages map is available at:
 
 [https://lucyjimenez.github.io/world-worm-map/](https://lucyjimenez.github.io/world-worm-map/)
 
-The page is static and reads `wwm/frontend/demo-samples.json` as its public dataset. During deployment, GitHub Actions refreshes this file from KoboToolbox when the repository secret `KOBO_TOKEN` is configured. The public export is intentionally limited to coordinates, country, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, site names, affiliations, and internal Kobo identifiers.
+The page is static and reads `wwm/frontend/demo-samples.json` as its public dataset. During deployment, GitHub Actions refreshes this file from KoboToolbox when the repository secret `KOBO_TOKEN` is configured. The public export is intentionally limited to coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
 
 To enable live Kobo refresh in GitHub Pages, add this repository secret:
 

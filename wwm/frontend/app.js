@@ -18,6 +18,16 @@ const affiliationNamesBySlug = {};
 let demoSamples = null;
 let useDemoData = false;
 
+const DISPLAY_LABELS = {
+  crc1211: "CRC1211",
+  worm_lab: "Worm Lab",
+  sanger_institute: "Sanger Institute",
+  urban: "Urban / built environment",
+  desert: "Desert / arid",
+  freshwater_margin: "Freshwater margin (river/lake)",
+  tundra: "Tundra / alpine",
+};
+
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: "&copy; OpenStreetMap contributors",
@@ -63,6 +73,7 @@ function htmlList(values) {
 }
 
 function niceLabel(value) {
+  if (DISPLAY_LABELS[value]) return DISPLAY_LABELS[value];
   return String(value || "")
     .replace(/_/g, " ")
     .replace(/\b\w/g, (char) => char.toUpperCase());
@@ -78,8 +89,9 @@ function paramsFromForm() {
 }
 
 function popupHtml(sample) {
-  const habitat = sample.habitat_other || sample.habitat_type || "Not recorded";
-  const soil = sample.soil_type_other || htmlList(sample.soil_types);
+  const habitat = sample.habitat_other || sample.habitat_label || niceLabel(sample.habitat_type) || "Not recorded";
+  const soil = sample.soil_type_other || htmlList(sample.soil_labels || sample.soil_types);
+  const affiliation = htmlList((sample.affiliations || []).map(niceLabel));
   const statusLine = sample.status ? `<span>Status: ${sample.status}</span><br>` : "";
   const subsamplesLine =
     sample.num_samples !== undefined && sample.num_samples !== null
@@ -90,6 +102,7 @@ function popupHtml(sample) {
     <strong>${sample.sample_id || "n/a"}</strong><br>
     ${sample.site_name || "Unnamed site"} ${sample.country ? `(${sample.country})` : ""}<br>
     ${statusLine}
+    <span>Affiliation: ${affiliation}</span><br>
     <span>Species: ${htmlList(sample.species)}</span><br>
     <span>Families: ${htmlList(sample.families)}</span><br>
     <hr>
@@ -217,12 +230,14 @@ function filterDemoSamples(samples) {
 
 function summarizeSamples(samples) {
   const phValues = samples.map((sample) => Number(sample.soil_ph)).filter(Number.isFinite);
-  const habitatValues = Array.from(new Set(samples.map((sample) => sample.habitat_type).filter(Boolean))).sort();
+  const habitatValues = Array.from(
+    new Set(samples.map((sample) => sample.habitat_label || niceLabel(sample.habitat_type)).filter(Boolean))
+  ).sort();
   return {
     sample_count: samples.length,
     ph_min: phValues.length ? Math.min(...phValues) : null,
     ph_max: phValues.length ? Math.max(...phValues) : null,
-    habitats: habitatValues.map(niceLabel),
+    habitats: habitatValues,
   };
 }
 

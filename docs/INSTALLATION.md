@@ -126,7 +126,7 @@ The public GitHub Pages map is static:
 https://lucyjimenez.github.io/world-worm-map/
 ```
 
-During deployment, the GitHub Actions workflow exports a sanitized public dataset from KoboToolbox to `wwm/frontend/demo-samples.json`. The public dataset includes only coordinates, country, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, site names, affiliations, and internal Kobo identifiers.
+During deployment, the GitHub Actions workflow exports a sanitized public dataset from KoboToolbox to `wwm/frontend/demo-samples.json`. The public dataset includes only coordinates, country, sampling site name, affiliation, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, and internal Kobo identifiers.
 
 Configure this repository secret in GitHub:
 

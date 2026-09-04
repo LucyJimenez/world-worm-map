@@ -13,6 +13,37 @@ from urllib.request import Request, urlopen
 
 OUTPUT_PATH = Path("wwm/frontend/demo-samples.json")
 
+HABITAT_VALUES = {
+    "agricultural_field": "Agricultural field",
+    "forest": "Forest",
+    "grassland": "Grassland",
+    "wetland": "Wetland",
+    "urban": "Urban / built environment",
+    "desert": "Desert / arid",
+    "freshwater_margin": "Freshwater margin (river/lake)",
+    "coastal": "Coastal",
+    "tundra": "Tundra / alpine",
+    "other": "Other",
+}
+
+SOIL_VALUES = {
+    "sandy": "Sandy",
+    "clay": "Clay",
+    "silt": "Silt",
+    "loam": "Loam",
+    "peat": "Peat",
+    "chalk": "Chalk",
+    "volcanic": "Volcanic",
+    "mixed": "Mixed",
+    "other": "Other",
+}
+
+AFFILIATION_VALUES = {
+    "worm_lab": "Worm Lab",
+    "sanger_institute": "Sanger Institute",
+    "crc1211": "CRC1211",
+}
+
 
 def is_empty(value: Any) -> bool:
     if value is None:
@@ -87,6 +118,41 @@ def parse_multi_value(value: Any) -> list[str]:
     return list(dict.fromkeys(items))
 
 
+def slugify(value: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9]+", "_", value.strip().lower()).strip("_")
+
+
+def normalize_choice(value: Any, mapping: dict[str, str]) -> str | None:
+    text = clean_string(value)
+    if not text:
+        return None
+
+    if text in mapping:
+        return text
+
+    slug = slugify(text)
+    if slug in mapping:
+        return slug
+
+    for key, label in mapping.items():
+        if slugify(label) == slug:
+            return key
+    return text
+
+
+def normalize_choices(value: Any, mapping: dict[str, str]) -> list[str]:
+    normalized: list[str] = []
+    for item in parse_multi_value(value):
+        choice = normalize_choice(item, mapping)
+        if choice and choice not in normalized:
+            normalized.append(choice)
+    return normalized
+
+
+def labels_for(values: list[str], mapping: dict[str, str]) -> list[str]:
+    return [mapping.get(value, value) for value in values]
+
+
 def extract_submissions(payload: Any) -> list[dict[str, Any]]:
     if isinstance(payload, dict) and isinstance(payload.get("results"), list):
         return [item for item in payload["results"] if isinstance(item, dict)]
@@ -116,20 +182,33 @@ def to_public_sample(submission: dict[str, Any], index: int) -> dict[str, Any] |
 
     species = parse_multi_value(get_first(submission, "species", "species_name", default=[]))
     family = parse_multi_value(get_first(submission, "family", "families", default=[]))
-    soil_type = clean_string(get_first(submission, "soil_type"))
+    habitat_type = normalize_choice(
+        get_first(submission, "habitat_type", "habitat_type_001"),
+        HABITAT_VALUES,
+    )
+    habitat_other = clean_string(get_first(submission, "habitat_other", "If_Other_please_type_the_habitat_type"))
+    soil_types = normalize_choices(get_first(submission, "soil_type", "soil_type_001_001"), SOIL_VALUES)
+    affiliation_slugs = normalize_choices(get_first(submission, "affiliation", default=[]), AFFILIATION_VALUES)
+    affiliation_other = clean_string(get_first(submission, "affiliation_other"))
+    affiliations = labels_for([item for item in affiliation_slugs if item != "other"], AFFILIATION_VALUES)
+    if "other" in affiliation_slugs and affiliation_other:
+        affiliations.append(affiliation_other)
 
     return {
         "sample_id": f"public-kobo-{index:04d}",
-        "site_name": "Kobo sampling site",
+        "site_name": clean_string(get_first(submission, "site_name")) or "Unnamed sampling site",
         "sampling_date": parse_date(get_first(submission, "sampling_date", "_submission_time")),
         "country": clean_string(get_first(submission, "country")),
-        "habitat_type": clean_string(get_first(submission, "habitat_type")),
-        "soil_type": soil_type,
-        "soil_types": parse_multi_value(soil_type),
+        "habitat_type": habitat_type,
+        "habitat_label": habitat_other if habitat_type == "other" and habitat_other else HABITAT_VALUES.get(habitat_type, habitat_type),
+        "soil_type": ",".join(soil_types) if soil_types else None,
+        "soil_types": soil_types,
+        "soil_labels": labels_for(soil_types, SOIL_VALUES),
         "soil_ph": clean_string(get_first(submission, "soil_ph")),
         "depth_cm": clean_string(get_first(submission, "depth_cm")),
         "lat": geopoint[0],
         "lon": geopoint[1],
+        "affiliations": affiliations,
         "species": species or ["unidentified"],
         "families": family,
     }

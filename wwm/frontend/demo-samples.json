@@ -1,16 +1,22 @@
 [
   {
     "sample_id": "public-demo-0001",
-    "site_name": "Demo sampling site",
+    "site_name": "Sao Paulo urban garden",
     "sampling_date": "2026-02-02",
     "country": null,
     "habitat_type": null,
+    "habitat_label": null,
     "soil_type": null,
     "soil_types": [],
+    "soil_labels": [],
     "soil_ph": null,
     "depth_cm": null,
     "lat": -23.5505,
     "lon": -46.6333,
+    "affiliations": [
+      "worm_lab",
+      "sanger_institute"
+    ],
     "species": [
       "unidentified",
       "Pristionchus pacificus"
@@ -19,16 +25,21 @@
   },
   {
     "sample_id": "public-demo-0002",
-    "site_name": "Demo sampling site",
+    "site_name": "Thames riverbank",
     "sampling_date": "2026-01-22",
     "country": null,
     "habitat_type": null,
+    "habitat_label": null,
     "soil_type": null,
     "soil_types": [],
+    "soil_labels": [],
     "soil_ph": null,
     "depth_cm": null,
     "lat": 51.5072,
     "lon": -0.1276,
+    "affiliations": [
+      "sanger_institute"
+    ],
     "species": [
       "Caenorhabditis elegans"
     ],
@@ -36,16 +47,21 @@
   },
   {
     "sample_id": "public-demo-0003",
-    "site_name": "Demo sampling site",
+    "site_name": "Nairobi field station",
     "sampling_date": "2026-01-10",
     "country": null,
     "habitat_type": null,
+    "habitat_label": null,
     "soil_type": null,
     "soil_types": [],
+    "soil_labels": [],
     "soil_ph": null,
     "depth_cm": null,
     "lat": -1.2921,
     "lon": 36.8219,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified"
     ],
@@ -53,19 +69,24 @@
   },
   {
     "sample_id": "public-demo-0004",
-    "site_name": "Demo sampling site",
+    "site_name": "Hehehd",
     "sampling_date": "2026-03-10",
     "country": "DE",
     "habitat_type": "agricultural_field",
+    "habitat_label": null,
     "soil_type": "volcanic,mixed",
     "soil_types": [
       "volcanic",
       "mixed"
     ],
+    "soil_labels": [],
     "soil_ph": 7.3,
     "depth_cm": 1,
     "lat": 50.955244,
     "lon": 6.914613,
+    "affiliations": [
+      "crc1211"
+    ],
     "species": [
       "unidentified"
     ],
@@ -73,18 +94,23 @@
   },
   {
     "sample_id": "public-demo-0005",
-    "site_name": "Demo sampling site",
+    "site_name": "Bern",
     "sampling_date": "2026-02-18",
     "country": "option_1",
     "habitat_type": "option_1",
+    "habitat_label": null,
     "soil_type": "option_1",
     "soil_types": [
       "option_1"
     ],
+    "soil_labels": [],
     "soil_ph": 8.0,
     "depth_cm": 3,
     "lat": 46.961525,
     "lon": 7.511167,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified"
     ],
@@ -92,18 +118,23 @@
   },
   {
     "sample_id": "public-demo-0006",
-    "site_name": "Demo sampling site",
+    "site_name": "Waco_usa",
     "sampling_date": "2026-02-18",
     "country": "option_1",
     "habitat_type": "option_1",
+    "habitat_label": null,
     "soil_type": "option_2",
     "soil_types": [
       "option_2"
     ],
+    "soil_labels": [],
     "soil_ph": 4.0,
     "depth_cm": 5,
     "lat": 31.616039,
     "lon": -97.063687,
+    "affiliations": [
+      "sanger_institute"
+    ],
     "species": [
       "unidentified"
     ],
@@ -111,16 +142,21 @@
   },
   {
     "sample_id": "public-demo-0007",
-    "site_name": "Demo sampling site",
+    "site_name": "Fowlers Gap",
     "sampling_date": "2023-07-23",
     "country": "AU",
     "habitat_type": "desert",
+    "habitat_label": null,
     "soil_type": null,
     "soil_types": [],
+    "soil_labels": [],
     "soil_ph": null,
     "depth_cm": 15,
     "lat": -31.08834,
     "lon": 141.70657,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified"
     ],
@@ -128,16 +164,21 @@
   },
   {
     "sample_id": "public-demo-0008",
-    "site_name": "Demo sampling site",
+    "site_name": "Example sampling site #1",
     "sampling_date": "2026-02-15",
     "country": "CL",
     "habitat_type": "desert",
+    "habitat_label": null,
     "soil_type": null,
     "soil_types": [],
+    "soil_labels": [],
     "soil_ph": 6.8,
     "depth_cm": 35,
     "lat": -33.943218,
     "lon": -71.828299,
+    "affiliations": [
+      "swedish_museum_of_natural_history"
+    ],
     "species": [
       "unidentified"
     ],
@@ -145,18 +186,23 @@
   },
   {
     "sample_id": "public-demo-0009",
-    "site_name": "Demo sampling site",
+    "site_name": "BOV.25.01",
     "sampling_date": "2025-03-26",
     "country": "option_1",
     "habitat_type": "option_2",
+    "habitat_label": null,
     "soil_type": "option_1",
     "soil_types": [
       "option_1"
     ],
+    "soil_labels": [],
     "soil_ph": null,
     "depth_cm": 15,
     "lat": -22.322429,
     "lon": -69.474276,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified"
     ],
@@ -164,19 +210,25 @@
   },
   {
     "sample_id": "public-demo-0010",
-    "site_name": "Demo sampling site",
+    "site_name": "Basel grassland edge",
     "sampling_date": "2026-05-04",
     "country": "CH",
     "habitat_type": "grassland",
+    "habitat_label": null,
     "soil_type": "loam,sandy",
     "soil_types": [
       "loam",
       "sandy"
     ],
+    "soil_labels": [],
     "soil_ph": 7.1,
     "depth_cm": 20,
     "lat": 47.5596,
     "lon": 7.5886,
+    "affiliations": [
+      "worm_lab",
+      "sanger_institute"
+    ],
     "species": [
       "unidentified",
       "Heterodera schachtii"
@@ -187,19 +239,24 @@
   },
   {
     "sample_id": "public-demo-0011",
-    "site_name": "Demo sampling site",
+    "site_name": "Bogota highland plot",
     "sampling_date": "2026-05-01",
     "country": "CO",
     "habitat_type": "agricultural_field",
+    "habitat_label": null,
     "soil_type": "loam,clay",
     "soil_types": [
       "loam",
       "clay"
     ],
+    "soil_labels": [],
     "soil_ph": 6.4,
     "depth_cm": 15,
     "lat": 4.711,
     "lon": -74.072,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified",
       "Pratylenchus penetrans",
@@ -212,19 +269,24 @@
   },
   {
     "sample_id": "public-demo-0012",
-    "site_name": "Demo sampling site",
+    "site_name": "Honshu forest soil",
     "sampling_date": "2026-05-11",
     "country": "JP",
     "habitat_type": "forest",
+    "habitat_label": null,
     "soil_type": "volcanic,loam",
     "soil_types": [
       "volcanic",
       "loam"
     ],
+    "soil_labels": [],
     "soil_ph": 5.6,
     "depth_cm": 18,
     "lat": 35.6762,
     "lon": 139.6503,
+    "affiliations": [
+      "sanger_institute"
+    ],
     "species": [
       "unidentified",
       "Aphelenchoides fragariae"
@@ -235,18 +297,23 @@
   },
   {
     "sample_id": "public-demo-0013",
-    "site_name": "Demo sampling site",
+    "site_name": "Nairobi urban garden",
     "sampling_date": "2026-05-08",
     "country": "KE",
     "habitat_type": "urban",
+    "habitat_label": null,
     "soil_type": "mixed",
     "soil_types": [
       "mixed"
     ],
+    "soil_labels": [],
     "soil_ph": 6.8,
     "depth_cm": 10,
     "lat": -1.2864,
     "lon": 36.8172,
+    "affiliations": [
+      "crc1211"
+    ],
     "species": [
       "unidentified",
       "Caenorhabditis elegans"
@@ -257,18 +324,23 @@
   },
   {
     "sample_id": "public-demo-0014",
-    "site_name": "Demo sampling site",
+    "site_name": "Cape coastal dune",
     "sampling_date": "2026-05-16",
     "country": "ZA",
     "habitat_type": "coastal",
+    "habitat_label": null,
     "soil_type": "sandy",
     "soil_types": [
       "sandy"
     ],
+    "soil_labels": [],
     "soil_ph": 8.0,
     "depth_cm": 12,
     "lat": -33.9249,
     "lon": 18.4241,
+    "affiliations": [
+      "worm_lab"
+    ],
     "species": [
       "unidentified",
       "Panagrolaimus sp."
