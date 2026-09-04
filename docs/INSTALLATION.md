@@ -118,6 +118,31 @@ Refresh Kobo-derived records while keeping seed examples:
 curl -X POST -H "x-api-key: admin-key" http://localhost:8000/api/admin/kobo/refresh
 ```
 
+## Refresh GitHub Pages from KoboToolbox
+
+The public GitHub Pages map is static:
+
+```text
+https://lucyjimenez.github.io/world-worm-map/
+```
+
+During deployment, the GitHub Actions workflow exports a sanitized public dataset from KoboToolbox to `wwm/frontend/demo-samples.json`. The public dataset includes only coordinates, country, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, site names, affiliations, and internal Kobo identifiers.
+
+Configure this repository secret in GitHub:
+
+```text
+KOBO_TOKEN=<kobotoolbox_api_token>
+```
+
+Optional repository variables:
+
+```text
+KOBO_BASE_URL=https://eu.kobotoolbox.org
+KOBO_ASSET_UID=a8Rvu5KasYeAfsa2GfFppG
+```
+
+The workflow runs once per hour and can also be started manually from GitHub Actions.
+
 ## Validate What3Words Values
 
 When `WHAT3WORDS_API_KEY` is configured:

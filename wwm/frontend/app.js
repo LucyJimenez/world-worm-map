@@ -80,11 +80,16 @@ function paramsFromForm() {
 function popupHtml(sample) {
   const habitat = sample.habitat_other || sample.habitat_type || "Not recorded";
   const soil = sample.soil_type_other || htmlList(sample.soil_types);
+  const statusLine = sample.status ? `<span>Status: ${sample.status}</span><br>` : "";
+  const subsamplesLine =
+    sample.num_samples !== undefined && sample.num_samples !== null
+      ? `<br><span>Sub-samples: ${sample.num_samples}</span>`
+      : "";
 
   return `
     <strong>${sample.sample_id || "n/a"}</strong><br>
     ${sample.site_name || "Unnamed site"} ${sample.country ? `(${sample.country})` : ""}<br>
-    <span>Status: ${sample.status || "n/a"}</span><br>
+    ${statusLine}
     <span>Species: ${htmlList(sample.species)}</span><br>
     <span>Families: ${htmlList(sample.families)}</span><br>
     <hr>
@@ -92,8 +97,7 @@ function popupHtml(sample) {
     <span>Habitat: ${habitat}</span><br>
     <span>Soil: ${soil}</span><br>
     <span>pH: ${sample.soil_ph ?? "Not recorded"}</span><br>
-    <span>Depth: ${sample.depth_cm ?? "Not recorded"} cm</span><br>
-    <span>Sub-samples: ${sample.num_samples ?? "Not recorded"}</span>
+    <span>Depth: ${sample.depth_cm ?? "Not recorded"} cm</span>${subsamplesLine}
   `;
 }
 

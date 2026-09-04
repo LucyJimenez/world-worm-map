@@ -40,6 +40,22 @@ This keeps KoboToolbox as the source of truth for new submissions while WWM hand
 
 What3Words is supported only as an optional internal field in KoboToolbox. GPS/PostGIS coordinates remain the canonical map location, and What3Words values are not displayed in the public map popup or public sample API response.
 
+## Public Web Map
+
+The public GitHub Pages map is available at:
+
+[https://lucyjimenez.github.io/world-worm-map/](https://lucyjimenez.github.io/world-worm-map/)
+
+The page is static and reads `wwm/frontend/demo-samples.json` as its public dataset. During deployment, GitHub Actions refreshes this file from KoboToolbox when the repository secret `KOBO_TOKEN` is configured. The public export is intentionally limited to coordinates, country, date, habitat, soil, pH, depth, and taxonomy when available. It excludes What3Words, collector names, notes, raw Kobo payloads, original sample IDs, site names, affiliations, and internal Kobo identifiers.
+
+To enable live Kobo refresh in GitHub Pages, add this repository secret:
+
+```text
+KOBO_TOKEN=<kobotoolbox_api_token>
+```
+
+The workflow runs automatically every hour and can also be started manually from the repository Actions tab.
+
 ## Repository Structure
 
 ```text
